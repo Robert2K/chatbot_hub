@@ -1,0 +1,38 @@
+{% extends "chat/base.html" %}
+
+{% block content %}
+    <h1>{{ session.name }}</h1>
+    <p>Session created: {{ session.created_at }}</p>
+    
+    <div>
+        <h2>Conversation</h2>
+        
+        {% if session.chatmessage_set.all %}
+            <div>
+                {% for message in session.chatmessage_set.all %}
+                    <div>
+                        <strong>{{ message.role }}:</strong> {{ message.content }}
+                        <span>{{ message.created_at }}</span>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>No messages yet. Start the conversation!</p>
+        {% endif %}
+    </div>
+    
+    <form method="POST">
+        {% csrf_token %}
+        
+        <label for="message">Your Message:</label>
+        <textarea id="message" name="message" placeholder="Type your message here..."></textarea>
+
+        <input type="file" name="file">
+                
+        <button type="submit">Send Message</button>
+    </form>
+    
+    <div>
+        <a href="{% url 'home' %}">Back to Sessions</a>
+    </div>
+{% endblock %}

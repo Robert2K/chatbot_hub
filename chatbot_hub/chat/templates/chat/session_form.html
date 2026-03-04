@@ -1,0 +1,18 @@
+{% extends "chat/base.html" %}
+
+{% block content %}
+    <h1>Create New Chat Session</h1>
+    
+    <form method="POST">
+        {% csrf_token %}
+        
+        <label for="name">Session Name:</label>
+        <input type="text" id="name" name="name" placeholder="Enter session name">
+        
+        <button type="submit">Create Session</button>
+    </form>
+    
+    <div>
+        <a href="{% url 'home' %}">Back to Sessions</a>
+    </div>
+{% endblock %}

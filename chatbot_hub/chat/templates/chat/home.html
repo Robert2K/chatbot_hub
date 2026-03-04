@@ -1,0 +1,22 @@
+{% extends "chat/base.html" %}
+
+{% block content %}
+    <h1>My Chat Sessions</h1>
+    
+    {% if sessions %}
+        <ul>
+            {% for session in sessions %}
+                <li>
+                    <a href="{% url 'session_detail' session.id %}">{{ session.name }}</a>
+                    <span>{{ session.created_at }}</span>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No chat sessions yet. Create one to get started!</p>
+    {% endif %}
+    
+    <div>
+        <a href="{% url 'session_create' %}">Create New Session</a>
+    </div>
+{% endblock %}

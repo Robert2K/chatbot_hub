@@ -1,0 +1,53 @@
+{% extends "chat/base.html" %}
+
+{% block content %}
+    <h1>Register</h1>
+    
+    <form method="POST">
+        {% csrf_token %}
+        
+        <label for="username">Username:</label>
+        {{ form.username }}
+        {% if form.username.errors %}
+            <ul>
+                {% for error in form.username.errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        
+        <label for="password1">Password:</label>
+        {{ form.password1 }}
+        {% if form.password1.errors %}
+            <ul>
+                {% for error in form.password1.errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        
+        <label for="password2">Confirm Password:</label>
+        {{ form.password2 }}
+        {% if form.password2.errors %}
+            <ul>
+                {% for error in form.password2.errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        
+        {% if form.non_field_errors %}
+            <ul>
+                {% for error in form.non_field_errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        
+        <button type="submit">Register</button>
+    </form>
+    
+    <div>
+        <p>Already have an account? <a href="{% url 'login' %}">Login here</a></p>
+    </div>
+{% endblock %}
