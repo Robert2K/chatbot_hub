@@ -4,35 +4,74 @@
     <h1>{{ session.name }}</h1>
     <p>Session created: {{ session.created_at }}</p>
     
+    {% if error %}
+        <div style="background-color: #ffcccc; padding: 10px; margin: 10px 0; border-radius: 4px; border-left: 4px solid #cc0000;">
+            <strong>⚠️ Error:</strong> {{ error }}
+        </div>
+    {% endif %}
+    
     <div>
         <h2>Conversation</h2>
         
         {% if session.chatmessage_set.all %}
             <div>
                 {% for message in session.chatmessage_set.all %}
-                    <div>
-                        <strong>{{ message.role }}:</strong> {{ message.content }}
-                        <span>{{ message.created_at }}</span>
+                    <div style="border: 1px solid #ddd; padding: 10px; margin: 10px 0; border-radius: 4px; background-color: {% if message.role == 'user' %}#f9f9f9{% else %}#eef5ff{% endif %};">
+                        <strong>{{ message.role|upper }}:</strong> 
+                        <p>{{ message.content }}</p>
+                        <span style="color: #999; font-size: 0.9em;">{{ message.created_at }}</span>
+                        
+                        {% if message.attachments.exists %}
+                            <hr style="margin: 5px 0;">
+                            <div style="background-color: #f0f0f0; padding: 8px; border-radius: 3px; margin-top: 8px;">
+                                📎 <strong>Attachment:</strong>
+                                {% for attachment in message.attachments.all %}
+                                    <div style="margin-top: 5px;">
+                                        <a href="{{ attachment.file.url }}" target="_blank" style="color: #0066cc; text-decoration: none;">{{ attachment.file.name }}</a>
+                                        <span style="color: #666; font-size: 0.85em;"> ({{ attachment.file_type|upper }}, {{ attachment.size|filesizeformat }})</span>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
                     </div>
                 {% endfor %}
             </div>
         {% else %}
-            <p>No messages yet. Start the conversation!</p>
+            <p><em>No messages yet. Start the conversation!</em></p>
         {% endif %}
     </div>
     
-    <form method="POST">
+    <hr>
+    <h3>Send New Message</h3>
+    <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         
-        <label for="message">Your Message:</label>
-        <textarea id="message" name="message" placeholder="Type your message here..."></textarea>
+        <div style="margin-bottom: 15px;">
+            <label for="message"><strong>Your Message:</strong></label>
+            <textarea id="message" name="message" placeholder="Type your message here..." style="width: 100%; height: 100px; padding: 8px; font-family: Arial, sans-serif; border: 1px solid #ccc; border-radius: 4px;"></textarea>
+        </div>
 
-        <input type="file" name="file">
+        <div style="margin-bottom: 15px;">
+            <label for="file"><strong>Attach File (Optional):</strong></label>
+            <input 
+                type="file" 
+                name="file" 
+                id="file"
+                accept=".jpg,.jpeg,.png,.pdf"
+                style="display: block; margin-top: 5px;"
+            >
+            <small style="display: block; margin-top: 8px; color: #666; background-color: #ffffcc; padding: 8px; border-radius: 3px;">
+                📌 <strong>Limits:</strong> Max 1 file per message | Supported: JPEG, PNG, PDF | Size: max 5MB
+            </small>
+        </div>
                 
-        <button type="submit">Send Message</button>
+        <button type="submit" style="padding: 10px 20px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 14px;">
+            ✉️ Send Message
+        </button>
     </form>
     
+    <hr>
     <div>
-        <a href="{% url 'home' %}">Back to Sessions</a>
+        <a href="{% url 'home' %}" style="color: #0066cc; text-decoration: none;">← Back to Sessions</a>
     </div>
 {% endblock %}

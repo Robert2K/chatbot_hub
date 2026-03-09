@@ -23,7 +23,7 @@ from .openrouter import ask_openrouter
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import authenticate, login, logout
-from.utils import mime_dictionary # z pliku utils.py imprtujemy funkcje mime_dictionary, która zwraca słownik rozszerzeń plików i odpowiadających im typów MIME, co jest potrzebne do prawidłowego obsługiwania załączników w wiadomościach.
+from .utils import mime_dictionary # z pliku utils.py importujemy funkcje mime_dictionary, która zwraca słownik rozszerzeń plików i odpowiadających im typów MIME, co jest potrzebne do prawidłowego obsługiwania załączników w wiadomościach.
 
 
 
@@ -66,9 +66,10 @@ def session_create(request):
 @login_required
 def session_detail(request, session_id):
     """
-    Display session and handle message/file submissions with validation.
+    Display session and handle message/file submissions with attachment validation.
     
-    Validates: message/file required, file size ≤5MB, file type allowed.
+    Validates: message/file required, file size ≤10MB, file type allowed.
+    Attachments: Limited to 1 per message. Allowed types: JPG, PNG, PDF (max 10MB).
     Creates ChatMessage for user and AI response via OpenRouter API.
     
     Args:
@@ -77,11 +78,12 @@ def session_detail(request, session_id):
     
     POST Data:
         message (str, optional): User message text.
-        file (UploadedFile, optional): File attachment.
+        file (UploadedFile, optional): File attachment (JPG, PNG, PDF (only)).
     
     Returns:
         HttpResponse: Session template or error/redirect response.
     """
+    # Allowed file types: only JPG, PNG, PDF
     ALLOWED = [
         'text/plain', #txt
         'application/rtf',  #rtf rich textformat
@@ -112,35 +114,58 @@ def session_detail(request, session_id):
 
 
     session = get_object_or_404(ChatSession, id=session_id, user=request.user)
+    
     if request.method == 'POST':
         text = request.POST.get('message', '').strip()
-        if not text and 'file' in request.FILES:
+        file = request.FILES.get('file')
+        
+        # Validation: message or file required
+        if not text and not file:
             return render(request, 'chat/session_detail.html',
-                          {"session" : session,
-                           "error" : "File or message should not be empty"})
+                          {"session": session,
+                           "error": "Message or file is required."})
+        
         if text:
-            file = request.FILES.get('file')
+            # Check if previous user message in session has attachment
+            last_user_msg = ChatMessage.objects.filter(
+                session=session, role='user'
+            ).order_by('-created_at').first()
+            
+            # Enforce: max 1 attachment in consecutive user messages
+            if file and last_user_msg and last_user_msg.attachments.exists():
+                return render(request, 'chat/session_detail.html',
+                              {"session": session,
+                               "error": "Previous message already has attachment. Maximum 1 file per message allowed."})
+            
+            # Create user message
             msg = ChatMessage.objects.create(session=session, role='user', content=text)
             
+            # Handle file attachment if provided
             if file:
+                # Validate file size
                 if file.size > MAX_SIZE:
+                    msg.delete()
                     return render(request, 'chat/session_detail.html',
-                                  {"session" : session,
-                                   "error" : "File is too large. Max size is 5MB."}
-                                   )
-                if file.content_type not in ALLOWED:
-                    return render(request, 'chat/session_detail.html',
-                                  {"session" : session,
-                                   "error" : "File type not allowed."}
-                                   )
+                                  {"session": session,
+                                   "error": "File is too large. Maximum 5MB allowed."})
                 
-                # Determine file type (img or other)
-                file_type = "img" if file.content_type.startswith("image/") else "file"
+                # Validate file type - ONLY JPG, PNG, PDF
+                if file.content_type not in ALLOWED:
+                    msg.delete()
+                    return render(request, 'chat/session_detail.html',
+                                  {"session": session,
+                                   "error": "File type not allowed. Only JPG, PNG, PDF supported."})
+                
+                # Determine file type and create attachment
+                file_type = "img" if file.content_type.startswith("image/") else "pdf"
                 Attachment.objects.create(message=msg, file=file, file_type=file_type, size=file.size)
             
+            # Get AI response and create assistant message
             reply = ask_openrouter(msg)
             ChatMessage.objects.create(session=session, role='assistant', content=reply)
+        
         return redirect('session_detail', session_id=session.id)
+    
     return render(request, 'chat/session_detail.html', {'session': session})
     
  
@@ -149,6 +174,8 @@ def session_detail(request, session_id):
 def login_view(request):
     """
     Handle user authentication using AuthenticationForm.
+    
+    Redirect authenticated users to home. Display login form for anonymous users.
     
     Args:
         request (HttpRequest): GET shows form, POST validates credentials.
@@ -160,6 +187,10 @@ def login_view(request):
     Returns:
         HttpResponse: Form template or redirect to 'home' on success.
     """
+    # Redirect if already authenticated
+    if request.user.is_authenticated:
+        return redirect('home')
+    
     if request.method == 'POST':
         form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
@@ -179,6 +210,7 @@ def register_view(request):
     Handle user registration with UserCreationForm and auto-login.
     
     Validates username uniqueness and password strength (per AUTH_PASSWORD_VALIDATORS).
+    Redirect authenticated users to home. Validates username uniqueness and password strength.
     Auto-authenticates user after successful account creation.
     
     Args:
@@ -192,6 +224,10 @@ def register_view(request):
     Returns:
         HttpResponse: Form template or redirect to 'home' on success.
     """
+    # Redirect if already authenticated
+    if request.user.is_authenticated:
+        return redirect('home')
+    
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
