@@ -10,7 +10,14 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
+
+import os
+import dj_database_url
 from pathlib import Path
+from dotenv import load_dotenv
+ 
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -74,12 +81,24 @@ WSGI_APPLICATION = 'chatbot_hub.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+if os.environ.get('DATABASE_URL'):
+    import dj_database_url
+    db_url = os.environ.get('DATABASE_URL')
+    
+    # Ensure proper PostgreSQL scheme if missing
+    if not db_url.startswith(('postgresql://', 'postgres://')):
+        db_url = 'postgresql://' + db_url
+    
+    DATABASES = {
+        'default': dj_database_url.parse(db_url)
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 
 # Password validation
@@ -124,6 +143,10 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'home'
+
+# Security: httponly session cookies
+SESSION_COOKIE_HTTPONLY = True
 
 # Media
 MEDIA_URL = '/media/' # adres w przegladarce na gorze

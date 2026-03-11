@@ -1,22 +1,271 @@
 {% extends "chat/base.html" %}
 
 {% block content %}
-    <h1>My Chat Sessions</h1>
+    <h1 style="font-size: 32px;">My Chat Sessions</h1>
     
     {% if sessions %}
-        <ul>
-            {% for session in sessions %}
-                <li>
-                    <a href="{% url 'session_detail' session.id %}">{{ session.name }}</a>
-                    <span>{{ session.created_at }}</span>
-                </li>
-            {% endfor %}
-        </ul>
+        <div style="display: flex; gap: 30px; align-items: flex-start;">
+            <div style="flex: 1;">
+                <ul>
+                    {% for session in sessions|slice:":10" %}
+                        <li>
+                            <a href="{% url 'session_detail' session.id }}" class="large-link">{{ session.name }}</a>
+                            <span style="color: rgb(247, 229, 156); font-size: 0.85em;">{{ session.created_at }}</span>
+                        </li>
+                    {% endfor %}
+                </ul>
+                
+                {% if sessions|length > 10 %}
+                    <div id="older-sessions-container" style="display: none; margin-top: 20px;">
+                        <h3>Older Sessions</h3>
+                        <ul>
+                            {% for session in sessions|slice:"10:20" %}
+                                <li>
+                                    <a href="{% url 'session_detail' session.id }}" class="large-link">{{ session.name }}</a>
+                                    <span style="color: rgb(247, 229, 156); font-size: 0.85em;">{{ session.created_at }}</span>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    
+                    <button 
+                        id="toggle-older-btn" 
+                        onclick="toggleOlderSessions()" 
+                        style="padding: 10px 20px; background: linear-gradient(135deg, #017759 0%, #490291 100%); color: rgb(247, 229, 156); border: 2px solid rgb(247, 229, 156); border-radius: 8px; cursor: pointer; font-size: 16px; margin-top: 15px;">
+                        Show Older History
+                    </button>
+                    
+                    <script>
+                        function toggleOlderSessions() {
+                            const container = document.getElementById('older-sessions-container');
+                            const button = document.getElementById('toggle-older-btn');
+                            
+                            if (container.style.display === 'none') {
+                                container.style.display = 'block';
+                                button.textContent = 'Hide Older History';
+                            } else {
+                                container.style.display = 'none';
+                                button.textContent = 'Show Older History';
+                            }
+                        }
+                    </script>
+                {% endif %}
+            </div>
+            
+            <div style="display: flex; flex-direction: column; width: 55%;">
+                <style>
+                    @keyframes cloudPush {
+                        0% { transform: translateX(0); }
+                        50% { transform: translateX(-40px); }
+                        100% { transform: translateX(0); }
+                    }
+                    
+                    @keyframes cloudPull {
+                        0% { transform: translateX(0); }
+                        50% { transform: translateX(40px); }
+                        100% { transform: translateX(0); }
+                    }
+                    
+                    @keyframes sunRotate {
+                        0% { transform: rotate(0deg); }
+                        100% { transform: rotate(360deg); }
+                    }
+                    
+                    @keyframes sunRaysMove {
+                        0% {
+                            right: -25%;
+                            opacity: 1;
+                            transform: rotate(0deg);
+                        }
+                        33% {
+                            right: 95%;
+                            opacity: 1;
+                            transform: rotate(360deg);
+                        }
+                        34% {
+                            opacity: 0;
+                            transform: rotate(360deg);
+                        }
+                        100% {
+                            opacity: 0;
+                            transform: rotate(360deg);
+                        }
+                    }
+                    
+                    @keyframes windBubbleFloat {
+                        0% {
+                            right: -15%;
+                            opacity: 0;
+                            transform: translateY(0) scale(1);
+                        }
+                        5% {
+                            opacity: 1;
+                        }
+                        85% {
+                            right: 105%;
+                            opacity: 1;
+                            transform: translateY(-30px) scale(1);
+                        }
+                        90% {
+                            right: 115%;
+                            opacity: 0;
+                            transform: translateY(-30px) scale(0.8);
+                        }
+                        100% {
+                            opacity: 0;
+                        }
+                    }
+                    
+                    @keyframes particleFloat {
+                        0% { 
+                            transform: translateY(0) translateX(0) scale(1);
+                            opacity: 0.8;
+                        }
+                        50% {
+                            opacity: 1;
+                        }
+                        100% { 
+                            transform: translateY(-30px) translateX(var(--tx)) scale(0.5);
+                            opacity: 0;
+                        }
+                    }
+                    
+                    @keyframes rayPulse {
+                        0% { opacity: 0.3; }
+                        50% { opacity: 0.8; }
+                        100% { opacity: 0.3; }
+                    }
+                    
+                    .cloud-left {
+                        animation: cloudPush 6s ease-in-out infinite;
+                    }
+                    
+                    .cloud-right {
+                        animation: cloudPull 6s ease-in-out infinite;
+                    }
+                    
+                    .sun-rays {
+                        animation: sunRaysMove 12s ease-in-out infinite;
+                    }
+                    
+                    .ray {
+                        animation: rayPulse 4s ease-in-out infinite;
+                    }
+                    
+                    .glass-particle {
+                        background: rgba(255, 255, 255, 0.2);
+                        backdrop-filter: blur(8px);
+                        -webkit-backdrop-filter: blur(8px);
+                        border: 1px solid rgba(247, 229, 156, 0.4);
+                        border-radius: 50%;
+                    }
+                    
+                    .wind-bubble {
+                        position: absolute;
+                        border: 2px solid rgba(247, 229, 156, 0.4);
+                        border-radius: 50%;
+                        background: rgba(247, 229, 156, 0.1);
+                        animation: windBubbleFloat 8s ease-in-out infinite;
+                    }
+                    
+                    @keyframes cloudBackgroundDarken {
+                        0% { background: rgba(255, 255, 255, 0.1); }
+                        33% { background: rgba(255, 255, 255, 0.1); }
+                        34% { background: rgba(0, 0, 0, 0.2); }
+                        99% { background: rgba(0, 0, 0, 0.2); }
+                        100% { background: rgba(255, 255, 255, 0.1); }
+                    }
+                    
+                    @keyframes moonAppear {
+                        0% { opacity: 0; transform: scale(0); }
+                        34% { opacity: 0; transform: scale(0); }
+                        35% { opacity: 1; transform: scale(1); }
+                        95% { opacity: 1; transform: scale(1); }
+                        99% { opacity: 0; transform: scale(0); }
+                        100% { opacity: 0; transform: scale(0); }
+                    }
+                    
+                    .moon {
+                        animation: moonAppear 12s ease-in-out infinite;
+                    }
+                    
+                </style>
+                <div style="
+                    width: 100%;
+                    background: rgba(255, 255, 255, 0.1);
+                    animation: cloudBackgroundDarken 12s ease-in-out infinite;
+                    backdrop-filter: blur(15px);
+                    -webkit-backdrop-filter: blur(15px);
+                    border: 2px solid rgba(247, 229, 156, 0.3);
+                    border-radius: 12px;
+                    padding: 30px 20px;
+                    text-align: center;
+                    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+                    position: relative;
+                    overflow: hidden;
+                ">
+                    <!-- Sun Rays Traveling Across at Cloud Height -->
+                    <svg class="sun-rays" width="180" height="160" style="position: absolute; top: -5%; right: -25%; pointer-events: none; z-index: 1; transform-origin: 90px 90px; filter: drop-shadow(0 0 8px rgba(247, 229, 156, 0.6));">
+                        <defs>
+                            <filter id="sunGlow" x="-50%" y="-50%" width="200%" height="200%">
+                                <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+                                <feMerge>
+                                    <feMergeNode in="coloredBlur"/>
+                                    <feMergeNode in="SourceGraphic"/>
+                                </feMerge>
+                            </filter>
+                        </defs>
+                        <g id="rays" filter="url(#sunGlow)">
+                            <line class="ray" x1="90" y1="30" x2="90" y2="65" stroke="rgba(247, 229, 156, 0.85)" stroke-width="4.5" stroke-linecap="round"/>
+                            <line class="ray" x1="90" y1="30" x2="90" y2="65" stroke="rgba(247, 229, 156, 0.85)" stroke-width="4.5" stroke-linecap="round" transform="rotate(45 90 90)"/>
+                            <line class="ray" x1="90" y1="30" x2="90" y2="65" stroke="rgba(247, 229, 156, 0.85)" stroke-width="4.5" stroke-linecap="round" transform="rotate(90 90 90)"/>
+                            <line class="ray" x1="90" y1="30" x2="90" y2="65" stroke="rgba(247, 229, 156, 0.85)" stroke-width="4.5" stroke-linecap="round" transform="rotate(135 90 90)"/>
+                            <line class="ray" x1="90" y1="30" x2="90" y2="65" stroke="rgba(247, 229, 156, 0.85)" stroke-width="4.5" stroke-linecap="round" transform="rotate(180 90 90)"/>
+                            <line class="ray" x1="90" y1="30" x2="90" y2="65" stroke="rgba(247, 229, 156, 0.85)" stroke-width="4.5" stroke-linecap="round" transform="rotate(225 90 90)"/>
+                            <line class="ray" x1="90" y1="30" x2="90" y2="65" stroke="rgba(247, 229, 156, 0.85)" stroke-width="4.5" stroke-linecap="round" transform="rotate(270 90 90)"/>
+                            <line class="ray" x1="90" y1="30" x2="90" y2="65" stroke="rgba(247, 229, 156, 0.85)" stroke-width="4.5" stroke-linecap="round" transform="rotate(315 90 90)"/>
+                        </g>
+                    </svg>
+                    
+                    <!-- Moon (Crescent) -->
+                    <div class="moon" style="position: absolute; top: 0%; left: 20%; font-size: 100px; z-index: 1; pointer-events: none;">🌙</div>
+                    
+                    <!-- Wind Bubbles Floating Effect -->
+                    <div class="wind-bubble" style="width: 20px; height: 20px; top: 25%; right: -15%; animation-delay: 0s;"></div>
+                    <div class="wind-bubble" style="width: 16px; height: 16px; top: 35%; right: -12%; animation-delay: 0.5s;"></div>
+                    <div class="wind-bubble" style="width: 24px; height: 24px; top: 30%; right: -18%; animation-delay: 1s;"></div>
+                    <div class="wind-bubble" style="width: 18px; height: 18px; top: 40%; right: -10%; animation-delay: 1.5s;"></div>
+                    <div class="wind-bubble" style="width: 22px; height: 22px; top: 28%; right: -16%; animation-delay: 2s;"></div>
+                    <div class="wind-bubble" style="width: 19px; height: 19px; top: 38%; right: -14%; animation-delay: 2.5s;"></div>
+                    <div class="wind-bubble" style="width: 21px; height: 21px; top: 32%; right: -20%; animation-delay: 3s;"></div>
+                    
+                    <!-- Content -->
+                    <div style="position: relative; z-index: 1;">
+                        <div style="display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 12px; margin-top: 20px;">
+                            <!-- Left Cloud -->
+                            <div class="cloud-left" style="font-size: 48px;">☁️</div>
+                            
+                            <!-- Right Cloud -->
+                        <div class="cloud-right" style="font-size: 48px;">☁️</div>
+                    </div>
+                    <h2 style="font-size: 28px; margin: 0 0 8px 0; color: rgb(247, 229, 156); font-weight: 700; text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);">
+                        chatbot_hub
+                    </h2>
+                    <p style="font-size: 14px; margin: 4px 0; color: rgba(247, 229, 156, 0.8);">
+                        Created by Robert K.
+                    </p>
+                    <p style="font-size: 12px; margin: 4px 0; color: rgba(247, 229, 156, 0.6);">
+                        Version 1.0
+                    </p>
+                    </div>
+                </div>
+                <a href="{% url 'session_create' %}" class="large-link" style="width: 100%; text-align: center; white-space: nowrap; margin-top: 40px; display: block;">Create New Session</a>
+            </div>
+        </div>
     {% else %}
-        <p>No chat sessions yet. Create one to get started!</p>
+        <p style="color: #666;">No chat sessions yet. Create one to get started!</p>
+        <div style="margin-top: 20px;">
+            <a href="{% url 'session_create' %}" class="large-link">Create New Session</a>
+        </div>
     {% endif %}
-    
-    <div>
-        <a href="{% url 'session_create' %}">Create New Session</a>
-    </div>
 {% endblock %}

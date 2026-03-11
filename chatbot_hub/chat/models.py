@@ -99,3 +99,16 @@ class Attachment(models.Model):
         """Return filename and file type for admin representation."""
         return f"{self.file.name} ({self.file_type})"
 
+
+class AudioMessage(models.Model):
+    """Audio response associated with an assistant message.
+    
+    Attributes:
+        message (ForeignKey): Parent ChatMessage (CASCADE delete).
+        file (FileField): Audio file (stored in 'audio/' directory).
+        created_at (DateTime): Automatic timestamp on creation.
+    """
+    message = models.ForeignKey(ChatMessage, on_delete=models.CASCADE, related_name='audio')
+    file = models.FileField(upload_to='audio/')
+    created_at = models.DateTimeField(auto_now_add=True)
+#After that, you need to build logic in views (views.py) for it to work.

@@ -1,11 +1,87 @@
 {% extends "chat/base.html" %}
 
 {% block content %}
+    <!-- File input styling: match "Send Message" button appearance -->
+    <style>
+        /* Style file selector button to match submit button styling */
+        input[type="file"]::file-selector-button {
+            background: linear-gradient(135deg, #017759 0%, #490291 100%);
+            color: rgb(247, 229, 156);
+            border: 2px solid rgb(247, 229, 156);
+            border-radius: 4px;
+            padding: 8px 16px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        /* Style file input text to match label styling */
+        input[type="file"] {
+            color: rgb(247, 229, 156);
+        }
+        
+        /* Hide native file input (replaced with custom button) */
+        #file {
+            display: none;
+        }
+        
+        /* Custom file button styling: match submit button, display inline with status */
+        #file-custom-button {
+            background: linear-gradient(135deg, #017759 0%, #490291 100%);
+            color: rgb(247, 229, 156);
+            border: 2px solid rgb(247, 229, 156);
+            border-radius: 4px;
+            padding: 8px 16px;
+            cursor: pointer;
+            font-size: 16px;
+            display: inline-block;
+            margin-top: 5px;
+            vertical-align: middle;
+        }
+        
+        /* Custom file status text (inline with button): shows "No file chosen" or filename */
+        #file-status {
+            display: inline-block;
+            margin-left: 12px;
+            color: rgb(247, 229, 156);
+            vertical-align: middle;
+            font-size: 14px;
+        }
+    </style>
+    
+    <!-- JavaScript: custom file input with English labels -->
+    <script>
+        // Ensure consistent English language file input labels regardless of browser language
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get elements: native file input, custom button, status display
+            const fileInput = document.getElementById('file');
+            const customButton = document.getElementById('file-custom-button');
+            const fileStatus = document.getElementById('file-status');
+            
+            // Update status: display "No file chosen" or selected filename
+            fileInput.addEventListener('change', function() {
+                if (this.files && this.files.length > 0) {
+                    fileStatus.textContent = this.files[0].name;
+                } else {
+                    fileStatus.textContent = 'No file chosen';
+                }
+            });
+            
+            // Trigger file input when custom button clicked
+            customButton.addEventListener('click', function(e) {
+                e.preventDefault();
+                fileInput.click();
+            });
+            
+            // Initialize status display
+            fileStatus.textContent = 'No file chosen';
+        });
+    </script>
+    
     <h1>{{ session.name }}</h1>
-    <p>Session created: {{ session.created_at }}</p>
+    <p style="color: rgb(247, 229, 156);">Session created: {{ session.created_at }}</p>
     
     {% if error %}
-        <div style="background-color: #ffcccc; padding: 10px; margin: 10px 0; border-radius: 4px; border-left: 4px solid #cc0000;">
+        <div style="background: linear-gradient(135deg, #017759 0%, #490291 100%); padding: 10px; margin: 10px 0; border-radius: 4px; border-left: 4px solid rgb(247, 229, 156); color: rgb(247, 229, 156);">
             <strong>⚠️ Error:</strong> {{ error }}
         </div>
     {% endif %}
@@ -15,29 +91,43 @@
         
         {% if session.chatmessage_set.all %}
             <div>
-                {% for message in session.chatmessage_set.all %}
-                    <div style="border: 1px solid #ddd; padding: 10px; margin: 10px 0; border-radius: 4px; background-color: {% if message.role == 'user' %}#f9f9f9{% else %}#eef5ff{% endif %};">
-                        <strong>{{ message.role|upper }}:</strong> 
-                        <p>{{ message.content }}</p>
-                        <span style="color: #999; font-size: 0.9em;">{{ message.created_at }}</span>
+                {% for message in session.chatmessage_set.all|slice:"-2:" %}
+                    <div class="message {% if message.role == 'user' %}user{% else %}assistant{% endif %}">
+                        <strong style="font-size: 20px;">{{ message.role|upper }}:</strong> 
+                        <p style="font-size: 20px;">{{ message.content }}</p>
+                        <span style="color: rgb(247, 229, 156); font-size: 0.9em;">{{ message.created_at }}</span>
                         
-                        {% if message.attachments.exists %}
-                            <hr style="margin: 5px 0;">
-                            <div style="background-color: #f0f0f0; padding: 8px; border-radius: 3px; margin-top: 8px;">
-                                📎 <strong>Attachment:</strong>
+                        {% if message.attachments.all %}
+                            <hr style="margin: 5px 0; border-color: rgb(247, 229, 156);">
+                            <div style="background: linear-gradient(135deg, #017759 0%, #490291 100%); padding: 8px; border-radius: 3px; margin-top: 8px;">
+                                📎 <strong style="color: rgb(247, 229, 156);">Attachment:</strong>
                                 {% for attachment in message.attachments.all %}
                                     <div style="margin-top: 5px;">
-                                        <a href="{{ attachment.file.url }}" target="_blank" style="color: #0066cc; text-decoration: none;">{{ attachment.file.name }}</a>
-                                        <span style="color: #666; font-size: 0.85em;"> ({{ attachment.file_type|upper }}, {{ attachment.size|filesizeformat }})</span>
+                                        <a href="{{ attachment.file.url }}" target="_blank" style="color: rgb(247, 229, 156); text-decoration: none;">
+                                            {{ attachment.file.name }}
+                                        </a>
+                                        <span style="color: rgb(247, 229, 156); font-size: 0.85em;">
+                                            ({{ attachment.file_type }}, {{ attachment.size }} bytes)
+                                        </span>
                                     </div>
                                 {% endfor %}
+                            </div>
+                        {% endif %}
+                        
+                        {% if message.role == 'assistant' and message.audio.all %}
+                            <hr style="margin: 5px 0; border-color: rgb(247, 229, 156);">
+                            <div style="background: linear-gradient(135deg, #017759 0%, #490291 100%); padding: 8px; border-radius: 3px; margin-top: 8px;">
+                                🔊 <strong style="color: rgb(247, 229, 156);">Audio:</strong>
+                                <div style="margin-top: 5px;">
+                                    <audio controls style="width: 100%;" src="{{ message.audio.first.file.url }}"></audio>
+                                </div>
                             </div>
                         {% endif %}
                     </div>
                 {% endfor %}
             </div>
         {% else %}
-            <p><em>No messages yet. Start the conversation!</em></p>
+            <p style="color: rgb(247, 229, 156);"><em>No messages yet. Start the conversation!</em></p>
         {% endif %}
     </div>
     
@@ -47,31 +137,56 @@
         {% csrf_token %}
         
         <div style="margin-bottom: 15px;">
-            <label for="message"><strong>Your Message:</strong></label>
-            <textarea id="message" name="message" placeholder="Type your message here..." style="width: 100%; height: 100px; padding: 8px; font-family: Arial, sans-serif; border: 1px solid #ccc; border-radius: 4px;"></textarea>
+            <label for="message" style="font-size: 16px; color: rgb(247, 229, 156);"><strong>Your Message:</strong></label>
+            <textarea 
+                id="message" 
+                name="message" 
+                placeholder="Type your message here..." 
+                style="width: 100%; height: 100px; padding: 0 !important; margin: 0 !important; font-family: Arial, sans-serif; font-size: 16px; border: 2px solid rgb(247, 229, 156); border-radius: 4px; background: #ffffff; color: #333;">
+            </textarea>
         </div>
 
         <div style="margin-bottom: 15px;">
-            <label for="file"><strong>Attach File (Optional):</strong></label>
+            <label for="file" style="color: rgb(247, 229, 156);"><strong>Attach File (Optional):</strong></label>
+            <!-- Native file input (hidden): acts as source of truth for form submission -->
             <input 
                 type="file" 
                 name="file" 
                 id="file"
-                accept=".jpg,.jpeg,.png,.pdf"
-                style="display: block; margin-top: 5px;"
+                accept=".txt,.rtf,.doc,.docx,.xls,.xlsx,.pptx,.pdf,.jpg,.jpeg,.png,.gif,.ico,.mp3,.mp4,.avi,.zip,.rar,.7z,.html,.css,.csv"
+                title="Attach file - Supported: Documents, Images, Audio, Video, Archives (max 10MB)"
             >
-            <small style="display: block; margin-top: 8px; color: #666; background-color: #ffffcc; padding: 8px; border-radius: 3px;">
-                📌 <strong>Limits:</strong> Max 1 file per message | Supported: JPEG, PNG, PDF | Size: max 5MB
+            <!-- Custom button: triggers native file input, displays English language labels -->
+            <button 
+                type="button"
+                id="file-custom-button"
+                title="Attach file - Supported: Documents, Images, Audio, Video, Archives (max 10MB)"
+            >
+                Choose File
+            </button>
+            <!-- File status (inline): displays "No file chosen" or selected filename in English -->
+            <span id="file-status">No file chosen</span>
+            <!-- File upload limits and supported formats: multi-line display for readability -->
+            <small style="display: block; margin-top: 8px; color: rgb(247, 229, 156); background: linear-gradient(135deg, #017759 0%, #490291 100%); padding: 8px; border-radius: 3px;">
+                📌 <strong>Limits:</strong> Max 1 file per message | Size: max 10MB<br>
+                Supported: TXT, RTF, DOC, DOCX, XLS, XLSX, PPTX, PDF, JPG, PNG, GIF, ICO, MP3, MP4, AVI, ZIP, RAR, 7Z, HTML, CSS, CSV 
             </small>
         </div>
                 
-        <button type="submit" style="padding: 10px 20px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 14px;">
+        <button 
+            type="submit" 
+            style="padding: 10px 20px; background: linear-gradient(135deg, #017759 0%, #490291 100%); color: rgb(247, 229, 156); border: 2px solid rgb(247, 229, 156); border-radius: 4px; cursor: pointer; font-size: 16px;">
             ✉️ Send Message
         </button>
     </form>
     
     <hr>
     <div>
-        <a href="{% url 'home' %}" style="color: #0066cc; text-decoration: none;">← Back to Sessions</a>
+        <a href="{% url 'home' %}" style="color: rgb(247, 229, 156); text-decoration: none;">← Back to Sessions</a>
     </div>
 {% endblock %}
+
+
+
+
+

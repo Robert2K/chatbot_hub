@@ -17,14 +17,14 @@ Reference:
     https://docs.djangoproject.com/en/5.2/topics/auth/
 """
 
-from django.shortcuts import redirect, render, get_object_or_404
-from .models import Attachment, ChatSession, ChatMessage
-from .openrouter import ask_openrouter
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import ChatSession, ChatMessage, Attachment, AudioMessage
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
-from django.contrib.auth import authenticate, login, logout
-from .utils import mime_dictionary # z pliku utils.py importujemy funkcje mime_dictionary, która zwraca słownik rozszerzeń plików i odpowiadających im typów MIME, co jest potrzebne do prawidłowego obsługiwania załączników w wiadomościach.
-
+from django.contrib.auth import login, logout, authenticate
+from .openrouter import ask_openrouter
+from .utils import mime_dictionary, generate_tts_file
+from django.core.files.base import ContentFile
 
 
 @login_required
@@ -69,7 +69,7 @@ def session_detail(request, session_id):
     Display session and handle message/file submissions with attachment validation.
     
     Validates: message/file required, file size ≤10MB, file type allowed.
-    Attachments: Limited to 1 per message. Allowed types: JPG, PNG, PDF (max 10MB).
+    Attachments: Limited to 1 per message. Supports all FILE_TYPES from models.py (max 10MB).
     Creates ChatMessage for user and AI response via OpenRouter API.
     
     Args:
@@ -78,40 +78,77 @@ def session_detail(request, session_id):
     
     POST Data:
         message (str, optional): User message text.
-        file (UploadedFile, optional): File attachment (JPG, PNG, PDF (only)).
+        file (UploadedFile, optional): File attachment (all supported types).
     
     Returns:
         HttpResponse: Session template or error/redirect response.
     """
-    # Allowed file types: only JPG, PNG, PDF
-    ALLOWED = [
-        'text/plain', #txt
-        'application/rtf',  #rtf rich textformat
-        'application/msword', #MS Word   
-        'application/vnd.openxmlformats-officedocument.wordprocessingml.document', #openOffice Word
-        'application/vnd.ms-excel', #MS Excel
-        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', #openOffice Excel
-        'application/vnd.openxmlformats-officedocument.presentationml.presentation', #openOffice PowerPoint
-        'application/pdf', #PDF
-        'image/vnd.microsoft.icon', #Icon
-        'image/jpeg', #JPEG
-        'image/png', #PNG
-        'image/gif', #GIF
-        'audio/x-mp3', #MP3
-        'audio/mpeg', #MPEG
-        'audio/mp4', #MP4
-        'video/x-msvideo', #AVI
-        'application/zip', #zip
-        'application/x-zip-compressed', #compressed zip
-        'application/x-rar-compressed', #rar
-        'application/x-7z-compressed', #7z
-        'text/html', #html    
-        'text/css', #css
-        'text/csv' #csv
-    ]
+    # MIME type to file_type mapping based on models.Attachment.FILE_TYPES
+    # Maps browser-provided MIME types to database file_type classification codes
+    MIME_TO_FILETYPE = {
+        # Documents
+        'text/plain': 'txt',
+        'application/rtf': 'rtf',
+        'application/msword': 'doc',
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document': 'docx',
+        'application/vnd.ms-excel': 'xls',
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': 'xlsx',
+        'application/vnd.openxmlformats-officedocument.presentationml.presentation': 'pptx',
+        'application/pdf': 'pdf',
+        'text/html': 'html',
+        'text/css': 'css',
+        'text/csv': 'csv',
+        # Images
+        'image/jpeg': 'jpg',
+        'image/png': 'png',
+        'image/gif': 'gif',
+        'image/x-icon': 'ico',
+        'image/vnd.microsoft.icon': 'ico',
+        # Audio
+        'audio/mpeg': 'mp3',
+        'audio/x-mp3': 'mp3',
+        'audio/mp4': 'mp4',
+        # Video
+        'video/x-msvideo': 'avi',
+        'video/mp4': 'mp4',
+        # Archives
+        'application/zip': 'zip',
+        'application/x-zip-compressed': 'xzip',
+        'application/x-rar-compressed': 'rar',
+        'application/x-7z-compressed': '7zip',
+    }
+    
+    # All MIME types allowed for validation (derived from MIME_TO_FILETYPE keys)
+    ALLOWED = list(MIME_TO_FILETYPE.keys())
    
-    MAX_SIZE = 5 * 1024 * 1024  # 5 MB  (1024Bytex1024Byte=1MegaByte)
+    MAX_SIZE = 10 * 1024 * 1024  # 10 MB  (1024Bytex1024Byte=1MegaByte)
 
+    # Generate supported file extensions list for dynamic error messages
+    # Maps file_type codes to display extensions for user-friendly error messages
+    SUPPORTED_EXTENSIONS = {
+        'txt': '.txt',
+        'rtf': '.rtf',
+        'doc': '.doc',
+        'docx': '.docx',
+        'xls': '.xls',
+        'xlsx': '.xlsx',
+        'pptx': '.pptx',
+        'pdf': '.pdf',
+        'jpg': '.jpg, .jpeg',
+        'png': '.png',
+        'ico': '.ico',
+        'gif': '.gif',
+        'mp3': '.mp3',
+        'mp4': '.mp4',
+        'avi': '.avi',
+        'zip': '.zip',
+        'xzip': '.zip (compressed)',
+        'rar': '.rar',
+        '7zip': '.7z',
+        'html': '.html',
+        'css': '.css',
+        'csv': '.csv',
+    }
 
     session = get_object_or_404(ChatSession, id=session_id, user=request.user)
     
@@ -147,25 +184,33 @@ def session_detail(request, session_id):
                     msg.delete()
                     return render(request, 'chat/session_detail.html',
                                   {"session": session,
-                                   "error": "File is too large. Maximum 5MB allowed."})
+                                   "error": "File is too large. Maximum 10MB allowed."})
                 
-                # Validate file type - ONLY JPG, PNG, PDF
-                if file.content_type not in ALLOWED:
+                # Validate file type against MIME_TO_FILETYPE mapping
+                # Dynamically displays all supported file types in error message
+                if file.content_type not in MIME_TO_FILETYPE:
                     msg.delete()
+                    # Comprehensive error message listing all supported file types
+                    supported_types = ", ".join(sorted(set(SUPPORTED_EXTENSIONS.values())))
                     return render(request, 'chat/session_detail.html',
                                   {"session": session,
-                                   "error": "File type not allowed. Only JPG, PNG, PDF supported."})
+                                   "error": f"File type not allowed. Supported: {supported_types} (max 10MB)"})
                 
-                # Determine file type and create attachment
-                file_type = "img" if file.content_type.startswith("image/") else "pdf"
+                # Determine file_type from MIME type using mapping
+                # Ensures database file_type matches file classification in FILE_TYPES
+                file_type = MIME_TO_FILETYPE[file.content_type]
                 Attachment.objects.create(message=msg, file=file, file_type=file_type, size=file.size)
             
             # Get AI response and create assistant message
-            reply = ask_openrouter(msg)
-            ChatMessage.objects.create(session=session, role='assistant', content=reply)
-        
+            reply = ask_openrouter(msg)  #ChatMessage przy Text-to-Speech-Agencie zamieniamy na 
+            #AudioMessage, ale to będzie wymagało przebudowy logiki w openrouter.py, 
+            #żeby zwracał odpowiedź audio zamiast tekstowej.
+            assistant_msg = ChatMessage.objects.create(session=session, role='assistant', content=reply)
+            audio_bytes = generate_tts_file(reply)
+            audio = AudioMessage.objects.create(message=assistant_msg)
+            audio.file.save('reply.mp3', ContentFile(audio_bytes))
+                        
         return redirect('session_detail', session_id=session.id)
-    
     return render(request, 'chat/session_detail.html', {'session': session})
     
  
@@ -210,7 +255,7 @@ def register_view(request):
     Handle user registration with UserCreationForm and auto-login.
     
     Validates username uniqueness and password strength (per AUTH_PASSWORD_VALIDATORS).
-    Redirect authenticated users to home. Validates username uniqueness and password strength.
+    Redirect authenticated users to home.
     Auto-authenticates user after successful account creation.
     
     Args:

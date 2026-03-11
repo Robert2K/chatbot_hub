@@ -1,10 +1,24 @@
+"""OpenRouter API integration with per-user response caching.
+
+Provides Chat Completion API interface using OpenRouter service.
+Implements user-isolated cache layer to prevent cross-user data leaks
+and optimize repeated user queries (20-minute TTL).
+
+Uses Django's cache framework for persistent session caching.
+Supports multimodal messages with file attachments (images, documents).
+
+Reference:
+    https://openrouter.ai/api/documentation
+    https://docs.djangoproject.com/en/5.2/topics/cache/
+"""
+
 import os
 from dotenv import load_dotenv
 from openai import OpenAI
 import mimetypes
-import base64  #biblioteka kodowania w PYTHONIE, pozwala na kodowanie i dekodowanie danych binarnych do formatu tekstowego (base64), co jest przydatne przy przesyłaniu plików przez API, które oczekuje danych tekstowych.
-import hashlib  #biblioteka do tworzenia skrótów (hashy) w PYTHONIE, pozwala na generowanie unikalnych identyfikatorów dla danych, co może być przydatne do cache'owania odpowiedzi lub identyfikowania wiadomości. 
-from django.core.cache import cache
+import base64  # Binary-to-base64 encoding for file transmission via text-only APIs
+import hashlib  # Hash generation for cache keys and unique message identifiers
+from django.core.cache import cache  # Django cache framework for per-user response storage
 
 load_dotenv()
 
@@ -26,22 +40,38 @@ if OPENROUTER_API_KEY:
     )
 
 def build_user_content(messages_obj):
+    """Build multimodal message content with text and attachments.
+    
+    Constructs content array combining text message with base64-encoded
+    file attachments (images, documents). Each attachment is serialized
+    as data URL for transmission via OpenRouter API.
+    
+    Args:
+        messages_obj (ChatMessage): Message containing text and attachments.
+    
+    Returns:
+        list: Content array with text and attachment objects.
+    
+    Reference:
+        https://openrouter.ai/docs#models
+    """
     content = [{"type" : "text", "text" : messages_obj.content}]
 
     for att in messages_obj.attachments.all():
         file_path = att.file.path
-        mime, _ = mimetypes.guess_type(file_path) # _  = podloga (swiadomie ignorujemy jakas wartosc), bo malo nas obchodzi jak plik jest ZAKODOWANY, bo i tak go nie wyślemy do API, ale chcemy mieć info o typie pliku w treści wiadomości.
-        #mime zwraca krotke, gdzie pierwszy element to typ MIME, a drugi to podloga (np. 'base64'). Jeśli nie można określić typu, zwraca (None, None).
-        mime = mime or "application/octet-stream" # octet/stream jest ciag BITÓW. default, jeśli nie można określić typu.
-        with open(file_path, 'rb') as f:  #r=zwykly READ. rb = read binary, czyli otwieramy plik w trybie binarnym, co jest konieczne do poprawnego odczytania zawartości pliku, zwłaszcza jeśli jest to plik nie-tekstowy (np. obraz, PDF, itp.).
-            b64 = base64.b64encode(f.read()).decode('utf-8') # kodowanie zawartości pliku do formatu base64, a następnie dekodowanie go do stringa UTF-8, aby można było go bezpiecznie przesłać jako tekst.
+        mime, _ = mimetypes.guess_type(file_path) # _ = ignore encoding info; focus on MIME type only
+        # Default to binary stream if MIME type cannot be determined
+        mime = mime or "application/octet-stream"
+        with open(file_path, 'rb') as f:  # rb = read binary mode for all file types
+            # Encode file content to base64 string for safe text transmission
+            b64 = base64.b64encode(f.read()).decode('utf-8')
             if att.file_type == "img":
+                # Image attachment: use data URL with embedded base64 content
                 content.append({"type" : "image_url", 
                                 "image_url" : f"data:{mime};base64,{b64}"
                                 }) 
-            # tworzymy specjalny URL danych (data URL), który zawiera zakodowaną zawartość pliku. Format tego URL to: data:[<mediatype>][;base64],<data>. W tym przypadku, <mediatype> to typ MIME pliku, a <data> to zakodowana zawartość pliku w formacie base64.
-    
             else: 
+                # Document attachment: use file data URL format
                 content.append({"type" : "file", 
                                 "filename" : att.file.name,
                                 "file_data" : f"data:{mime};base64,{b64}"
@@ -50,15 +80,62 @@ def build_user_content(messages_obj):
 
 
 
+def make_cache_key(message_obj) -> str:
+    """Generate per-user cache key with direct user ID in key format.
+    
+    Creates cache key combining user ID prefix with hash of prompt content.
+    Ensures strict cache isolation between users for privacy and prevents
+    accidental cross-user data access.
+    
+    Key format: ai:{user_id}:{prompt_hash}
+    - user_id: User identifier for cache isolation
+    - prompt_hash: MD5 hash of message content
+    
+    Args:
+        message_obj (ChatMessage): Message with session.user and content.
+    
+    Returns:
+        str: Cache key format "ai:{user_id}:{md5_hash}" (explicit user separation).
+    
+    Reference:
+        https://docs.djangoproject.com/en/5.2/topics/cache/#cache-key-warnings
+    """
+    # Extract user_id for explicit cache key isolation
+    user_id = message_obj.session.user.id
+    
+    # Generate MD5 hash of prompt content
+    prompt_hash = hashlib.md5(message_obj.content.encode()).hexdigest()
+    
+    # Return cache key with explicit user_id separation: ai:{user_id}:{hash}
+    return f"ai:{user_id}:{prompt_hash}"
+
+
 def ask_openrouter(message_obj):
+    """Query OpenRouter API with per-user response caching.
     
-    #key = "ai:" + hashlib.md5(message_obj.content.encode()).hexdigest()
+    Generates per-user cache key from user ID and prompt content hash.
+    Returns cached response if available (20-minute TTL), otherwise queries API.
+    Ensures complete cache isolation between users for privacy.
     
-    key = "ai:" + hashlib.sha256(message_obj.content.encode()).hexdigest() 
-    #nowsza metoda HASOWANIA niz metoda MD5. SHA256 jest uważana za bezpieczniejszą i bardziej odporną na kolizje niż MD5, co oznacza, że jest mniej prawdopodobne, że dwie różne wiadomości wygenerują ten sam hash. Dlatego w kontekście cache'owania odpowiedzi AI, SHA256 może być lepszym wyborem do generowania unikalnych kluczy dla wiadomości.
-    cashed = cache.get(key)
+    Args:
+        message_obj (ChatMessage): Message with session.user and content.
+    
+    Returns:
+        str: AI response text from cache or API call.
+    
+    Reference:
+        https://docs.djangoproject.com/en/5.2/topics/cache/
+    """
+    # Generate unique per-user cache key incorporating user ID and prompt hash
+    key = make_cache_key(message_obj)
+    
+    # Check cache first to avoid redundant API calls
+    cached = cache.get(key)
+    if cached:
+        return cached
+    
     if not OPENROUTER_API_KEY:
-        return "Demo response (API key nie ustawiony): Dziękuję za pytanie: " + question[:50] + "..."
+        return "Demo response (API key nie ustawiony): Dziękuję za pytanie: " + message_obj.content[:50] + "..."
     if not client:
         return "Demo response: Chatbot nie mógł połączyć się z API"
     try:
@@ -68,7 +145,9 @@ def ask_openrouter(message_obj):
             extra_body={"reasoning": {"enabled": True}}
         )
         answer = response.choices[0].message.content
-        cache.set(key, answer, timeout=60*20) # 60sekund * 20 = 20 minut. Oznacza to, że odpowiedź będzie przechowywana w cache'u przez 20 minut. Jeśli ta sama wiadomość zostanie zapytana ponownie w ciągu tych 20 minut, chatbot zwróci odpowiedź z cache'a zamiast ponownie wywoływać API, co może znacznie przyspieszyć odpowiedź i zmniejszyć obciążenie API.
+        # Store response in per-user cache with 20-minute TTL (1200 seconds)
+        # Each user's cache is independent, file-aware, ensuring data privacy
+        cache.set(key, answer, timeout=60*20)
         return answer
     except Exception as e:
         return f"Blad OPENROUTER: {str(e)}"

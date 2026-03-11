@@ -1,0 +1,564 @@
+/* ===========================
+   CHATBOT HUB - MAIN STYLES
+   =========================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #6600FF 0%, #0099FF 100%);
+    min-height: 100vh;
+    padding: 20px;
+    color: rgb(247, 229, 156);
+}
+
+/* Container */
+body > * {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+/* ===========================
+   NAVIGATION
+   =========================== */
+
+nav {
+    background: linear-gradient(135deg, #6600FF 0%, #0099FF 100%);
+    padding: 15px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+nav a {
+    text-decoration: none;
+    color: rgb(247, 229, 156);
+    font-weight: 600;
+    font-size: 17px;
+    padding: 8px 16px;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+nav a:hover {
+    background-color: rgba(247, 229, 156, 0.2);
+    color: #ffd700;
+}
+
+nav span {
+    color: rgb(247, 229, 156);
+    font-weight: 600;
+    font-size: 17px;
+    background: linear-gradient(135deg, #6600FF 0%, #0099FF 100%);
+    padding: 8px 16px;
+    border-radius: 4px;
+}
+
+/* ===========================
+   HEADINGS & TEXT
+   =========================== */
+
+h1, h2, h3 {
+    color: rgb(247, 229, 156);
+    margin-bottom: 15px;
+}
+
+h1 {
+    font-size: 28px;
+    border-left: 4px solid rgb(247, 229, 156);
+    padding-left: 15px;
+}
+
+h2 {
+    font-size: 22px;
+    color: rgb(247, 229, 156);
+}
+
+h3 {
+    font-size: 18px;
+    color: rgb(247, 229, 156);
+    background: linear-gradient(135deg, #6600FF 0%, #0099FF 100%);
+    padding: 12px;
+    border-radius: 6px;
+    border-left: 4px solid rgb(247, 229, 156);
+}
+
+p {
+    color: rgb(247, 229, 156);
+}
+
+hr {
+    border: none;
+    border-top: 2px solid rgb(247, 229, 156);
+    margin: 20px 0;
+}
+
+/* ===========================
+   GLASSMORPHISM EFFECTS
+   =========================== */
+
+.glass-effect {
+    background: linear-gradient(135deg, rgba(5, 5, 5, 0.95) 0%, rgba(10, 10, 15, 0.95) 100%);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 32px;
+}
+
+.glass-effect:hover {
+    background: linear-gradient(135deg, rgba(5, 5, 5, 0.98) 0%, rgba(10, 10, 15, 0.98) 100%);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* ===========================
+   CONVERSATION STYLES
+   =========================== */
+
+/* Main chat wrapper container with dark glassmorphism effect.
+   Location: session_detail.html | Wraps all messages in conversation view.
+   Displays past chat history with semi-transparent backdrop and border radius. */
+.conversation-container {
+    background: linear-gradient(135deg, rgba(5, 5, 5, 0.95) 0%, rgba(10, 10, 15, 0.95) 100%);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 32px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.message {
+    background: rgba(8, 8, 12, 0.95);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(247, 229, 156, 0.3);
+    padding: 18px;
+    margin: 10px 0;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+}
+
+/* Base message element styling for both user and assistant messages.
+   Location: session_detail.html | Applied to every .message div in conversation.
+   Handles opacity, border, padding, and hover effects for message display. */
+.message:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* User message styling with dark gradient and golden left border.
+   Location: session_detail.html | Applied when message.user class present.
+   Distinguishes user input from AI responses with dark background gradient. */
+.message.user {
+    background: linear-gradient(135deg, #050508 0%, #0a0a12 100%);
+    border-left: 4px solid rgb(247, 229, 156);
+}
+
+/* Assistant message styling identical dark gradient to equal prominence.
+   Location: session_detail.html | Applied when message.assistant class present.
+   Maintains visual balance with user messages while maintaining dark theme contrast. */
+.message.assistant {
+    background: linear-gradient(135deg, #050508 0%, #0a0a12 100%);
+    border-left: 4px solid rgb(247, 229, 156);
+}
+
+.message strong {
+    font-size: 20px;
+    color: rgb(247, 229, 156);
+}
+
+.message.assistant strong {
+    color: rgb(247, 229, 156);
+}
+
+.message p {
+    font-size: 20px;
+    margin: 10px 0;
+    line-height: 1.6;
+    color: rgb(247, 229, 156);
+}
+
+.message-time {
+    color: #999;
+    font-size: 0.85em;
+    margin-top: 5px;
+}
+
+.attachment-container {
+    background: linear-gradient(135deg, rgba(5, 5, 5, 0.95) 0%, rgba(10, 10, 15, 0.95) 100%);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(247, 229, 156, 0.2);
+    padding: 16px;
+    border-radius: 24px;
+    margin-top: 8px;
+}
+
+/* File attachment display container with dark semi-transparent background.
+   Location: session_detail.html | Wraps attachment links and metadata below messages.
+   Provides visual separation and styling for uploaded files and download links. */
+.attachment-link {
+    color: #0066cc;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.attachment-link:hover {
+    text-decoration: underline;
+}
+
+.attachment-info {
+    color: #666;
+    font-size: 0.85em;
+    margin-left: 5px;
+}
+
+/* ===========================
+   FORMS & INPUTS
+   =========================== */
+
+form {
+    background: linear-gradient(135deg, rgba(5, 5, 5, 0.95) 0%, rgba(10, 10, 15, 0.95) 100%);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 24px;
+    border-radius: 32px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    margin-bottom: 20px;
+}
+
+/* Main form container with dark glassmorphism for login/register/message input.
+   Location: login.html, register.html, session_detail.html | Wraps entire form content.
+   Provides consistent dark background styling with blur effect across all form views. */
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    font-weight: 600;
+    font-size: 16px;
+    color: rgb(247, 229, 156);
+    margin-bottom: 8px;
+    background: linear-gradient(135deg, #6600FF 0%, #0099FF 100%);
+    padding: 8px 12px;
+    border-radius: 4px;
+    border-left: 3px solid rgb(247, 229, 156);
+}
+
+/* Form field labels with golden gradient background and left accent border.
+   Location: login.html, register.html, session_detail.html | Applied to all form labels.
+   Highlights form structure with consistent styling and improved accessibility. */
+textarea {
+    width: 100%;
+    height: 100px;
+    padding: 0 !important;
+    margin: 0 !important;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 16px;
+    border: 2px solid rgb(247, 229, 156);
+    border-radius: 14px;
+    resize: vertical;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    background: #ffffff !important;
+    color: #333 !important;
+}
+
+textarea::placeholder {
+    color: #999 !important;
+}
+
+textarea:focus {
+    outline: none;
+    border-color: #ffd700;
+    box-shadow: 0 0 8px rgba(247, 229, 156, 0.5);
+    background: #ffffff !important;
+    color: #333 !important;
+}
+
+/* Message input textarea with white background and golden border focus state.
+   Location: session_detail.html | ID element for chat message composition.
+   Provides clear visual distinction from dark theme with high text contrast. */
+input[type="file"] {
+    display: block;
+    padding: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-top: 5px;
+    color: #333;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border: 2px solid rgb(247, 229, 156);
+    border-radius: 14px;
+    margin-top: 8px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    background: rgba(1, 119, 89, 0.2);
+    color: rgb(247, 229, 156);
+}
+
+input[type="text"]::placeholder,
+input[type="email"]::placeholder,
+input[type="password"]::placeholder {
+    color: #333;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus {
+    outline: none;
+    border-color: #ffd700;
+    box-shadow: 0 0 8px rgba(247, 229, 156, 0.5);
+}
+
+/* Text input fields for login/register credentials with semi-transparent dark background.
+   Location: login.html, register.html | Username, password, email input elements.
+   Uses golden border and text for visibility with focus state highlighting. */
+/* Error messages */
+ul {
+    color: rgb(247, 229, 156);
+    list-style-type: none;
+    padding: 0;
+    margin: 8px 0;
+}
+
+ul li {
+    color: rgb(247, 229, 156);
+    background: rgba(8, 8, 12, 0.95);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(247, 229, 156, 0.3);
+    padding: 12px;
+    margin: 3px 0;
+    border-radius: 8px;
+    border-left: 4px solid rgb(247, 229, 156);
+    transition: all 0.3s ease;
+}
+
+ul li:hover {
+    background: rgba(1, 40, 25, 0.95);
+    border-color: rgba(247, 229, 156, 0.5);
+}
+
+/* ===========================
+   BUTTONS
+   =========================== */
+
+button,
+input[type="submit"] {
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: 600;
+    color: rgb(247, 229, 156);
+    background: linear-gradient(135deg, #6600FF 0%, #0099FF 100%);
+    border: 2px solid rgb(247, 229, 156);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+button:hover,
+input[type="submit"]:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(247, 229, 156, 0.3);
+    background: linear-gradient(135deg, #0099FF 0%, #6600FF 100%);
+    border-color: #ffd700;
+}
+
+button:active,
+input[type="submit"]:active {
+    transform: translateY(0);
+}
+
+/* Interactive buttons with gradient background and golden border on hover.
+   Location: login.html, register.html, session_detail.html | submit buttons and action triggers.
+   Provides hover animations and color transitions for clear user feedback. */
+/* ===========================
+   FILE INPUT LIMITS INFO
+   =========================== */
+
+.file-limits {
+    display: block;
+    margin-top: 8px;
+    padding: 10px;
+    color: #666;
+    background-color: #ffffcc;
+    border-radius: 4px;
+    font-size: 14px;
+    border-left: 4px solid #ffcc00;
+}
+
+/* ===========================
+   ALERTS & ERRORS
+   =========================== */
+
+.error-message {
+    background-color: #ffcccc;
+    color: #cc0000;
+    padding: 12px;
+    border-radius: 4px;
+    border-left: 4px solid #cc0000;
+    margin-bottom: 15px;
+    font-weight: 500;
+}
+
+/* ===========================
+   SESSIONS LIST
+   =========================== */
+
+.sessions-container {
+    background: linear-gradient(135deg, rgba(5, 5, 5, 0.95) 0%, rgba(10, 10, 15, 0.95) 100%);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.sessions-container ul {
+    list-style: none;
+}
+
+.sessions-container li {
+    padding: 15px;
+    margin: 10px 0;
+    background-color: rgba(10, 10, 15, 0.95);
+    border-left: 4px solid rgb(247, 229, 156);
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.sessions-container li:hover {
+    background-color: rgba(15, 15, 25, 0.98);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.sessions-container a {
+    text-decoration: none;
+    color: rgb(247, 229, 156);
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.sessions-container a:hover {
+    color: #ffd700;
+}
+
+.session-date {
+    color: #999;
+    font-size: 14px;
+    margin-left: 10px;
+}
+
+/* ===========================
+   LINKS
+   =========================== */
+
+a {
+    color: rgb(247, 229, 156);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #ffd700;
+    text-decoration: underline;
+}
+/* Large styled links for session titles in home.html session list display.
+   Location: home.html | Session navigation links with prominent border styling.
+   Uses golden color scheme matching site theme with hover state interactions. */.large-link {
+    font-size: 20px;
+    color: rgb(247, 229, 156);
+    border: 2px solid rgb(247, 229, 156);
+    padding: 10px 20px;
+    border-radius: 8px;
+    display: inline-block;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.large-link:hover {
+    color: #ffd700;
+    background-color: rgba(247, 229, 156, 0.2);
+    border-color: #ffd700;
+}
+
+/* Sessions list container with white background displaying all user chat sessions.
+   Location: home.html | Wraps ul list of session items for navigation.
+   Provides clean white background card styling with hover effects for each session. */
+/* ===========================
+   RESPONSIVE DESIGN
+   =========================== */
+
+@media (max-width: 768px) {
+    nav {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+
+    h2 {
+        font-size: 20px;
+    }
+
+    h3 {
+        font-size: 16px;
+    }
+
+    .message strong,
+    .message p {
+        font-size: 16px;
+    }
+
+    button,
+    input[type="submit"] {
+        width: 100%;
+    }
+
+    textarea {
+        height: 80px;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 10px;
+    }
+
+    nav {
+        padding: 10px;
+    }
+
+    form,
+    .sessions-container,
+    .conversation-container {
+        padding: 15px;
+    }
+
+    h1 {
+        font-size: 20px;
+    }
+
+    button,
+    input[type="submit"] {
+        padding: 10px 16px;
+        font-size: 14px;
+    }
+}
