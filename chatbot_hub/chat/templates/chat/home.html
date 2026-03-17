@@ -4,8 +4,8 @@
     <h1 style="font-size: 32px;">My Chat Sessions</h1>
     
     {% if sessions %}
-        <div style="display: flex; gap: 30px; align-items: flex-start;">
-            <div style="flex: 1;">
+        <div style="display: flex; gap: 30px; align-items: flex-start; flex-wrap: wrap;">
+            <div style="flex: 1; min-width: 200px;">
                 <ul>
                     {% for session in sessions|slice:":10" %}
                         <li>
@@ -252,14 +252,14 @@
                         chatbot_hub
                     </h2>
                     <p style="font-size: 14px; margin: 4px 0; color: rgba(247, 229, 156, 0.8);">
-                        Created by Robert K.
+                        Created by Robert Kroll.
                     </p>
                     <p style="font-size: 12px; margin: 4px 0; color: rgba(247, 229, 156, 0.6);">
                         Version 1.0
                     </p>
                     </div>
                 </div>
-                <a href="{% url 'session_create' %}" class="large-link" style="width: 100%; text-align: center; white-space: nowrap; margin-top: 40px; display: block;">Create New Session</a>
+                <a href="{% url 'session_create' %}" class="large-link" style="width: 100%; text-align: center; word-wrap: break-word; overflow-wrap: break-word; margin-top: 40px; display: block; padding: 10px 20px; box-sizing: border-box;">Create New Session</a>
             </div>
         </div>
     {% else %}

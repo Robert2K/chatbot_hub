@@ -46,6 +46,42 @@
             vertical-align: middle;
             font-size: 14px;
         }
+
+        /* File limits container: responsive design for mobile */
+        .file-limits-box {
+            display: block;
+            margin-top: 8px;
+            color: rgb(247, 229, 156);
+            background: linear-gradient(135deg, #017759 0%, #490291 100%);
+            padding: 10px;
+            border-radius: 3px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* Mobile responsive: stack elements vertically */
+        @media (max-width: 480px) {
+            #file-custom-button {
+                display: block;
+                width: 100%;
+                margin-top: 8px;
+                padding: 10px;
+            }
+            
+            #file-status {
+                display: block;
+                margin-left: 0;
+                margin-top: 8px;
+                word-wrap: break-word;
+            }
+
+            .file-limits-box {
+                padding: 8px;
+                font-size: 13px;
+            }
+        }
     </style>
     
     <!-- JavaScript: custom file input with English labels -->
@@ -167,10 +203,11 @@
             <!-- File status (inline): displays "No file chosen" or selected filename in English -->
             <span id="file-status">No file chosen</span>
             <!-- File upload limits and supported formats: multi-line display for readability -->
-            <small style="display: block; margin-top: 8px; color: rgb(247, 229, 156); background: linear-gradient(135deg, #017759 0%, #490291 100%); padding: 8px; border-radius: 3px;">
-                📌 <strong>Limits:</strong> Max 1 file per message | Size: max 10MB<br>
-                Supported: TXT, RTF, DOC, DOCX, XLS, XLSX, PPTX, PDF, JPG, PNG, GIF, ICO, MP3, MP4, AVI, ZIP, RAR, 7Z, HTML, CSS, CSV 
-            </small>
+            <div class="file-limits-box">
+                📌 <strong>Limits:</strong> Max 1 file per message<br>
+                Size: max 10MB<br>
+                <strong>Supported:</strong> TXT, RTF, DOC, DOCX, XLS, XLSX, PPTX, PDF, JPG, PNG, GIF, ICO, MP3, MP4, AVI, ZIP, RAR, 7Z, HTML, CSS, CSV
+            </div>
         </div>
                 
         <button 
