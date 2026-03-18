@@ -1,4 +1,9 @@
-from gtts import gTTS
+try:
+    from gtts import gTTS
+except ImportError:
+    gTTS = None
+    # Możesz dodać logowanie lub wyjątek, jeśli gTTS jest wymagane w środowisku produkcyjnym
+
 from django.core.files.base import ContentFile
 import io
 
@@ -34,12 +39,14 @@ def generate_tts_file(text):
     Returns:
         bytes: Audio file content as binary data (MP3 format).
     """
-    mp3 = gTTS(text=text, lang='en')
-    buffer = io.BytesIO()  # Input/output stream for binary data
-    mp3.write_to_fp(buffer)  # Write TTS audio data to buffer
-    buffer.seek(0)  # Reset pointer to start of file
-    return buffer.getvalue()  # Return binary content of audio file
-
+    if gTTS is not None:
+        mp3 = gTTS(text=text, lang='en')
+        buffer = io.BytesIO()  # Input/output stream for binary data
+        mp3.write_to_fp(buffer)  # Write TTS audio data to buffer
+        buffer.seek(0)  # Reset pointer to start of file
+        return buffer.getvalue()  # Return binary content of audio file
+    else:
+        return None  # Return None if gTTS is not available
 
 def is_tts_enabled(post_data):
     """Return True when TTS checkbox is checked in submitted form data."""

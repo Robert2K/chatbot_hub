@@ -210,6 +210,11 @@ def session_detail(request, session_id):
             if request.POST.get('tts'):
                 if is_tts_enabled(request.POST):
                     audio_bytes = generate_tts_file(reply)
+                    if not audio_bytes:
+                        return render(request, 'chat/session_detail.html', {
+                            'session': session,
+                            'error': 'Błąd generowania pliku audio. Sprawdź konfigurację TTS.'
+                        })
                     audio = AudioMessage.objects.create(message=assistant_msg)
                     audio.file.save('reply.mp3', ContentFile(audio_bytes))
                         
