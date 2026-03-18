@@ -23,7 +23,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import login, logout, authenticate
 from .openrouter import ask_openrouter
-from .utils import mime_dictionary, generate_tts_file
+from .utils import mime_dictionary, generate_tts_file, is_tts_enabled
 from django.core.files.base import ContentFile
 
 
@@ -206,9 +206,12 @@ def session_detail(request, session_id):
             #AudioMessage, ale to będzie wymagało przebudowy logiki w openrouter.py, 
             #żeby zwracał odpowiedź audio zamiast tekstowej.
             assistant_msg = ChatMessage.objects.create(session=session, role='assistant', content=reply)
-            audio_bytes = generate_tts_file(reply)
-            audio = AudioMessage.objects.create(message=assistant_msg)
-            audio.file.save('reply.mp3', ContentFile(audio_bytes))
+            # Generate MP3 only when tts checkbox is enabled in the submitted form.
+            if request.POST.get('tts'):
+                if is_tts_enabled(request.POST):
+                    audio_bytes = generate_tts_file(reply)
+                    audio = AudioMessage.objects.create(message=assistant_msg)
+                    audio.file.save('reply.mp3', ContentFile(audio_bytes))
                         
         return redirect('session_detail', session_id=session.id)
     return render(request, 'chat/session_detail.html', {'session': session})

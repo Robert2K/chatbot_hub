@@ -41,5 +41,11 @@ def generate_tts_file(text):
     return buffer.getvalue()  # Return binary content of audio file
 
 
+def is_tts_enabled(post_data):
+    """Return True when TTS checkbox is checked in submitted form data."""
+    tts_value = post_data.get('tts')
+    return tts_value in ('on', 'true', 'True', '1', True)
+
+
 
 
