@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#10172f">
+  <meta name="description" content="Chatbot Hub — odkrywaj i porównuj narzędzia AI w jednym miejscu.">
+  <title>Chatbot Hub — Twoje centrum AI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="ambient ambient-one"></div>
+  <div class="ambient ambient-two"></div>
+
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="Chatbot Hub — strona główna">
+      <span class="brand-mark"><span></span><span></span><span></span></span>
+      <span>chatbot<span class="brand-light">hub</span></span>
+    </a>
+    <nav class="nav-links" aria-label="Główna nawigacja">
+      <a class="active" href="#odkrywaj">Odkrywaj</a>
+      <a href="#kategorie">Kategorie</a>
+      <a href="#polecane">Polecane</a>
+    </nav>
+    <a class="top-cta" href="#odkrywaj">Poznaj narzędzia <span>↗</span></a>
+  </header>
+
+  <main>
+    <section class="hero" id="odkrywaj">
+      <div class="eyebrow"><span class="pulse"></span> TWOJE CENTRUM SZTUCZNEJ INTELIGENCJI</div>
+      <h1>Wszystkie możliwości AI.<br><span>w jednym miejscu.</span></h1>
+      <p class="hero-copy">Odkrywaj chatboty, porównuj możliwości i wybieraj narzędzia, które najlepiej pasują do Twoich pomysłów.</p>
+      <div class="search-wrap">
+        <span class="search-icon">⌕</span>
+        <input id="search" type="search" placeholder="Wyszukaj chatbot lub kategorię..." aria-label="Wyszukaj chatbot lub kategorię">
+        <kbd>⌘ K</kbd>
+      </div>
+      <div class="hero-meta"><span>✦</span> Odkrywaj. Ucz się. Twórz.</div>
+    </section>
+
+    <section class="section" id="kategorie">
+      <div class="section-heading">
+        <div><div class="section-kicker">NAWIGUJ PO ŚWIECIE AI</div><h2>Odkryj według kategorii</h2></div>
+        <span class="subtle">Wybierz obszar, który Cię interesuje</span>
+      </div>
+      <div class="category-grid">
+        <a class="category-card" href="#narzedzia" data-category="asystenci"><span class="category-icon purple">✧</span><span><b>Asystenci AI</b><small>Rozmowa i codzienna pomoc</small></span><i>↗</i></a>
+        <a class="category-card" href="#narzedzia" data-category="programowanie"><span class="category-icon blue">⌘</span><span><b>Programowanie</b><small>Kod, debugowanie i nauka</small></span><i>↗</i></a>
+        <a class="category-card" href="#narzedzia" data-category="research"><span class="category-icon violet">⌕</span><span><b>Research</b><small>Wiedza i wyszukiwanie</small></span><i>↗</i></a>
+        <a class="category-card" href="#narzedzia" data-category="kreatywne"><span class="category-icon pink">✳</span><span><b>Kreatywne AI</b><small>Pomysły i tworzenie</small></span><i>↗</i></a>
+      </div>
+    </section>
+
+    <section class="section tools-section" id="narzedzia">
+      <div class="section-heading">
+        <div><div class="section-kicker">WYBRANE NARZĘDZIA</div><h2>Popularne chatboty</h2></div>
+        <span class="live-label"><span></span> Katalog startowy</span>
+      </div>
+      <div class="tools-grid" id="tools-grid">
+        <article class="tool-card" data-tags="asystenci research kreatywne">
+          <div class="tool-top"><div class="tool-logo chatgpt">✳</div><span class="tool-type">ASYSTENT AI</span></div>
+          <h3>ChatGPT</h3><p>Wszechstronny asystent do rozmów, nauki, analizy i tworzenia.</p>
+          <div class="tool-bottom"><span class="tool-note">OpenAI</span><a href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">Otwórz narzędzie <b>↗</b></a></div>
+        </article>
+        <article class="tool-card" data-tags="asystenci research kreatywne">
+          <div class="tool-top"><div class="tool-logo claude">✳</div><span class="tool-type">ASYSTENT AI</span></div>
+          <h3>Claude</h3><p>Asystent do pracy z tekstem, analizą, dokumentami i kodem.</p>
+          <div class="tool-bottom"><span class="tool-note">Anthropic</span><a href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Otwórz narzędzie <b>↗</b></a></div>
+        </article>
+        <article class="tool-card" data-tags="asystenci research kreatywne">
+          <div class="tool-top"><div class="tool-logo gemini">✦</div><span class="tool-type">ASYSTENT AI</span></div>
+          <h3>Gemini</h3><p>Model AI od Google do pracy z informacjami i multimediami.</p>
+          <div class="tool-bottom"><span class="tool-note">Google</span><a href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Otwórz narzędzie <b>↗</b></a></div>
+        </article>
+        <article class="tool-card" data-tags="research asystenci">
+          <div class="tool-top"><div class="tool-logo perplexity">◈</div><span class="tool-type">RESEARCH</span></div>
+          <h3>Perplexity</h3><p>Wyszukiwanie odpowiedzi i eksplorowanie tematów ze źródłami.</p>
+          <div class="tool-bottom"><span class="tool-note">Perplexity AI</span><a href="https://www.perplexity.ai/" target="_blank" rel="noopener noreferrer">Otwórz narzędzie <b>↗</b></a></div>
+        </article>
+        <article class="tool-card" data-tags="programowanie asystenci">
+          <div class="tool-top"><div class="tool-logo copilot">⌘</div><span class="tool-type">PROGRAMOWANIE</span></div>
+          <h3>GitHub Copilot</h3><p>Wsparcie programowania, podpowiedzi kodu i praca w IDE.</p>
+          <div class="tool-bottom"><span class="tool-note">GitHub</span><a href="https://github.com/features/copilot" target="_blank" rel="noopener noreferrer">Otwórz narzędzie <b>↗</b></a></div>
+        </article>
+        <article class="tool-card" data-tags="kreatywne">
+          <div class="tool-top"><div class="tool-logo midjourney">✺</div><span class="tool-type">KREATYWNE AI</span></div>
+          <h3>Midjourney</h3><p>Generowanie obrazów i rozwijanie wizualnych koncepcji.</p>
+          <div class="tool-bottom"><span class="tool-note">Midjourney</span><a href="https://www.midjourney.com/" target="_blank" rel="noopener noreferrer">Otwórz narzędzie <b>↗</b></a></div>
+        </article>
+      </div>
+      <p class="empty-state" id="empty-state" hidden>Nie znaleziono narzędzi. Spróbuj innej frazy.</p>
+    </section>
+
+    <section class="feature-banner" id="polecane">
+      <div class="feature-orb">✧</div>
+      <div><div class="section-kicker">TWÓJ HUB. TWOJE MOŻLIWOŚCI.</div><h2>Jedno miejsce. Wiele pomysłów.</h2><p>Katalog będzie rozwijany o kolejne narzędzia, kategorie i praktyczne wskazówki.</p></div>
+      <a href="#odkrywaj" class="feature-link">Wróć na górę ↑</a>
+    </section>
+  </main>
+
+  <footer><a class="brand footer-brand" href="#"><span class="brand-mark"><span></span><span></span><span></span></span><span>chatbot<span class="brand-light">hub</span></span></a><span>© 2026 Chatbot Hub · Niezależny katalog narzędzi AI</span><a href="#odkrywaj">Do góry ↑</a></footer>
+
+  <script>
+    const search = document.querySelector('#search');
+    const cards = [...document.querySelectorAll('.tool-card')];
+    const empty = document.querySelector('#empty-state');
+    function filterTools(term) {
+      const q = term.trim().toLocaleLowerCase('pl');
+      let visible = 0;
+      cards.forEach(card => {
+        const match = (card.innerText + ' ' + card.dataset.tags).toLocaleLowerCase('pl').includes(q);
+        card.hidden = !match;
+        if (match) visible++;
+      });
+      empty.hidden = visible !== 0;
+    }
+    search.addEventListener('input', event => filterTools(event.target.value));
+    document.querySelectorAll('.category-card').forEach(link => {
+      link.addEventListener('click', () => {
+        const category = link.dataset.category;
+        search.value = category;
+        filterTools(category);
+      });
+    });
+    document.addEventListener('keydown', event => {
+      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k') {
+        event.preventDefault(); search.focus();
+      }
+      if (event.key === 'Escape') { search.value = ''; filterTools(''); search.blur(); }
+    });
+  </script>
+</body>
+</html>
