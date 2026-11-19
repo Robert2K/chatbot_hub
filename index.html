@@ -45,11 +45,11 @@
       <div class="eyebrow"><span class="pulse"></span><span data-i18n="eyebrow">TWOJE CENTRUM SZTUCZNEJ INTELIGENCJI</span></div>
       <h1 data-i18n="heroTitle">Wszystkie możliwości AI.<br><span>w jednym miejscu.</span></h1>
       <p class="hero-copy" data-i18n="heroCopy">Odkrywaj chatboty, porównuj możliwości i wybieraj narzędzia, które najlepiej pasują do Twoich pomysłów.</p>
-      <div class="search-wrap">
+      <form class="search-wrap" id="search-form" role="search">
         <span class="search-icon" aria-hidden="true">⌕</span>
-        <input id="search" type="search" placeholder="Wyszukaj chatbot lub kategorię..." aria-label="Wyszukaj chatbot lub kategorię...">
-        <kbd>Ctrl K</kbd>
-      </div>
+        <input id="search" type="search" placeholder="Wyszukaj chatbot lub kategorię..." aria-label="Wyszukaj chatbot lub kategorię..." autocomplete="off">
+        <button class="search-submit" type="submit" aria-label="Szukaj">Enter</button>
+      </form>
       <div class="hero-meta"><span>✦</span> <span data-i18n="heroMeta">Odkrywaj. Ucz się. Twórz.</span></div>
     </section>
 
@@ -102,6 +102,31 @@
           <h3>Midjourney</h3><p data-i18n="midjourneyDesc">Generowanie obrazów i rozwijanie wizualnych koncepcji.</p>
           <div class="tool-bottom"><span class="tool-note">Midjourney</span><a href="https://www.midjourney.com/" target="_blank" rel="noopener noreferrer"><span data-i18n="openTool">Otwórz narzędzie</span> <b>↗</b></a></div>
         </article>
+        <article class="tool-card" data-category="assistants research">
+          <div class="tool-top"><div class="tool-logo bielik">🇵🇱</div><span class="tool-type" data-i18n="typeAssistant">ASYSTENT AI</span></div>
+          <h3>Bielik.ai</h3><p data-i18n="bielikDesc">Polski ekosystem otwartych modeli językowych, rozwijanych z myślą o języku polskim.</p>
+          <div class="tool-bottom"><span class="tool-note">SpeakLeash</span><a href="https://www.bielik.ai/" target="_blank" rel="noopener noreferrer"><span data-i18n="openTool">Otwórz narzędzie</span> <b>↗</b></a></div>
+        </article>
+        <article class="tool-card" data-category="assistants research coding">
+          <div class="tool-top"><div class="tool-logo deepseek">◉</div><span class="tool-type" data-i18n="typeAssistant">ASYSTENT AI</span></div>
+          <h3>DeepSeek</h3><p data-i18n="deepseekDesc">Asystent AI i modele do rozumowania, analizy oraz programowania.</p>
+          <div class="tool-bottom"><span class="tool-note">DeepSeek</span><a href="https://chat.deepseek.com/" target="_blank" rel="noopener noreferrer"><span data-i18n="openTool">Otwórz narzędzie</span> <b>↗</b></a></div>
+        </article>
+        <article class="tool-card" data-category="assistants coding research">
+          <div class="tool-top"><div class="tool-logo openai">✳</div><span class="tool-type" data-i18n="typeAssistant">ASYSTENT AI</span></div>
+          <h3>OpenAI</h3><p data-i18n="openaiDesc">Firma rozwijająca modele GPT, narzędzia AI i rozwiązania dla programistów.</p>
+          <div class="tool-bottom"><span class="tool-note">OpenAI</span><a href="https://openai.com/" target="_blank" rel="noopener noreferrer"><span data-i18n="openTool">Otwórz narzędzie</span> <b>↗</b></a></div>
+        </article>
+        <article class="tool-card" data-category="coding assistants">
+          <div class="tool-top"><div class="tool-logo opencode">⌘</div><span class="tool-type" data-i18n="typeCoding">PROGRAMOWANIE</span></div>
+          <h3>OpenCode</h3><p data-i18n="opencodeDesc">Agent programistyczny działający w terminalu, obsługujący wiele modeli AI.</p>
+          <div class="tool-bottom"><span class="tool-note">OpenCode</span><a href="https://opencode.ai/" target="_blank" rel="noopener noreferrer"><span data-i18n="openTool">Otwórz narzędzie</span> <b>↗</b></a></div>
+        </article>
+        <article class="tool-card" data-category="coding assistants">
+          <div class="tool-top"><div class="tool-logo codex">⌘</div><span class="tool-type" data-i18n="typeCoding">PROGRAMOWANIE</span></div>
+          <h3>Codex</h3><p data-i18n="codexDesc">Agent programistyczny OpenAI do tworzenia, analizowania i poprawiania kodu.</p>
+          <div class="tool-bottom"><span class="tool-note">OpenAI</span><a href="https://openai.com/codex/" target="_blank" rel="noopener noreferrer"><span data-i18n="openTool">Otwórz narzędzie</span> <b>↗</b></a></div>
+        </article>
       </div>
       <p class="empty-state" id="empty-state" hidden data-i18n="emptyState">Nie znaleziono narzędzi. Spróbuj innej frazy.</p>
     </section>
@@ -126,42 +151,42 @@
         pageTitle:"Chatbot Hub — Twoje centrum AI",navDiscover:"Odkrywaj",navCategories:"Kategorie",navFeatured:"Polecane",topCta:"Poznaj narzędzia",languageLabel:"Wybierz język",
         eyebrow:"TWOJE CENTRUM SZTUCZNEJ INTELIGENCJI",heroTitle:"Wszystkie możliwości AI.<br><span>w jednym miejscu.</span>",heroCopy:"Odkrywaj chatboty, porównuj możliwości i wybieraj narzędzia, które najlepiej pasują do Twoich pomysłów.",searchPlaceholder:"Wyszukaj chatbot lub kategorię...",heroMeta:"Odkrywaj. Ucz się. Twórz.",
         categoryKicker:"NAWIGUJ PO ŚWIECIE AI",categoryTitle:"Odkryj według kategorii",categoryHint:"Wybierz obszar, który Cię interesuje",catAssistants:"Asystenci AI",catAssistantsDesc:"Rozmowa i codzienna pomoc",catCoding:"Programowanie",catCodingDesc:"Kod, debugowanie i nauka",catResearch:"Research",catResearchDesc:"Wiedza i wyszukiwanie",catCreative:"Kreatywne AI",catCreativeDesc:"Pomysły i tworzenie",
-        toolsKicker:"WYBRANE NARZĘDZIA",toolsTitle:"Popularne chatboty",catalogLabel:"Katalog startowy",typeAssistant:"ASYSTENT AI",typeCoding:"PROGRAMOWANIE",typeCreative:"KREATYWNE AI",chatgptDesc:"Wszechstronny asystent do rozmów, nauki, analizy i tworzenia.",claudeDesc:"Asystent do pracy z tekstem, analizą, dokumentami i kodem.",geminiDesc:"Model AI od Google do pracy z informacjami i multimediami.",perplexityDesc:"Wyszukiwanie odpowiedzi i eksplorowanie tematów ze źródłami.",copilotDesc:"Wsparcie programowania, podpowiedzi kodu i praca w IDE.",midjourneyDesc:"Generowanie obrazów i rozwijanie wizualnych koncepcji.",
+        toolsKicker:"WYBRANE NARZĘDZIA",toolsTitle:"Popularne chatboty",catalogLabel:"Katalog startowy",typeAssistant:"ASYSTENT AI",typeCoding:"PROGRAMOWANIE",typeCreative:"KREATYWNE AI",chatgptDesc:"Wszechstronny asystent do rozmów, nauki, analizy i tworzenia.",claudeDesc:"Asystent do pracy z tekstem, analizą, dokumentami i kodem.",geminiDesc:"Model AI od Google do pracy z informacjami i multimediami.",perplexityDesc:"Wyszukiwanie odpowiedzi i eksplorowanie tematów ze źródłami.",copilotDesc:"Wsparcie programowania, podpowiedzi kodu i praca w IDE.",midjourneyDesc:"Generowanie obrazów i rozwijanie wizualnych koncepcji.",bielikDesc:"Polski ekosystem otwartych modeli językowych, rozwijanych z myślą o języku polskim.",deepseekDesc:"Asystent AI i modele do rozumowania, analizy oraz programowania.",openaiDesc:"Firma rozwijająca modele GPT, narzędzia AI i rozwiązania dla programistów.",opencodeDesc:"Agent programistyczny działający w terminalu, obsługujący wiele modeli AI.",codexDesc:"Agent programistyczny OpenAI do tworzenia, analizowania i poprawiania kodu.",
         openTool:"Otwórz narzędzie",emptyState:"Nie znaleziono narzędzi. Spróbuj innej frazy.",bannerKicker:"TWÓJ HUB. TWOJE MOŻLIWOŚCI.",bannerTitle:"Jedno miejsce. Wiele pomysłów.",bannerCopy:"Katalog będzie rozwijany o kolejne narzędzia, kategorie i praktyczne wskazówki.",backTop:"Wróć na górę ↑",footerCopy:"© 2026 Chatbot Hub · Niezależny katalog narzędzi AI",footerTop:"Do góry ↑",searchLabel:"Wyszukaj chatbot lub kategorię..."
       },
       en: {
         pageTitle:"Chatbot Hub — Your AI Center",navDiscover:"Discover",navCategories:"Categories",navFeatured:"Featured",topCta:"Explore tools",languageLabel:"Choose language",
         eyebrow:"YOUR ARTIFICIAL INTELLIGENCE HUB",heroTitle:"All the possibilities of AI.<br><span>in one place.</span>",heroCopy:"Discover chatbots, compare their capabilities, and choose the tools that best fit your ideas.",searchPlaceholder:"Search for a chatbot or category...",heroMeta:"Discover. Learn. Create.",
         categoryKicker:"EXPLORE THE WORLD OF AI",categoryTitle:"Explore by category",categoryHint:"Choose an area that interests you",catAssistants:"AI Assistants",catAssistantsDesc:"Conversation and everyday help",catCoding:"Programming",catCodingDesc:"Code, debugging and learning",catResearch:"Research",catResearchDesc:"Knowledge and search",catCreative:"Creative AI",catCreativeDesc:"Ideas and creation",
-        toolsKicker:"SELECTED TOOLS",toolsTitle:"Popular chatbots",catalogLabel:"Starter catalog",typeAssistant:"AI ASSISTANT",typeCoding:"PROGRAMMING",typeCreative:"CREATIVE AI",chatgptDesc:"A versatile assistant for conversation, learning, analysis and creation.",claudeDesc:"An assistant for working with text, analysis, documents and code.",geminiDesc:"Google's AI model for working with information and multimedia.",perplexityDesc:"Find answers and explore topics with cited sources.",copilotDesc:"Programming support, code suggestions and help inside your IDE.",midjourneyDesc:"Generate images and develop visual concepts.",
+        toolsKicker:"SELECTED TOOLS",toolsTitle:"Popular chatbots",catalogLabel:"Starter catalog",typeAssistant:"AI ASSISTANT",typeCoding:"PROGRAMMING",typeCreative:"CREATIVE AI",chatgptDesc:"A versatile assistant for conversation, learning, analysis and creation.",claudeDesc:"An assistant for working with text, analysis, documents and code.",geminiDesc:"Google's AI model for working with information and multimedia.",perplexityDesc:"Find answers and explore topics with cited sources.",copilotDesc:"Programming support, code suggestions and help inside your IDE.",midjourneyDesc:"Generate images and develop visual concepts.",bielikDesc:"An open Polish language-model ecosystem designed with the Polish language in mind.",deepseekDesc:"AI assistant and models for reasoning, analysis and coding.",openaiDesc:"The company behind GPT models, AI tools and developer solutions.",opencodeDesc:"A terminal-based coding agent that works with many AI models.",codexDesc:"OpenAI coding agent for building, analyzing and improving code.",
         openTool:"Open tool",emptyState:"No tools found. Try a different search.",bannerKicker:"YOUR HUB. YOUR POSSIBILITIES.",bannerTitle:"One place. Many ideas.",bannerCopy:"The catalog will grow with more tools, categories and practical tips.",backTop:"Back to top ↑",footerCopy:"© 2026 Chatbot Hub · Independent AI tools directory",footerTop:"Top ↑",searchLabel:"Search for a chatbot or category..."
       },
       es: {
         pageTitle:"Chatbot Hub — Tu centro de IA",navDiscover:"Descubrir",navCategories:"Categorías",navFeatured:"Destacados",topCta:"Explorar herramientas",languageLabel:"Elegir idioma",
         eyebrow:"TU CENTRO DE INTELIGENCIA ARTIFICIAL",heroTitle:"Todas las posibilidades de la IA.<br><span>en un solo lugar.</span>",heroCopy:"Descubre chatbots, compara sus capacidades y elige las herramientas que mejor se adapten a tus ideas.",searchPlaceholder:"Buscar un chatbot o una categoría...",heroMeta:"Descubre. Aprende. Crea.",
         categoryKicker:"EXPLORA EL MUNDO DE LA IA",categoryTitle:"Explora por categoría",categoryHint:"Elige el área que te interesa",catAssistants:"Asistentes de IA",catAssistantsDesc:"Conversación y ayuda diaria",catCoding:"Programación",catCodingDesc:"Código, depuración y aprendizaje",catResearch:"Investigación",catResearchDesc:"Conocimiento y búsqueda",catCreative:"IA creativa",catCreativeDesc:"Ideas y creación",
-        toolsKicker:"HERRAMIENTAS SELECCIONADAS",toolsTitle:"Chatbots populares",catalogLabel:"Catálogo inicial",typeAssistant:"ASISTENTE DE IA",typeCoding:"PROGRAMACIÓN",typeCreative:"IA CREATIVA",chatgptDesc:"Un asistente versátil para conversar, aprender, analizar y crear.",claudeDesc:"Un asistente para trabajar con textos, análisis, documentos y código.",geminiDesc:"El modelo de IA de Google para trabajar con información y contenido multimedia.",perplexityDesc:"Encuentra respuestas y explora temas con fuentes citadas.",copilotDesc:"Ayuda para programar, sugerencias de código y asistencia en tu IDE.",midjourneyDesc:"Genera imágenes y desarrolla conceptos visuales.",
+        toolsKicker:"HERRAMIENTAS SELECCIONADAS",toolsTitle:"Chatbots populares",catalogLabel:"Catálogo inicial",typeAssistant:"ASISTENTE DE IA",typeCoding:"PROGRAMACIÓN",typeCreative:"IA CREATIVA",chatgptDesc:"Un asistente versátil para conversar, aprender, analizar y crear.",claudeDesc:"Un asistente para trabajar con textos, análisis, documentos y código.",geminiDesc:"El modelo de IA de Google para trabajar con información y contenido multimedia.",perplexityDesc:"Encuentra respuestas y explora temas con fuentes citadas.",copilotDesc:"Ayuda para programar, sugerencias de código y asistencia en tu IDE.",midjourneyDesc:"Genera imágenes y desarrolla conceptos visuales.",bielikDesc:"Ecosistema polaco de modelos de lenguaje abiertos, diseñado para el idioma polaco.",deepseekDesc:"Asistente de IA y modelos para razonamiento, análisis y programación.",openaiDesc:"La empresa que desarrolla los modelos GPT, herramientas de IA y soluciones para desarrolladores.",opencodeDesc:"Agente de programación en terminal compatible con muchos modelos de IA.",codexDesc:"Agente de programación de OpenAI para crear, analizar y mejorar código.",
         openTool:"Abrir herramienta",emptyState:"No se encontraron herramientas. Prueba otra búsqueda.",bannerKicker:"TU HUB. TUS POSIBILIDADES.",bannerTitle:"Un lugar. Muchas ideas.",bannerCopy:"El catálogo crecerá con más herramientas, categorías y consejos prácticos.",backTop:"Volver arriba ↑",footerCopy:"© 2026 Chatbot Hub · Directorio independiente de herramientas de IA",footerTop:"Arriba ↑",searchLabel:"Buscar un chatbot o una categoría..."
       },
       fr: {
         pageTitle:"Chatbot Hub — Votre centre IA",navDiscover:"Découvrir",navCategories:"Catégories",navFeatured:"À la une",topCta:"Explorer les outils",languageLabel:"Choisir la langue",
         eyebrow:"VOTRE CENTRE D’INTELLIGENCE ARTIFICIELLE",heroTitle:"Toutes les possibilités de l’IA.<br><span>au même endroit.</span>",heroCopy:"Découvrez des chatbots, comparez leurs capacités et choisissez les outils qui correspondent le mieux à vos idées.",searchPlaceholder:"Rechercher un chatbot ou une catégorie...",heroMeta:"Découvrez. Apprenez. Créez.",
         categoryKicker:"EXPLOREZ LE MONDE DE L’IA",categoryTitle:"Découvrir par catégorie",categoryHint:"Choisissez un domaine qui vous intéresse",catAssistants:"Assistants IA",catAssistantsDesc:"Conversation et aide au quotidien",catCoding:"Programmation",catCodingDesc:"Code, débogage et apprentissage",catResearch:"Recherche",catResearchDesc:"Connaissances et recherche",catCreative:"IA créative",catCreativeDesc:"Idées et création",
-        toolsKicker:"OUTILS SÉLECTIONNÉS",toolsTitle:"Chatbots populaires",catalogLabel:"Catalogue de départ",typeAssistant:"ASSISTANT IA",typeCoding:"PROGRAMMATION",typeCreative:"IA CRÉATIVE",chatgptDesc:"Un assistant polyvalent pour discuter, apprendre, analyser et créer.",claudeDesc:"Un assistant pour travailler sur des textes, des analyses, des documents et du code.",geminiDesc:"Le modèle IA de Google pour travailler avec des informations et des contenus multimédias.",perplexityDesc:"Trouvez des réponses et explorez des sujets avec des sources citées.",copilotDesc:"Aide à la programmation, suggestions de code et assistance dans votre IDE.",midjourneyDesc:"Générez des images et développez des concepts visuels.",
+        toolsKicker:"OUTILS SÉLECTIONNÉS",toolsTitle:"Chatbots populaires",catalogLabel:"Catalogue de départ",typeAssistant:"ASSISTANT IA",typeCoding:"PROGRAMMATION",typeCreative:"IA CRÉATIVE",chatgptDesc:"Un assistant polyvalent pour discuter, apprendre, analyser et créer.",claudeDesc:"Un assistant pour travailler sur des textes, des analyses, des documents et du code.",geminiDesc:"Le modèle IA de Google pour travailler avec des informations et des contenus multimédias.",perplexityDesc:"Trouvez des réponses et explorez des sujets avec des sources citées.",copilotDesc:"Aide à la programmation, suggestions de code et assistance dans votre IDE.",midjourneyDesc:"Générez des images et développez des concepts visuels.",bielikDesc:"Écosystème polonais de modèles linguistiques ouverts, conçu pour la langue polonaise.",deepseekDesc:"Assistant IA et modèles pour le raisonnement, l’analyse et la programmation.",openaiDesc:"L’entreprise qui développe les modèles GPT, des outils IA et des solutions pour développeurs.",opencodeDesc:"Agent de programmation en terminal compatible avec de nombreux modèles IA.",codexDesc:"Agent de programmation OpenAI pour créer, analyser et améliorer du code.",
         openTool:"Ouvrir l’outil",emptyState:"Aucun outil trouvé. Essayez une autre recherche.",bannerKicker:"VOTRE HUB. VOS POSSIBILITÉS.",bannerTitle:"Un endroit. Mille idées.",bannerCopy:"Le catalogue s’enrichira de nouveaux outils, catégories et conseils pratiques.",backTop:"Retour en haut ↑",footerCopy:"© 2026 Chatbot Hub · Annuaire indépendant des outils d’IA",footerTop:"Haut ↑",searchLabel:"Rechercher un chatbot ou une catégorie..."
       },
       de: {
         pageTitle:"Chatbot Hub — Dein KI-Zentrum",navDiscover:"Entdecken",navCategories:"Kategorien",navFeatured:"Empfehlungen",topCta:"Tools entdecken",languageLabel:"Sprache auswählen",
         eyebrow:"DEIN ZENTRUM FÜR KÜNSTLICHE INTELLIGENZ",heroTitle:"Alle Möglichkeiten der KI.<br><span>an einem Ort.</span>",heroCopy:"Entdecke Chatbots, vergleiche ihre Funktionen und wähle die Tools, die am besten zu deinen Ideen passen.",searchPlaceholder:"Chatbot oder Kategorie suchen...",heroMeta:"Entdecken. Lernen. Erschaffen.",
         categoryKicker:"ENTDECKE DIE WELT DER KI",categoryTitle:"Nach Kategorie entdecken",categoryHint:"Wähle einen Bereich, der dich interessiert",catAssistants:"KI-Assistenten",catAssistantsDesc:"Gespräche und Alltagshilfe",catCoding:"Programmierung",catCodingDesc:"Code, Fehlersuche und Lernen",catResearch:"Recherche",catResearchDesc:"Wissen und Suche",catCreative:"Kreative KI",catCreativeDesc:"Ideen und Gestaltung",
-        toolsKicker:"AUSGEWÄHLTE TOOLS",toolsTitle:"Beliebte Chatbots",catalogLabel:"Startkatalog",typeAssistant:"KI-ASSISTENT",typeCoding:"PROGRAMMIERUNG",typeCreative:"KREATIVE KI",chatgptDesc:"Ein vielseitiger Assistent für Gespräche, Lernen, Analysen und Kreativität.",claudeDesc:"Ein Assistent für Texte, Analysen, Dokumente und Programmcode.",geminiDesc:"Googles KI-Modell für Informationen und Multimedia-Inhalte.",perplexityDesc:"Finde Antworten und erkunde Themen mit Quellenangaben.",copilotDesc:"Programmierhilfe, Code-Vorschläge und Unterstützung direkt in deiner IDE.",midjourneyDesc:"Erstelle Bilder und entwickle visuelle Konzepte.",
+        toolsKicker:"AUSGEWÄHLTE TOOLS",toolsTitle:"Beliebte Chatbots",catalogLabel:"Startkatalog",typeAssistant:"KI-ASSISTENT",typeCoding:"PROGRAMMIERUNG",typeCreative:"KREATIVE KI",chatgptDesc:"Ein vielseitiger Assistent für Gespräche, Lernen, Analysen und Kreativität.",claudeDesc:"Ein Assistent für Texte, Analysen, Dokumente und Programmcode.",geminiDesc:"Googles KI-Modell für Informationen und Multimedia-Inhalte.",perplexityDesc:"Finde Antworten und erkunde Themen mit Quellenangaben.",copilotDesc:"Programmierhilfe, Code-Vorschläge und Unterstützung direkt in deiner IDE.",midjourneyDesc:"Erstelle Bilder und entwickle visuelle Konzepte.",bielikDesc:"Offenes polnisches Sprachmodell-Ökosystem mit besonderem Fokus auf die polnische Sprache.",deepseekDesc:"KI-Assistent und Modelle für logisches Denken, Analyse und Programmierung.",openaiDesc:"Das Unternehmen hinter GPT-Modellen, KI-Tools und Entwicklerlösungen.",opencodeDesc:"Terminalbasierter Programmieragent für die Arbeit mit vielen KI-Modellen.",codexDesc:"OpenAI-Programmieragent zum Erstellen, Analysieren und Verbessern von Code.",
         openTool:"Tool öffnen",emptyState:"Keine Tools gefunden. Versuche eine andere Suche.",bannerKicker:"DEIN HUB. DEINE MÖGLICHKEITEN.",bannerTitle:"Ein Ort. Viele Ideen.",bannerCopy:"Der Katalog wird um weitere Tools, Kategorien und praktische Tipps erweitert.",backTop:"Nach oben ↑",footerCopy:"© 2026 Chatbot Hub · Unabhängiges Verzeichnis für KI-Tools",footerTop:"Nach oben ↑",searchLabel:"Chatbot oder Kategorie suchen..."
       },
       it: {
         pageTitle:"Chatbot Hub — Il tuo centro IA",navDiscover:"Scopri",navCategories:"Categorie",navFeatured:"In evidenza",topCta:"Esplora gli strumenti",languageLabel:"Scegli la lingua",
         eyebrow:"IL TUO CENTRO DI INTELLIGENZA ARTIFICIALE",heroTitle:"Tutte le possibilità dell’IA.<br><span>in un unico posto.</span>",heroCopy:"Scopri i chatbot, confronta le loro funzionalità e scegli gli strumenti più adatti alle tue idee.",searchPlaceholder:"Cerca un chatbot o una categoria...",heroMeta:"Scopri. Impara. Crea.",
         categoryKicker:"ESPLORA IL MONDO DELL’IA",categoryTitle:"Esplora per categoria",categoryHint:"Scegli l’area che ti interessa",catAssistants:"Assistenti IA",catAssistantsDesc:"Conversazione e aiuto quotidiano",catCoding:"Programmazione",catCodingDesc:"Codice, debug e apprendimento",catResearch:"Ricerca",catResearchDesc:"Conoscenza e ricerca",catCreative:"IA creativa",catCreativeDesc:"Idee e creazione",
-        toolsKicker:"STRUMENTI SELEZIONATI",toolsTitle:"Chatbot popolari",catalogLabel:"Catalogo iniziale",typeAssistant:"ASSISTENTE IA",typeCoding:"PROGRAMMAZIONE",typeCreative:"IA CREATIVA",chatgptDesc:"Un assistente versatile per conversare, imparare, analizzare e creare.",claudeDesc:"Un assistente per lavorare con testi, analisi, documenti e codice.",geminiDesc:"Il modello IA di Google per lavorare con informazioni e contenuti multimediali.",perplexityDesc:"Trova risposte ed esplora argomenti con fonti citate.",copilotDesc:"Supporto alla programmazione, suggerimenti di codice e assistenza nel tuo IDE.",midjourneyDesc:"Genera immagini e sviluppa concept visivi.",
+        toolsKicker:"STRUMENTI SELEZIONATI",toolsTitle:"Chatbot popolari",catalogLabel:"Catalogo iniziale",typeAssistant:"ASSISTENTE IA",typeCoding:"PROGRAMMAZIONE",typeCreative:"IA CREATIVA",chatgptDesc:"Un assistente versatile per conversare, imparare, analizzare e creare.",claudeDesc:"Un assistente per lavorare con testi, analisi, documenti e codice.",geminiDesc:"Il modello IA di Google per lavorare con informazioni e contenuti multimediali.",perplexityDesc:"Trova risposte ed esplora argomenti con fonti citate.",copilotDesc:"Supporto alla programmazione, suggerimenti di codice e assistenza nel tuo IDE.",midjourneyDesc:"Genera immagini e sviluppa concept visivi.",bielikDesc:"Ecosistema polacco di modelli linguistici aperti, progettato per la lingua polacca.",deepseekDesc:"Assistente IA e modelli per ragionamento, analisi e programmazione.",openaiDesc:"L’azienda che sviluppa i modelli GPT, strumenti IA e soluzioni per sviluppatori.",opencodeDesc:"Agente di programmazione da terminale compatibile con molti modelli IA.",codexDesc:"Agente di programmazione OpenAI per creare, analizzare e migliorare codice.",
         openTool:"Apri strumento",emptyState:"Nessuno strumento trovato. Prova un'altra ricerca.",bannerKicker:"IL TUO HUB. LE TUE POSSIBILITÀ.",bannerTitle:"Un luogo. Tante idee.",bannerCopy:"Il catalogo si arricchirà di nuovi strumenti, categorie e consigli pratici.",backTop:"Torna in alto ↑",footerCopy:"© 2026 Chatbot Hub · Elenco indipendente di strumenti IA",footerTop:"In alto ↑",searchLabel:"Cerca un chatbot o una categoria..."
       }
     };
@@ -186,20 +211,31 @@
       try { localStorage.setItem("chatbotHubLanguage", language); } catch (error) { /* Storage may be disabled. */ }
     }
 
+    function normalizeSearch(value) {
+      return value.toLocaleLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
+    }
+
     function filterTools() {
-      const query = searchInput.value.trim().toLocaleLowerCase();
+      const query = normalizeSearch(searchInput.value);
       let visibleCount = 0;
       toolCards.forEach(card => {
-        const categoryMatch = !activeCategory || card.dataset.category.split(" ").includes(activeCategory);
-        const searchableText = card.innerText.toLocaleLowerCase();
+        const categories = (card.dataset.category || "").replace(/\s+/g, " ");
+        const categoryMatch = !activeCategory || categories.split(" ").includes(activeCategory);
+        const searchableText = normalizeSearch(`${card.innerText} ${categories}`);
         const searchMatch = !query || searchableText.includes(query);
         const visible = categoryMatch && searchMatch;
         card.hidden = !visible;
         if (visible) visibleCount++;
       });
       emptyState.hidden = visibleCount !== 0;
+      return visibleCount;
     }
 
+    document.getElementById("search-form").addEventListener("submit", event => {
+      event.preventDefault();
+      filterTools();
+      document.getElementById("tools").scrollIntoView({ behavior: "smooth", block: "start" });
+    });
     languageSelect.addEventListener("change", event => applyLanguage(event.target.value));
     searchInput.addEventListener("input", filterTools);
     document.querySelectorAll(".category-card").forEach(link => {
@@ -212,12 +248,9 @@
       link.addEventListener("click", () => { activeCategory = ""; filterTools(); });
     });
     document.addEventListener("keydown", event => {
-      if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "k") {
-        event.preventDefault();
-        searchInput.focus();
-      }
       if (event.key === "Escape" && document.activeElement === searchInput) {
         searchInput.value = "";
+        activeCategory = "";
         filterTools();
         searchInput.blur();
       }
