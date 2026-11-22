@@ -30,10 +30,7 @@ a { color: inherit; text-decoration: none; }
 .brand-mark span { width: 3px; border-radius: 5px; background: #e5ddff; }
 .brand-mark span:nth-child(1) { height: 8px; }.brand-mark span:nth-child(2) { height: 14px; }.brand-mark span:nth-child(3) { height: 10px; }
 .nav-links { display: flex; gap: 34px; color: #aab4d2; font-size: 13px; }
-.nav-links a { transition: color .2s; }.nav-links a:hover,.nav-links .active { color: #fff; }
-.top-cta { padding: 11px 16px; border: 1px solid rgba(169,151,255,.32); border-radius: 10px; background: rgba(105,83,193,.13); font-size: 12px; font-weight: 700; }
-.top-cta span { color: #b8a5ff; margin-left: 8px; }
-main { max-width: 1120px; padding: 0 28px; margin: auto; }
+.nav-links a { transition: color .2s; }.nav-links a:hover,.nav-links .active { color: #fff; }main { max-width: 1120px; padding: 0 28px; margin: auto; }
 .hero { text-align: center; padding: 104px 0 86px; }
 .eyebrow,.section-kicker { color: #a995ff; font-size: 10px; font-weight: 700; letter-spacing: 2px; }
 .eyebrow { display: inline-flex; align-items: center; gap: 9px; padding: 9px 14px; border: 1px solid rgba(167,147,255,.2); border-radius: 30px; background: rgba(111,91,190,.12); }
@@ -42,11 +39,6 @@ h1,h2,h3,p { margin-top: 0; }
 h1 { margin: 27px 0 17px; font: 700 clamp(42px, 6.5vw, 70px)/1.08 'Space Grotesk', sans-serif; letter-spacing: -3.7px; }
 h1 span { color: #a995ff; background: linear-gradient(90deg,#a5a0ff,#c5a3ff,#8daaff); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
 .hero-copy { max-width: 570px; margin: 0 auto; color: #aab5d3; font-size: 15px; line-height: 1.8; }
-.search-wrap { max-width: 570px; height: 58px; margin: 34px auto 0; padding: 0 16px; display: flex; align-items: center; gap: 12px; border: 1px solid rgba(169,157,255,.27); border-radius: 13px; background: rgba(21,30,61,.85); box-shadow: 0 14px 50px rgba(4,8,25,.25), inset 0 1px rgba(255,255,255,.04); }
-.search-icon { color: #b8a6ff; font-size: 29px; transform: rotate(-20deg); }
-.search-wrap input { min-width: 0; flex: 1; border: 0; outline: 0; color: white; background: transparent; font: 13px 'DM Sans',sans-serif; }
-.search-wrap input::placeholder { color: #7784a9; }
-kbd { padding: 5px 7px; border: 1px solid rgba(177,180,226,.2); border-radius: 5px; color: #8995b7; font-size: 10px; }
 .hero-meta { margin-top: 22px; color: #8996ba; font-size: 11px; letter-spacing: .4px; }.hero-meta span { color: #b69fff; margin-right: 5px; }
 .section { margin: 0 0 76px; }
 .section-heading { display: flex; justify-content: space-between; align-items: end; margin-bottom: 22px; }
@@ -79,11 +71,9 @@ footer { max-width: 1190px; min-height: 82px; margin: auto; padding: 18px 28px; 
   .feature-banner { align-items: flex-start; flex-wrap: wrap; padding: 24px; }.feature-link { margin-left: 78px; }
   footer { padding: 20px; flex-wrap: wrap; gap: 13px; }
 }
-@media (max-width: 480px) {
-  .top-cta { padding: 9px 10px; font-size: 10px; }.brand { font-size: 18px; }
+@media (max-width: 480px) {.brand { font-size: 18px; }
   .hero { padding-top: 68px; }.eyebrow { font-size: 8px; letter-spacing: 1.2px; } h1 { font-size: 43px; }
-  .hero-copy { font-size: 13px; }.search-wrap { height: 54px; }.search-wrap kbd { display: none; }
-  .category-grid,.tools-grid { grid-template-columns: 1fr; }.category-card { min-height: 78px; }
+  .hero-copy { font-size: 13px; }.search-wrap .category-grid,.tools-grid { grid-template-columns: 1fr; }.category-card { min-height: 78px; }
   .subtle { line-height: 1.5; }.live-label { margin-top: 3px; }
   .feature-banner { gap: 15px; }.feature-banner > div:nth-child(2) { flex: 1; min-width: 190px; }.feature-link { margin-left: 69px; }
   footer > span { order: 3; width: 100%; }
@@ -193,3 +183,144 @@ footer { max-width: 1190px; min-height: 82px; margin: auto; padding: 18px 28px; 
 .language-trigger {
   gap: 7px;
 }
+
+
+/* Copyright line directly below the Chatbot Hub wordmark */
+.brand-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 2px;
+  min-width: 0;
+}
+.brand-name {
+  display: block;
+  line-height: 1.05;
+}
+.brand-copyright {
+  display: block;
+  color: #8996ba;
+  font: 500 8px/1.25 'DM Sans', sans-serif;
+  letter-spacing: .15px;
+  white-space: nowrap;
+}
+@media (max-width: 480px) {
+  .brand-copyright {
+    font-size: 7px;
+    letter-spacing: 0;
+  }
+}
+
+
+/* Final wordmark layout: copyright is one continuous second line under "chatbot hub". */
+.topbar .brand {
+  flex: 0 0 auto;
+  align-items: center;
+}
+.topbar .brand-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  flex: 0 0 auto;
+  min-width: max-content;
+  gap: 2px;
+}
+.topbar .brand-name {
+  display: block;
+  white-space: nowrap;
+  line-height: 1.05;
+}
+.topbar .brand-copyright {
+  display: block;
+  width: max-content;
+  max-width: none;
+  white-space: nowrap;
+  overflow: visible;
+  font-size: 8px;
+  line-height: 1.2;
+}
+@media (max-width: 480px) {
+  .topbar .brand-copyright {
+    font-size: 7px;
+  }
+}
+
+
+/* News-style scrolling copyright ticker under the Chatbot Hub wordmark */
+.topbar .brand-copyright-flow {
+  display: block;
+  position: relative;
+  width: 235px;
+  max-width: 32vw;
+  height: 16px;
+  overflow: hidden;
+  white-space: nowrap;
+  line-height: 16px;
+  color: #a2aed0;
+  font: 600 9.5px/16px 'DM Sans', sans-serif;
+  letter-spacing: .18px;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 5%, #000 95%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, #000 5%, #000 95%, transparent 100%);
+}
+.topbar .brand-copyright-track {
+  display: flex;
+  width: max-content;
+  white-space: nowrap;
+  animation: brand-copyright-marquee 18s linear infinite;
+  will-change: transform;
+}
+.topbar .brand-copyright-segment {
+  display: inline-block;
+  flex: 0 0 auto;
+}
+@keyframes brand-copyright-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.topbar .brand-copy {
+  gap: 1px;
+}
+@media (max-width: 760px) {
+  .topbar .brand-copyright-flow {
+    width: 205px;
+    max-width: 38vw;
+    font-size: 9px;
+  }
+}
+@media (max-width: 480px) {
+  .topbar .brand-copyright-flow {
+    width: 170px;
+    max-width: 40vw;
+    font-size: 8.5px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .topbar .brand-copyright-track {
+    padding-left: 0;
+    animation: none;
+  }
+}
+
+
+/* Extra room for the expanded copyright and contact ticker */
+.topbar .brand-copyright-flow {
+  width: 285px;
+  max-width: 38vw;
+}
+@media (max-width: 760px) {
+  .topbar .brand-copyright-flow {
+    width: 245px;
+    max-width: 40vw;
+  }
+}
+@media (max-width: 480px) {
+  .topbar .brand-copyright-flow {
+    width: 195px;
+    max-width: 42vw;
+  }
+}
+
+/* Duplicate header CTA intentionally removed; Explore navigation remains. */
+.topbar .top-cta { display: none !important; }

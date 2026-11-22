@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="pl">
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -16,9 +16,13 @@
   <div class="ambient ambient-two"></div>
 
   <header class="topbar">
-    <a class="brand" href="#" aria-label="Chatbot Hub — strona główna">
+    <a class="brand" href="#" aria-label="+++   Copyrights by WebDeveloper Robert Kroll, 2026 - contact info: E/mail: robert.krol82@interia.pl">
       <span class="brand-mark"><span></span><span></span><span></span></span>
-      <span>chatbot<span class="brand-light">hub</span></span>
+      <span class="brand-copy">
+        <span class="brand-name">chatbot<span class="brand-light">hub</span></span>
+        <span class="brand-copyright-flow" aria-label="+++ Copyrights by WebDeveloper Robert Kroll, 2026 - contact info: robert.krol82@interia.pl"><span class="brand-copyright-track"><span class="brand-copyright-segment">+++   Copyrights by WebDeveloper Robert Kroll, 2026 - contact info: E/mail: robert.krol82@interia.pl&nbsp;&nbsp;&nbsp;</span><span class="brand-copyright-segment" aria-hidden="true">+++   Copyrights by WebDeveloper Robert Kroll, 2026 - contact info: E/mail: robert.krol82@interia.pl&nbsp;&nbsp;&nbsp;</span></span></span>
+        </span>
+      </span>
     </a>
     <nav class="nav-links" aria-label="Główna nawigacja">
       <a class="active" href="#odkrywaj" data-i18n="navExplore">Explore</a>
@@ -28,14 +32,7 @@
     <div class="top-controls">
       <div class="language-control" id="language-control">
         <label class="sr-only" id="language-label">Language</label>
-        <select id="language-select" aria-label="Language" tabindex="-1">
-          <option value="en">English</option>
-          <option value="pl">Polski</option>
-          <option value="es">Español</option>
-          <option value="fr">Français</option>
-          <option value="de">Deutsch</option>
-          <option value="it">Italiano</option>
-        </select>
+        <select id="language-select" aria-label="Language" tabindex="-1"></select>
         <button class="language-trigger" id="language-trigger" type="button"
                 aria-haspopup="listbox" aria-expanded="false" aria-labelledby="language-label language-current">
           <span class="flag flag-gb" aria-hidden="true">
@@ -54,11 +51,10 @@
         </div>
       </div>
       <label class="zoom-control" for="zoom-slider">
-        <span class="zoom-label">Zoom <output id="zoom-value">50%</output></span>
-        <input id="zoom-slider" type="range" min="1" max="100" value="50" step="1" aria-label="Zoom 1–100%">
+        <span class="zoom-label">Zoom <output id="zoom-value">60%</output></span>
+        <input id="zoom-slider" type="range" min="1" max="100" value="60" step="1" aria-label="Zoom 1–100%">
       </label>
     </div>
-    <a class="top-cta" href="#odkrywaj" data-i18n="cta">Explore tools <span>↗</span></a>
   </header>
 
   <main>
@@ -66,11 +62,6 @@
       <div class="eyebrow"><span class="pulse"></span> YOUR AI DISCOVERY HUB</div>
       <h1>All the possibilities of AI.<br><span>in one place.</span></h1>
       <p class="hero-copy">Discover chatbots, compare capabilities, and choose the tools that fit your ideas.</p>
-      <div class="search-wrap">
-        <span class="search-icon">⌕</span>
-        <input id="search" type="search" placeholder="Search chatbots or categories..." aria-label="Search chatbots or categories" data-i18n-placeholder="searchPlaceholder">
-        <kbd>⌘ K</kbd>
-      </div>
       <div class="hero-meta"><span>✦</span> Discover. Learn. Create.</div>
     </section>
 
@@ -138,7 +129,6 @@
           <div class="tool-bottom"><span class="tool-note">OpenAI</span><a href="https://openai.com/codex/" target="_blank" rel="noopener noreferrer" data-i18n="openTool">Open tool <b>↗</b></a></div>
         </article>
       </div>
-      <p class="empty-state" id="empty-state" hidden>No tools found. Try another search.</p>
     </section>
 
     <section class="feature-banner" id="polecane">
@@ -151,16 +141,13 @@
   <footer><a class="brand footer-brand" href="#"><span class="brand-mark"><span></span><span></span><span></span></span><span>chatbot<span class="brand-light">hub</span></span></a><span>© 2026 Chatbot Hub · Independent AI tools catalogue</span><a href="#odkrywaj">To top ↑</a></footer>
 
   <script>
-    const search = document.querySelector('#search');
-    const cards = [...document.querySelectorAll('.tool-card')];
-    const empty = document.querySelector('#empty-state');
     const languageSelect = document.querySelector('#language-select');
     const zoomSlider = document.querySelector('#zoom-slider');
     const zoomValue = document.querySelector('#zoom-value');
 
     const translations = {
       en: {
-        nav:['Explore','Categories','Featured'], cta:'Explore tools',
+        nav:['Explore','Categories','Featured'],
         eyebrow:'YOUR AI DISCOVERY HUB', h1a:'All the possibilities of AI.', h1b:'in one place.',
         hero:'Discover chatbots, compare capabilities, and choose the tools that fit your ideas.',
         search:'Search chatbots or categories...', meta:'Discover. Learn. Create.',
@@ -173,7 +160,7 @@
         back:'Back to top ↑', footer:'© 2026 Chatbot Hub · Independent AI tools catalogue'
       },
       pl: {
-        nav:['Odkrywaj','Kategorie','Polecane'], cta:'Poznaj narzędzia',
+        nav:['Odkrywaj','Kategorie','Polecane'],
         eyebrow:'TWOJE CENTRUM SZTUCZNEJ INTELIGENCJI', h1a:'Wszystkie możliwości AI.', h1b:'w jednym miejscu.',
         hero:'Odkrywaj chatboty, porównuj możliwości i wybieraj narzędzia, które najlepiej pasują do Twoich pomysłów.',
         search:'Wyszukaj chatbot lub kategorię...', meta:'Odkrywaj. Ucz się. Twórz.',
@@ -186,7 +173,7 @@
         back:'Wróć na górę ↑', footer:'© 2026 Chatbot Hub · Niezależny katalog narzędzi AI'
       },
       es: {
-        nav:['Explorar','Categorías','Destacados'], cta:'Ver herramientas',
+        nav:['Explorar','Categorías','Destacados'],
         eyebrow:'TU CENTRO DE DESCUBRIMIENTO DE IA', h1a:'Todas las posibilidades de la IA.', h1b:'en un solo lugar.',
         hero:'Descubre chatbots, compara sus capacidades y elige las herramientas adecuadas para tus ideas.',
         search:'Buscar chatbots o categorías...', meta:'Descubre. Aprende. Crea.',
@@ -199,7 +186,7 @@
         back:'Volver arriba ↑', footer:'© 2026 Chatbot Hub · Catálogo independiente de herramientas de IA'
       },
       fr: {
-        nav:['Découvrir','Catégories','À la une'], cta:'Voir les outils',
+        nav:['Découvrir','Catégories','À la une'],
         eyebrow:'VOTRE CENTRE DE DÉCOUVERTE DE L’IA', h1a:'Toutes les possibilités de l’IA.', h1b:'au même endroit.',
         hero:'Découvrez des chatbots, comparez leurs capacités et choisissez les outils adaptés à vos idées.',
         search:'Rechercher des chatbots ou catégories...', meta:'Découvrez. Apprenez. Créez.',
@@ -212,7 +199,7 @@
         back:'Retour en haut ↑', footer:'© 2026 Chatbot Hub · Catalogue indépendant d’outils IA'
       },
       de: {
-        nav:['Entdecken','Kategorien','Empfohlen'], cta:'Tools entdecken',
+        nav:['Entdecken','Kategorien','Empfohlen'],
         eyebrow:'DEIN ZENTRUM FÜR KI-ENTDECKUNGEN', h1a:'Alle Möglichkeiten der KI.', h1b:'an einem Ort.',
         hero:'Entdecke Chatbots, vergleiche ihre Fähigkeiten und wähle passende Tools für deine Ideen.',
         search:'Chatbots oder Kategorien suchen...', meta:'Entdecken. Lernen. Erstellen.',
@@ -225,7 +212,7 @@
         back:'Nach oben ↑', footer:'© 2026 Chatbot Hub · Unabhängiger Katalog für KI-Tools'
       },
       it: {
-        nav:['Esplora','Categorie','In evidenza'], cta:'Scopri gli strumenti',
+        nav:['Esplora','Categorie','In evidenza'],
         eyebrow:'IL TUO HUB PER SCOPRIRE L’INTELLIGENZA ARTIFICIALE', h1a:'Tutte le possibilità dell’IA.', h1b:'in un unico posto.',
         hero:'Scopri i chatbot, confronta le funzionalità e scegli gli strumenti più adatti alle tue idee.',
         search:'Cerca chatbot o categorie...', meta:'Scopri. Impara. Crea.',
@@ -314,6 +301,16 @@
       ]
     };
 
+
+    const toolTypes = {
+      en: ['AI ASSISTANT','AI ASSISTANT','AI ASSISTANT','RESEARCH','PROGRAMMING','CREATIVE AI','POLISH AI MODEL','AI ASSISTANT','PROGRAMMING','PROGRAMMING'],
+      pl: ['ASYSTENT AI','ASYSTENT AI','ASYSTENT AI','RESEARCH','PROGRAMOWANIE','KREATYWNE AI','POLSKI MODEL AI','ASYSTENT AI','PROGRAMOWANIE','PROGRAMOWANIE'],
+      es: ['ASISTENTE DE IA','ASISTENTE DE IA','ASISTENTE DE IA','INVESTIGACIÓN','PROGRAMACIÓN','IA CREATIVA','MODELO DE IA POLACO','ASISTENTE DE IA','PROGRAMACIÓN','PROGRAMACIÓN'],
+      fr: ['ASSISTANT IA','ASSISTANT IA','ASSISTANT IA','RECHERCHE','PROGRAMMATION','IA CRÉATIVE','MODÈLE IA POLONAIS','ASSISTANT IA','PROGRAMMATION','PROGRAMMATION'],
+      de: ['KI-ASSISTENT','KI-ASSISTENT','KI-ASSISTENT','RECHERCHE','PROGRAMMIERUNG','KREATIVE KI','POLNISCHES KI-MODELL','KI-ASSISTENT','PROGRAMMIERUNG','PROGRAMMIERUNG'],
+      it: ['ASSISTENTE IA','ASSISTENTE IA','ASSISTENTE IA','RICERCA','PROGRAMMAZIONE','IA CREATIVA','MODELLO IA POLACCO','ASSISTENTE IA','PROGRAMMAZIONE','PROGRAMMAZIONE']
+    };
+
     function setText(selector, value) {
       const element = document.querySelector(selector);
       if (element) element.textContent = value;
@@ -322,14 +319,17 @@
       const t = translations[lang] || translations.en;
       document.documentElement.lang = lang;
       document.querySelectorAll('.nav-links a').forEach((el, i) => el.textContent = t.nav[i]);
-      setText('.top-cta', t.cta + ' ↗');
       setText('.eyebrow', t.eyebrow);
       const h1 = document.querySelector('h1');
       h1.innerHTML = `${t.h1a}<br><span>${t.h1b}</span>`;
       setText('.hero-copy', t.hero);
-      search.placeholder = t.search;
-      search.setAttribute('aria-label', t.search);
-      setText('.hero-meta', t.meta);
+      const heroMeta = document.querySelector('.hero-meta');
+      if (heroMeta) {
+        const metaIcon = heroMeta.querySelector('span');
+        heroMeta.textContent = '';
+        if (metaIcon) heroMeta.appendChild(metaIcon);
+        heroMeta.append(document.createTextNode(` ${t.meta}`));
+      }
       setText('#kategorie .section-kicker', t.kicker1);
       setText('#kategorie h2', t.categoryTitle);
       setText('#kategorie .subtle', t.categorySub);
@@ -340,9 +340,18 @@
       document.querySelectorAll('.tool-card p').forEach((el, i) => {
         el.textContent = (toolDescriptions[lang] || toolDescriptions.en)[i];
       });
+      document.querySelectorAll('.tool-card .tool-type').forEach((el, i) => {
+        el.textContent = (toolTypes[lang] || toolTypes.en)[i];
+      });
       setText('#narzedzia .section-kicker', t.toolsKicker);
       setText('#narzedzia h2', t.toolsTitle);
-      setText('.live-label', t.live);
+      const liveLabel = document.querySelector('.live-label');
+      if (liveLabel) {
+        const liveDot = liveLabel.querySelector('span');
+        liveLabel.textContent = '';
+        if (liveDot) liveLabel.appendChild(liveDot);
+        liveLabel.append(document.createTextNode(` ${t.live}`));
+      }
       document.querySelectorAll('.tool-bottom a').forEach(a => {
         const b = a.querySelector('b');
         a.textContent = t.open + ' ';
@@ -368,26 +377,7 @@
         });
       }
     }
-
-    function filterTools(term) {
-      const q = term.trim().toLocaleLowerCase();
-      let visible = 0;
-      cards.forEach(card => {
-        const match = (card.innerText + ' ' + card.dataset.tags).toLocaleLowerCase().includes(q);
-        card.hidden = !match;
-        if (match) visible++;
-      });
-      empty.hidden = visible !== 0;
-    }
-    search.addEventListener('input', event => filterTools(event.target.value));
-    document.querySelectorAll('.category-card').forEach(link => {
-      link.addEventListener('click', () => {
-        const category = link.dataset.category;
-        search.value = category;
-        filterTools(category);
-      });
-    });
-    const languageTrigger = document.querySelector('#language-trigger');
+        const languageTrigger = document.querySelector('#language-trigger');
     const languageMenu = document.querySelector('#language-menu');
 
     function closeLanguageMenu() {
@@ -414,17 +404,51 @@
       if (event.key === 'Escape') closeLanguageMenu();
     });
 
-    // Zoom: 1% = 8px, 100% = 40px. Apply font changes only after release.
-    const fontElements = [...document.querySelectorAll('body *')].filter(el =>
-      el.children.length === 0 && el.textContent.trim() && !el.closest('.zoom-control, .language-control')
-    );
-    const baseFontSizes = new Map(fontElements.map(el => [el, parseFloat(getComputedStyle(el).fontSize) || 16]));
+    // Zoom: 70% = 8px, 100% = 40px. Apply font changes only after release.
     function applyZoom(percent) {
       const targetSize = 8 + ((Number(percent) - 1) / 99) * 32;
       const factor = targetSize / 16;
-      baseFontSizes.forEach((baseSize, element) => {
-        if (element.isConnected) element.style.fontSize = `${(baseSize * factor).toFixed(2)}px`;
+
+      // Collect text elements each time: language changes can create new nodes
+      // (for example, the highlighted second line in the main heading).
+      // Save each element's original CSS size once, so repeated zoom changes
+      // never compound the previous scaling.
+      const fontElements = [...document.querySelectorAll('body *')].filter(el =>
+        el.children.length === 0 &&
+        el.textContent.trim() &&
+        !el.closest('.zoom-control, .language-control')
+      );
+
+      fontElements.forEach(element => {
+        if (!element.dataset.baseZoomFontSize) {
+          const originalSize = parseFloat(getComputedStyle(element).fontSize) || 16;
+          element.dataset.baseZoomFontSize = String(originalSize);
+        }
+        const baseSize = Number(element.dataset.baseZoomFontSize) || 16;
+        element.style.fontSize = `${(baseSize * factor).toFixed(2)}px`;
       });
+
+      // The ticker is a special case: its wrapper previously had a fixed
+      // 16px height, which clipped the enlarged text and made it look unscaled.
+      const ticker = document.querySelector('.topbar .brand-copyright-flow');
+      const tickerSegments = document.querySelectorAll('.topbar .brand-copyright-segment');
+      if (ticker) {
+        if (!ticker.dataset.baseZoomFontSize) {
+          ticker.dataset.baseZoomFontSize = String(parseFloat(getComputedStyle(ticker).fontSize) || 9.5);
+        }
+        // Calibrate ticker independently: at the default 70% setting it must
+        // render at 18px (not remain at its 9.5px CSS base size).
+        const tickerFontSize = 17.5 * (Number(percent) / 70);
+        const tickerLineHeight = Math.ceil(tickerFontSize * 1.55);
+        ticker.style.fontSize = `${tickerFontSize.toFixed(2)}px`;
+        ticker.style.lineHeight = `${tickerLineHeight}px`;
+        ticker.style.height = `${tickerLineHeight}px`;
+        tickerSegments.forEach(segment => {
+          segment.style.fontSize = `${tickerFontSize.toFixed(2)}px`;
+          segment.style.lineHeight = `${tickerLineHeight}px`;
+        });
+      }
+
       zoomValue.textContent = `${percent}%`;
       try { localStorage.setItem('chatbotHubZoom', String(percent)); } catch (_) {}
     }
@@ -433,19 +457,32 @@
     });
     zoomSlider.addEventListener('change', event => applyZoom(event.target.value));
 
-    // Start in English on every fresh page load.
+    // Start in English. Apply zoom after the page styles and web fonts are ready,
+    // so the initial sizing matches a manual change of the Zoom slider.
     applyLanguage('en');
-    let savedZoom = 50;
-    try { savedZoom = Number(localStorage.getItem('chatbotHubZoom')) || 50; } catch (_) {}
-    zoomSlider.value = String(Math.min(100, Math.max(1, savedZoom)));
-    applyZoom(zoomSlider.value);
+    zoomSlider.value = '60';
+    zoomValue.textContent = '60%';
 
-    document.addEventListener('keydown', event => {
-      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k') {
-        event.preventDefault(); search.focus();
+    const applyInitialZoom = () => {
+      zoomSlider.value = '60';
+      applyZoom(60);
+    };
+
+    if (document.readyState === 'complete') {
+      if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(applyInitialZoom);
+      } else {
+        requestAnimationFrame(applyInitialZoom);
       }
-      if (event.key === 'Escape') { search.value = ''; filterTools(''); search.blur(); }
-    });
-  </script>
+    } else {
+      window.addEventListener('load', () => {
+        if (document.fonts && document.fonts.ready) {
+          document.fonts.ready.then(applyInitialZoom);
+        } else {
+          requestAnimationFrame(applyInitialZoom);
+        }
+      }, { once: true });
+    }
+      </script>
 </body>
 </html>
