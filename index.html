@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#10172f">
-  <meta name="description" content="Chatbot Hub — odkrywaj i porównuj narzędzia AI w jednym miejscu.">
+  <meta name="description" content="Chatbot Hub — odkrywaj i porównuj narzędzia AI in one place.">
   <title>Chatbot Hub — Twoje centrum AI</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,347 +12,440 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="ambient ambient-one"></div><div class="ambient ambient-two"></div>
+  <div class="ambient ambient-one"></div>
+  <div class="ambient ambient-two"></div>
+
   <header class="topbar">
-    <a class="brand" href="#discover" aria-label="Chatbot Hub home">
+    <a class="brand" href="#" aria-label="Chatbot Hub — strona główna">
       <span class="brand-mark"><span></span><span></span><span></span></span>
       <span>chatbot<span class="brand-light">hub</span></span>
     </a>
-    <nav class="nav-links" aria-label="Main navigation">
-      <a class="active" href="#discover" data-i18n="navDiscover">Odkrywaj</a>
-      <a href="#categories" data-i18n="navCategories">Kategorie</a>
-      <a href="#featured" data-i18n="navFeatured">Polecane</a>
+    <nav class="nav-links" aria-label="Główna nawigacja">
+      <a class="active" href="#odkrywaj" data-i18n="navExplore">Explore</a>
+      <a href="#kategorie" data-i18n="navCategories">Categories</a>
+      <a href="#polecane" data-i18n="navFeatured">Featured</a>
     </nav>
-    <div class="header-actions">
-      <label class="language-picker">
-        <span class="language-globe" aria-hidden="true">◎</span>
-        <span class="sr-only" data-i18n="languageLabel">Wybierz język</span>
-        <select id="language-select" aria-label="Wybierz język">
-          <option value="pl">Polski</option>
+    <div class="top-controls">
+      <div class="language-control" id="language-control">
+        <label class="sr-only" id="language-label">Language</label>
+        <select id="language-select" aria-label="Language" tabindex="-1">
           <option value="en">English</option>
+          <option value="pl">Polski</option>
           <option value="es">Español</option>
           <option value="fr">Français</option>
           <option value="de">Deutsch</option>
           <option value="it">Italiano</option>
         </select>
+        <button class="language-trigger" id="language-trigger" type="button"
+                aria-haspopup="listbox" aria-expanded="false" aria-labelledby="language-label language-current">
+          <span class="flag flag-gb" aria-hidden="true">
+            <svg viewBox="0 0 24 16" focusable="false"><rect width="24" height="16" fill="#24478f"/><path d="M0 0L24 16M24 0L0 16" stroke="#fff" stroke-width="4"/><path d="M0 0L24 16M24 0L0 16" stroke="#d9253d" stroke-width="1.6"/><path d="M12 0V16M0 8H24" stroke="#fff" stroke-width="6"/><path d="M12 0V16M0 8H24" stroke="#d9253d" stroke-width="3"/></svg>
+          </span>
+          <span id="language-current">English</span>
+          <span class="language-chevron" aria-hidden="true">▾</span>
+        </button>
+        <div class="language-menu" id="language-menu" role="listbox" aria-label="Choose language" hidden>
+          <button type="button" class="language-option" role="option" data-language="en" aria-selected="true"><span class="flag flag-gb" aria-hidden="true"><svg viewBox="0 0 24 16"><rect width="24" height="16" fill="#24478f"/><path d="M0 0L24 16M24 0L0 16" stroke="#fff" stroke-width="4"/><path d="M0 0L24 16M24 0L0 16" stroke="#d9253d" stroke-width="1.6"/><path d="M12 0V16M0 8H24" stroke="#fff" stroke-width="6"/><path d="M12 0V16M0 8H24" stroke="#d9253d" stroke-width="3"/></svg></span>English</button>
+          <button type="button" class="language-option" role="option" data-language="pl" aria-selected="false"><span class="flag flag-pl" aria-hidden="true"><svg viewBox="0 0 24 16"><rect width="24" height="8" fill="#fff"/><rect y="8" width="24" height="8" fill="#dc143c"/></svg></span>Polski</button>
+          <button type="button" class="language-option" role="option" data-language="es" aria-selected="false"><span class="flag flag-es" aria-hidden="true"><svg viewBox="0 0 24 16"><rect width="24" height="4" fill="#aa151b"/><rect y="4" width="24" height="8" fill="#f1bf00"/><rect y="12" width="24" height="4" fill="#aa151b"/></svg></span>Español</button>
+          <button type="button" class="language-option" role="option" data-language="fr" aria-selected="false"><span class="flag flag-fr" aria-hidden="true"><svg viewBox="0 0 24 16"><rect width="8" height="16" fill="#1b3f8b"/><rect x="8" width="8" height="16" fill="#fff"/><rect x="16" width="8" height="16" fill="#ed2939"/></svg></span>Français</button>
+          <button type="button" class="language-option" role="option" data-language="de" aria-selected="false"><span class="flag flag-de" aria-hidden="true"><svg viewBox="0 0 24 16"><rect width="24" height="5.34" fill="#111"/><rect y="5.33" width="24" height="5.34" fill="#dd0000"/><rect y="10.66" width="24" height="5.34" fill="#ffce00"/></svg></span>Deutsch</button>
+          <button type="button" class="language-option" role="option" data-language="it" aria-selected="false"><span class="flag flag-it" aria-hidden="true"><svg viewBox="0 0 24 16"><rect width="8" height="16" fill="#009246"/><rect x="8" width="8" height="16" fill="#fff"/><rect x="16" width="8" height="16" fill="#ce2b37"/></svg></span>Italiano</button>
+        </div>
+      </div>
+      <label class="zoom-control" for="zoom-slider">
+        <span class="zoom-label">Zoom <output id="zoom-value">50%</output></span>
+        <input id="zoom-slider" type="range" min="1" max="100" value="50" step="1" aria-label="Zoom 1–100%">
       </label>
-      <a class="top-cta" href="#tools" data-i18n="topCta">Poznaj narzędzia <span>↗</span></a>
     </div>
+    <a class="top-cta" href="#odkrywaj" data-i18n="cta">Explore tools <span>↗</span></a>
   </header>
 
   <main>
-    <section class="hero" id="discover">
-      <div class="eyebrow"><span class="pulse"></span><span data-i18n="eyebrow">TWOJE CENTRUM SZTUCZNEJ INTELIGENCJI</span></div>
-      <h1 data-i18n="heroTitle">Wszystkie możliwości AI.<br><span>w jednym miejscu.</span></h1>
-      <p class="hero-copy" data-i18n="heroCopy">Odkrywaj chatboty, porównuj możliwości i wybieraj narzędzia, które najlepiej pasują do Twoich pomysłów.</p>
-      <form class="search-wrap" id="search-form" role="search">
-        <span class="search-icon" aria-hidden="true">⌕</span>
-        <input id="search" type="search" placeholder="Wyszukaj chatbot lub kategorię..." aria-label="Wyszukaj chatbot lub kategorię..." autocomplete="off">
-        <button class="search-submit" type="submit" aria-label="Szukaj">Enter</button>
-      </form>
-      <section class="mini-chat" aria-labelledby="chat-title">
-        <div class="chat-heading"><div><div class="section-kicker" data-i18n="chatKicker">CHATBOT HUB AI</div><h2 id="chat-title" data-i18n="chatTitle">Zapytaj AI</h2><p data-i18n="chatIntro">Wybierz model, zadaj pytanie, dodaj plik lub nagraj głos.</p></div><span class="chat-status"><i></i> <span data-i18n="chatStatus">Mini chat</span></span></div>
-        <label class="model-label" for="ai-provider" data-i18n="modelLabel">Model AI</label>
-        <div class="chat-controls"><select id="ai-provider" aria-label="Model AI"><option value="openai">🇺🇸 ChatGPT / OpenAI</option><option value="anthropic">🇺🇸 Claude</option><option value="google">🇺🇸 Gemini</option><option value="deepseek">🇨🇳 DeepSeek</option><option value="bielik">🇵🇱 Bielik.ai</option></select><input id="chat-question" type="text" data-i18n-placeholder="chatQuestionPlaceholder" placeholder="Wpisz pytanie do wybranego modelu..." maxlength="12000"><button id="send-chat" type="button" data-i18n="sendChat">Wyślij ↗</button></div>
-        <div class="upload-grid">
-          <div class="upload-file-group"><label class="upload-box" for="chat-files"><span class="upload-symbol">＋</span><strong data-i18n="uploadTitle">Dodaj pliki</strong><small data-i18n="uploadHint">Przeciągnij tutaj lub wybierz z komputera</small><input id="chat-files" type="file" multiple accept=".bmp,.jpg,.jpeg,.png,.txt,.doc,.docx,.gif,.xls,.xlsx,.ppt,.pptx,.mp3,.mp4,.ogg"><small class="file-limit" data-i18n="fileLimit">file max: 10MB</small></label><button id="clear-files" class="clear-files-button" type="button" data-i18n="clearFiles">Usuń pliki</button></div>
-          <div class="upload-box voice-box"><span class="upload-symbol">🎙</span><strong data-i18n="voiceTitle">Nagranie głosowe</strong><small id="recording-status" data-i18n="recordReady">Maksymalnie 60 sekund</small><div class="voice-actions"><button id="record-start" type="button" data-i18n="recordStart">● Nagraj</button><button id="record-stop" type="button" disabled data-i18n="recordStop">■ Zakończ</button></div><small id="record-time">00:00 / 01:00</small></div>
-        </div>
-        <div id="selected-files" class="selected-files" aria-live="polite"></div>
-        <div id="chat-error" class="chat-error" role="alert" hidden></div>
-        <div id="chat-response" class="chat-response" aria-live="polite"><div class="response-placeholder" data-i18n="responsePlaceholder">Odpowiedź wybranego modelu pojawi się tutaj.</div></div>
-        <p class="privacy-note" data-i18n="privacyNote">Pliki są przesyłane do skonfigurowanego serwera AI. Nie umieszczaj tu haseł ani poufnych danych.</p>
-      </section>
-      <div class="hero-meta"><span>✦</span> <span data-i18n="heroMeta">Odkrywaj. Ucz się. Twórz.</span></div>
+    <section class="hero" id="odkrywaj">
+      <div class="eyebrow"><span class="pulse"></span> YOUR AI DISCOVERY HUB</div>
+      <h1>All the possibilities of AI.<br><span>in one place.</span></h1>
+      <p class="hero-copy">Discover chatbots, compare capabilities, and choose the tools that fit your ideas.</p>
+      <div class="search-wrap">
+        <span class="search-icon">⌕</span>
+        <input id="search" type="search" placeholder="Search chatbots or categories..." aria-label="Search chatbots or categories" data-i18n-placeholder="searchPlaceholder">
+        <kbd>⌘ K</kbd>
+      </div>
+      <div class="hero-meta"><span>✦</span> Discover. Learn. Create.</div>
     </section>
 
-    <section class="section" id="categories">
+    <section class="section" id="kategorie">
       <div class="section-heading">
-        <div><div class="section-kicker" data-i18n="categoryKicker">NAWIGUJ PO ŚWIECIE AI</div><h2 data-i18n="categoryTitle">Odkryj według kategorii</h2></div>
-        <span class="subtle" data-i18n="categoryHint">Wybierz obszar, który Cię interesuje</span>
+        <div><div class="section-kicker">NAVIGATE THE AI WORLD</div><h2>Explore by category</h2></div>
+        <span class="subtle">Choose an area that interests you</span>
       </div>
       <div class="category-grid">
-        <a class="category-card" href="#tools" data-category="assistants"><span class="category-icon purple">✧</span><span><b data-i18n="catAssistants">Asystenci AI</b><small data-i18n="catAssistantsDesc">Rozmowa i codzienna pomoc</small></span><i>↗</i></a>
-        <a class="category-card" href="#tools" data-category="coding"><span class="category-icon blue">⌘</span><span><b data-i18n="catCoding">Programowanie</b><small data-i18n="catCodingDesc">Kod, debugowanie i nauka</small></span><i>↗</i></a>
-        <a class="category-card" href="#tools" data-category="research"><span class="category-icon violet">⌕</span><span><b data-i18n="catResearch">Research</b><small data-i18n="catResearchDesc">Wiedza i wyszukiwanie</small></span><i>↗</i></a>
-        <a class="category-card" href="#tools" data-category="creative"><span class="category-icon pink">✳</span><span><b data-i18n="catCreative">Kreatywne AI</b><small data-i18n="catCreativeDesc">Pomysły i tworzenie</small></span><i>↗</i></a>
+        <a class="category-card" href="#narzedzia" data-category="asystenci"><span class="category-icon purple">✧</span><span><b>AI assistants</b><small>Conversation and everyday help</small></span><i>↗</i></a>
+        <a class="category-card" href="#narzedzia" data-category="programowanie"><span class="category-icon blue">⌘</span><span><b>Programming</b><small>Code, debugging and learning</small></span><i>↗</i></a>
+        <a class="category-card" href="#narzedzia" data-category="research"><span class="category-icon violet">⌕</span><span><b>Research</b><small>Knowledge and search</small></span><i>↗</i></a>
+        <a class="category-card" href="#narzedzia" data-category="kreatywne"><span class="category-icon pink">✳</span><span><b>Creative AI</b><small>Ideas and creation</small></span><i>↗</i></a>
       </div>
     </section>
 
-    <section class="section tools-section" id="tools">
+    <section class="section tools-section" id="narzedzia">
       <div class="section-heading">
-        <div><div class="section-kicker" data-i18n="toolsKicker">WYBRANE NARZĘDZIA</div><h2 data-i18n="toolsTitle">Popularne chatboty</h2></div>
-        <span class="live-label"><span></span><span data-i18n="catalogLabel">Katalog startowy</span></span>
+        <div><div class="section-kicker">FEATURED TOOLS</div><h2>Popular AI tools</h2></div>
+        <span class="live-label"><span></span> Starter catalogue</span>
       </div>
       <div class="tools-grid" id="tools-grid">
-        <article class="tool-card" data-category="assistants research creative">
-          <div class="tool-top"><div class="tool-logo chatgpt">◎</div><span class="tool-type" data-i18n="typeAssistant">ASYSTENT AI</span><span class="country-tag" title="Country of origin / kraj pochodzenia">🇺🇸 US</span></div>
-          <h3>ChatGPT</h3><p data-i18n="chatgptDesc">Wszechstronny asystent do rozmów, nauki, analizy i tworzenia.</p>
-          <div class="tool-bottom"><span class="tool-note">OpenAI</span><a href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer"><span data-i18n="openTool">Otwórz narzędzie</span> <b>↗</b></a></div>
+        <article class="tool-card" data-tags="asystenci research kreatywne">
+          <div class="tool-heading"><div class="tool-logo chatgpt">✳</div><h3>ChatGPT</h3></div><div class="tool-type">ASYSTENT AI</div><p>Wszechstronny asystent do rozmów, nauki, analizy i tworzenia.</p>
+          <div class="tool-bottom"><span class="tool-note">OpenAI</span><a href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">Open tool <b>↗</b></a></div>
         </article>
-        <article class="tool-card" data-category="assistants research creative coding">
-          <div class="tool-top"><div class="tool-logo claude">C</div><span class="tool-type" data-i18n="typeAssistant">ASYSTENT AI</span><span class="country-tag" title="Country of origin / kraj pochodzenia">🇺🇸 US</span></div>
-          <h3>Claude</h3><p data-i18n="claudeDesc">Asystent do pracy z tekstem, analizą, dokumentami i kodem.</p>
-          <div class="tool-bottom"><span class="tool-note">Anthropic</span><a href="https://claude.ai/" target="_blank" rel="noopener noreferrer"><span data-i18n="openTool">Otwórz narzędzie</span> <b>↗</b></a></div>
+        <article class="tool-card" data-tags="asystenci research kreatywne">
+          <div class="tool-heading"><div class="tool-logo claude">✳</div><h3>Claude</h3></div><div class="tool-type">ASYSTENT AI</div><p>Asystent do pracy z tekstem, analizą, dokumentami i kodem.</p>
+          <div class="tool-bottom"><span class="tool-note">Anthropic</span><a href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Open tool <b>↗</b></a></div>
         </article>
-        <article class="tool-card" data-category="assistants research creative">
-          <div class="tool-top"><div class="tool-logo gemini">✧</div><span class="tool-type" data-i18n="typeAssistant">ASYSTENT AI</span><span class="country-tag" title="Country of origin / kraj pochodzenia">🇺🇸 US</span></div>
-          <h3>Gemini</h3><p data-i18n="geminiDesc">Model AI od Google do pracy z informacjami i multimediami.</p>
-          <div class="tool-bottom"><span class="tool-note">Google</span><a href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer"><span data-i18n="openTool">Otwórz narzędzie</span> <b>↗</b></a></div>
+        <article class="tool-card" data-tags="asystenci research kreatywne">
+          <div class="tool-heading"><div class="tool-logo gemini">✦</div><h3>Gemini</h3></div><div class="tool-type">ASYSTENT AI</div><p>Model AI od Google do pracy z informacjami i multimediami.</p>
+          <div class="tool-bottom"><span class="tool-note">Google</span><a href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Open tool <b>↗</b></a></div>
         </article>
-        <article class="tool-card" data-category="research assistants">
-          <div class="tool-top"><div class="tool-logo perplexity">◈</div><span class="tool-type">RESEARCH</span><span class="country-tag" title="Country of origin / kraj pochodzenia">🇺🇸 US</span></div>
-          <h3>Perplexity</h3><p data-i18n="perplexityDesc">Wyszukiwanie odpowiedzi i eksplorowanie tematów ze źródłami.</p>
-          <div class="tool-bottom"><span class="tool-note">Perplexity AI</span><a href="https://www.perplexity.ai/" target="_blank" rel="noopener noreferrer"><span data-i18n="openTool">Otwórz narzędzie</span> <b>↗</b></a></div>
+        <article class="tool-card" data-tags="research asystenci">
+          <div class="tool-heading"><div class="tool-logo perplexity">◈</div><h3>Perplexity</h3></div><div class="tool-type">RESEARCH</div><p>Wyszukiwanie odpowiedzi i eksplorowanie tematów ze źródłami.</p>
+          <div class="tool-bottom"><span class="tool-note">Perplexity AI</span><a href="https://www.perplexity.ai/" target="_blank" rel="noopener noreferrer">Open tool <b>↗</b></a></div>
         </article>
-        <article class="tool-card" data-category="coding assistants">
-          <div class="tool-top"><div class="tool-logo copilot">⌘</div><span class="tool-type" data-i18n="typeCoding">PROGRAMOWANIE</span><span class="country-tag" title="Country of origin / kraj pochodzenia">🇺🇸 US</span></div>
-          <h3>GitHub Copilot</h3><p data-i18n="copilotDesc">Wsparcie programowania, podpowiedzi kodu i praca w IDE.</p>
-          <div class="tool-bottom"><span class="tool-note">GitHub</span><a href="https://github.com/features/copilot" target="_blank" rel="noopener noreferrer"><span data-i18n="openTool">Otwórz narzędzie</span> <b>↗</b></a></div>
+        <article class="tool-card" data-tags="programowanie asystenci">
+          <div class="tool-heading"><div class="tool-logo copilot">⌘</div><h3>Copilot</h3></div><div class="tool-type">PROGRAMOWANIE</div><p>Wsparcie programowania, podpowiedzi kodu i praca w IDE.</p>
+          <div class="tool-bottom"><span class="tool-note">GitHub</span><a href="https://github.com/features/copilot" target="_blank" rel="noopener noreferrer">Open tool <b>↗</b></a></div>
         </article>
-        <article class="tool-card" data-category="creative">
-          <div class="tool-top"><div class="tool-logo midjourney">✺</div><span class="tool-type" data-i18n="typeCreative">KREATYWNE AI</span><span class="country-tag" title="Country of origin / kraj pochodzenia">🇺🇸 US</span></div>
-          <h3>Midjourney</h3><p data-i18n="midjourneyDesc">Generowanie obrazów i rozwijanie wizualnych koncepcji.</p>
-          <div class="tool-bottom"><span class="tool-note">Midjourney</span><a href="https://www.midjourney.com/" target="_blank" rel="noopener noreferrer"><span data-i18n="openTool">Otwórz narzędzie</span> <b>↗</b></a></div>
+        <article class="tool-card" data-tags="kreatywne">
+          <div class="tool-heading"><div class="tool-logo midjourney">✺</div><h3>Midjourney</h3></div><div class="tool-type">KREATYWNE AI</div><p>Generowanie obrazów i rozwijanie wizualnych koncepcji.</p>
+          <div class="tool-bottom"><span class="tool-note">Midjourney</span><a href="https://www.midjourney.com/" target="_blank" rel="noopener noreferrer">Open tool <b>↗</b></a></div>
         </article>
-        <article class="tool-card" data-category="assistants research">
-          <div class="tool-top"><div class="tool-logo bielik">🇵🇱</div><span class="tool-type" data-i18n="typeAssistant">ASYSTENT AI</span><span class="country-tag" title="Country of origin / kraj pochodzenia">🇵🇱 PL</span></div>
-          <h3>Bielik.ai</h3><p data-i18n="bielikDesc">Polski ekosystem otwartych modeli językowych, rozwijanych z myślą o języku polskim.</p>
-          <div class="tool-bottom"><span class="tool-note">SpeakLeash</span><a href="https://www.bielik.ai/" target="_blank" rel="noopener noreferrer"><span data-i18n="openTool">Otwórz narzędzie</span> <b>↗</b></a></div>
+        <article class="tool-card" data-tags="asystenci polski programowanie">
+          <div class="tool-heading"><div class="tool-logo bielik">🇵🇱</div><h3>Bielik</h3></div><div class="tool-type">POLSKI MODEL AI</div>
+          <p>Polski model językowy do rozmów, analizy tekstu i zadań językowych.</p>
+          <div class="tool-bottom"><span class="tool-note">SpeakLeash</span><a href="https://bielik.ai/" target="_blank" rel="noopener noreferrer" data-i18n="openTool">Open tool <b>↗</b></a></div>
         </article>
-        <article class="tool-card" data-category="assistants research coding">
-          <div class="tool-top"><div class="tool-logo deepseek">◉</div><span class="tool-type" data-i18n="typeAssistant">ASYSTENT AI</span><span class="country-tag" title="Country of origin / kraj pochodzenia">🇨🇳 CN</span></div>
-          <h3>DeepSeek</h3><p data-i18n="deepseekDesc">Asystent AI i modele do rozumowania, analizy oraz programowania.</p>
-          <div class="tool-bottom"><span class="tool-note">DeepSeek</span><a href="https://chat.deepseek.com/" target="_blank" rel="noopener noreferrer"><span data-i18n="openTool">Otwórz narzędzie</span> <b>↗</b></a></div>
+        <article class="tool-card" data-tags="asystenci research programowanie">
+          <div class="tool-heading"><div class="tool-logo deepseek">🐋</div><h3>DeepSeek</h3></div><div class="tool-type">AI ASSISTANT</div>
+          <p>Asystent AI do rozumowania, wyszukiwania i programowania.</p>
+          <div class="tool-bottom"><span class="tool-note">DeepSeek</span><a href="https://www.deepseek.com/" target="_blank" rel="noopener noreferrer" data-i18n="openTool">Open tool <b>↗</b></a></div>
         </article>
-        <article class="tool-card" data-category="assistants coding research">
-          <div class="tool-top"><div class="tool-logo openai">◎</div><span class="tool-type" data-i18n="typeAssistant">ASYSTENT AI</span><span class="country-tag" title="Country of origin / kraj pochodzenia">🇺🇸 US</span></div>
-          <h3>OpenAI</h3><p data-i18n="openaiDesc">Firma rozwijająca modele GPT, narzędzia AI i rozwiązania dla programistów.</p>
-          <div class="tool-bottom"><span class="tool-note">OpenAI</span><a href="https://openai.com/" target="_blank" rel="noopener noreferrer"><span data-i18n="openTool">Otwórz narzędzie</span> <b>↗</b></a></div>
+        <article class="tool-card" data-tags="programowanie asystenci">
+          <div class="tool-heading"><div class="tool-logo opencode">⌘</div><h3>OpenCode</h3></div><div class="tool-type">PROGRAMMING</div>
+          <p>Agent kodujący AI do pracy z projektami programistycznymi.</p>
+          <div class="tool-bottom"><span class="tool-note">OpenCode</span><a href="https://opencode.ai/" target="_blank" rel="noopener noreferrer" data-i18n="openTool">Open tool <b>↗</b></a></div>
         </article>
-        <article class="tool-card" data-category="coding assistants">
-          <div class="tool-top"><div class="tool-logo opencode">⌘</div><span class="tool-type" data-i18n="typeCoding">PROGRAMOWANIE</span><span class="country-tag" title="Country of origin / kraj pochodzenia">🇺🇸 US</span></div>
-          <h3>OpenCode</h3><p data-i18n="opencodeDesc">Agent programistyczny działający w terminalu, obsługujący wiele modeli AI.</p>
-          <div class="tool-bottom"><span class="tool-note">OpenCode</span><a href="https://opencode.ai/" target="_blank" rel="noopener noreferrer"><span data-i18n="openTool">Otwórz narzędzie</span> <b>↗</b></a></div>
-        </article>
-        <article class="tool-card" data-category="coding assistants">
-          <div class="tool-top"><div class="tool-logo codex">⌘</div><span class="tool-type" data-i18n="typeCoding">PROGRAMOWANIE</span><span class="country-tag" title="Country of origin / kraj pochodzenia">🇺🇸 US</span></div>
-          <h3>Codex</h3><p data-i18n="codexDesc">Agent programistyczny OpenAI do tworzenia, analizowania i poprawiania kodu.</p>
-          <div class="tool-bottom"><span class="tool-note">OpenAI</span><a href="https://openai.com/codex/" target="_blank" rel="noopener noreferrer"><span data-i18n="openTool">Otwórz narzędzie</span> <b>↗</b></a></div>
+        <article class="tool-card" data-tags="programowanie asystenci">
+          <div class="tool-heading"><div class="tool-logo codex">⌘</div><h3>Codex</h3></div><div class="tool-type">PROGRAMMING</div>
+          <p>Agent programistyczny OpenAI do tworzenia i przeglądania kodu.</p>
+          <div class="tool-bottom"><span class="tool-note">OpenAI</span><a href="https://openai.com/codex/" target="_blank" rel="noopener noreferrer" data-i18n="openTool">Open tool <b>↗</b></a></div>
         </article>
       </div>
-      <p class="empty-state" id="empty-state" hidden data-i18n="emptyState">Nie znaleziono narzędzi. Spróbuj innej frazy.</p>
+      <p class="empty-state" id="empty-state" hidden>No tools found. Try another search.</p>
     </section>
 
-    <section class="feature-banner" id="featured">
+    <section class="feature-banner" id="polecane">
       <div class="feature-orb">✧</div>
-      <div><div class="section-kicker" data-i18n="bannerKicker">TWÓJ HUB. TWOJE MOŻLIWOŚCI.</div><h2 data-i18n="bannerTitle">Jedno miejsce. Wiele pomysłów.</h2><p data-i18n="bannerCopy">Katalog będzie rozwijany o kolejne narzędzia, kategorie i praktyczne wskazówki.</p></div>
-      <a href="#discover" class="feature-link" data-i18n="backTop">Wróć na górę ↑</a>
+      <div><div class="section-kicker">YOUR HUB. YOUR POSSIBILITIES.</div><h2>One place. Many ideas.</h2><p>The catalogue will grow with more tools, categories, and practical tips.</p></div>
+      <a href="#odkrywaj" class="feature-link">Back to top ↑</a>
     </section>
   </main>
 
-  <footer>
-    <a class="brand footer-brand" href="#discover"><span class="brand-mark"><span></span><span></span><span></span></span><span>chatbot<span class="brand-light">hub</span></span></a>
-    <span data-i18n="footerCopy">© 2026 Chatbot Hub · Niezależny katalog narzędzi AI</span>
-    <a href="#discover" data-i18n="footerTop">Do góry ↑</a>
-  </footer>
+  <footer><a class="brand footer-brand" href="#"><span class="brand-mark"><span></span><span></span><span></span></span><span>chatbot<span class="brand-light">hub</span></span></a><span>© 2026 Chatbot Hub · Independent AI tools catalogue</span><a href="#odkrywaj">To top ↑</a></footer>
 
   <script>
-    // Publiczny adres backendu Render dla Chatbot Hub. Klucze API pozostają wyłącznie na serwerze.
-    window.CHATBOT_HUB_API_URL = "https://chatbot-hub-sly5.onrender.com";
-    // Nazwy języków w selektorze są zapisane w ich własnych językach.
+    const search = document.querySelector('#search');
+    const cards = [...document.querySelectorAll('.tool-card')];
+    const empty = document.querySelector('#empty-state');
+    const languageSelect = document.querySelector('#language-select');
+    const zoomSlider = document.querySelector('#zoom-slider');
+    const zoomValue = document.querySelector('#zoom-value');
+
     const translations = {
-      pl: {
-        pageTitle:"Chatbot Hub — Twoje centrum AI",navDiscover:"Odkrywaj",navCategories:"Kategorie",navFeatured:"Polecane",topCta:"Poznaj narzędzia",languageLabel:"Wybierz język",
-        eyebrow:"TWOJE CENTRUM SZTUCZNEJ INTELIGENCJI",heroTitle:"Wszystkie możliwości AI.<br><span>w jednym miejscu.</span>",heroCopy:"Odkrywaj chatboty, porównuj możliwości i wybieraj narzędzia, które najlepiej pasują do Twoich pomysłów.",searchPlaceholder:"Wyszukaj chatbot lub kategorię...",heroMeta:"Odkrywaj. Ucz się. Twórz.",
-        categoryKicker:"NAWIGUJ PO ŚWIECIE AI",categoryTitle:"Odkryj według kategorii",categoryHint:"Wybierz obszar, który Cię interesuje",catAssistants:"Asystenci AI",catAssistantsDesc:"Rozmowa i codzienna pomoc",catCoding:"Programowanie",catCodingDesc:"Kod, debugowanie i nauka",catResearch:"Research",catResearchDesc:"Wiedza i wyszukiwanie",catCreative:"Kreatywne AI",catCreativeDesc:"Pomysły i tworzenie",
-        toolsKicker:"WYBRANE NARZĘDZIA",toolsTitle:"Popularne chatboty",catalogLabel:"Katalog startowy",typeAssistant:"ASYSTENT AI",typeCoding:"PROGRAMOWANIE",typeCreative:"KREATYWNE AI",chatgptDesc:"Wszechstronny asystent do rozmów, nauki, analizy i tworzenia.",claudeDesc:"Asystent do pracy z tekstem, analizą, dokumentami i kodem.",geminiDesc:"Model AI od Google do pracy z informacjami i multimediami.",perplexityDesc:"Wyszukiwanie odpowiedzi i eksplorowanie tematów ze źródłami.",copilotDesc:"Wsparcie programowania, podpowiedzi kodu i praca w IDE.",midjourneyDesc:"Generowanie obrazów i rozwijanie wizualnych koncepcji.",bielikDesc:"Polski ekosystem otwartych modeli językowych, rozwijanych z myślą o języku polskim.",deepseekDesc:"Asystent AI i modele do rozumowania, analizy oraz programowania.",openaiDesc:"Firma rozwijająca modele GPT, narzędzia AI i rozwiązania dla programistów.",opencodeDesc:"Agent programistyczny działający w terminalu, obsługujący wiele modeli AI.",codexDesc:"Agent programistyczny OpenAI do tworzenia, analizowania i poprawiania kodu.",
-        chatTitle:'Zapytaj AI',chatIntro:'Wybierz model, zadaj pytanie, dodaj plik lub nagraj głos.',modelLabel:'Model AI',chatQuestionPlaceholder:'Wpisz pytanie do wybranego modelu...',sendChat:'Wyślij ↗',uploadTitle:'Dodaj pliki',clearFiles:'Usuń pliki',uploadHint:'Przeciągnij tutaj lub wybierz z komputera',voiceTitle:'Nagranie głosowe',recordReady:'Maksymalnie 60 sekund',recordStart:'● Nagraj',recordStop:'■ Zakończ',responsePlaceholder:'Odpowiedź wybranego modelu pojawi się tutaj.',privacyNote:'Pliki są przesyłane do skonfigurowanego serwera AI. Nie umieszczaj tu haseł ani poufnych danych.',chatKicker:'CHATBOT HUB AI',chatStatus:'Mini chat',fileLimit:'file max: 10MB',chatSending:"Wysyłanie…",chatAnalyzing:"Model analizuje Twoje pytanie i załączniki…",chatNeedInput:"Wpisz pytanie, dodaj plik lub nagraj wiadomość.",chatFileError:"Plik {name} jest za duży lub ma nieobsługiwany format. Limit: 10 MB na plik.",chatRecording:"Nagrywanie…",chatRecordingReady:"Nagranie gotowe — zostanie wysłane z pytaniem.",chatMicError:"Nie udało się uruchomić mikrofonu.",chatNoAnswer:"Model nie zwrócił odpowiedzi.",chatConnectionError:"Nie można połączyć się z backendem. Uruchom serwer API i ustaw adres API w konfiguracji wdrożenia.",chatServerError:"Serwer nie mógł przetworzyć zapytania.",openTool:"Otwórz narzędzie",emptyState:"Nie znaleziono narzędzi. Spróbuj innej frazy.",bannerKicker:"TWÓJ HUB. TWOJE MOŻLIWOŚCI.",bannerTitle:"Jedno miejsce. Wiele pomysłów.",bannerCopy:"Katalog będzie rozwijany o kolejne narzędzia, kategorie i praktyczne wskazówki.",backTop:"Wróć na górę ↑",footerCopy:"© 2026 Chatbot Hub · Niezależny katalog narzędzi AI",footerTop:"Do góry ↑",searchLabel:"Wyszukaj chatbot lub kategorię..."
-      },
       en: {
-        pageTitle:"Chatbot Hub — Your AI Center",navDiscover:"Discover",navCategories:"Categories",navFeatured:"Featured",topCta:"Explore tools",languageLabel:"Choose language",
-        eyebrow:"YOUR ARTIFICIAL INTELLIGENCE HUB",heroTitle:"All the possibilities of AI.<br><span>in one place.</span>",heroCopy:"Discover chatbots, compare their capabilities, and choose the tools that best fit your ideas.",searchPlaceholder:"Search for a chatbot or category...",heroMeta:"Discover. Learn. Create.",
-        categoryKicker:"EXPLORE THE WORLD OF AI",categoryTitle:"Explore by category",categoryHint:"Choose an area that interests you",catAssistants:"AI Assistants",catAssistantsDesc:"Conversation and everyday help",catCoding:"Programming",catCodingDesc:"Code, debugging and learning",catResearch:"Research",catResearchDesc:"Knowledge and search",catCreative:"Creative AI",catCreativeDesc:"Ideas and creation",
-        toolsKicker:"SELECTED TOOLS",toolsTitle:"Popular chatbots",catalogLabel:"Starter catalog",typeAssistant:"AI ASSISTANT",typeCoding:"PROGRAMMING",typeCreative:"CREATIVE AI",chatgptDesc:"A versatile assistant for conversation, learning, analysis and creation.",claudeDesc:"An assistant for working with text, analysis, documents and code.",geminiDesc:"Google's AI model for working with information and multimedia.",perplexityDesc:"Find answers and explore topics with cited sources.",copilotDesc:"Programming support, code suggestions and help inside your IDE.",midjourneyDesc:"Generate images and develop visual concepts.",bielikDesc:"An open Polish language-model ecosystem designed with the Polish language in mind.",deepseekDesc:"AI assistant and models for reasoning, analysis and coding.",openaiDesc:"The company behind GPT models, AI tools and developer solutions.",opencodeDesc:"A terminal-based coding agent that works with many AI models.",codexDesc:"OpenAI coding agent for building, analyzing and improving code.",
-        chatTitle:'Ask AI',chatIntro:'Choose a model, ask a question, attach a file or record your voice.',modelLabel:'AI model',chatQuestionPlaceholder:'Ask the selected model a question...',sendChat:'Send ↗',uploadTitle:'Add files',clearFiles:'Remove files',uploadHint:'Drop files here or browse your computer',voiceTitle:'Voice recording',recordReady:'Up to 60 seconds',recordStart:'● Record',recordStop:'■ Stop',responsePlaceholder:'The selected model’s answer will appear here.',privacyNote:'Files are sent to the configured AI server. Do not include passwords or confidential data.',chatKicker:'CHATBOT HUB AI',chatStatus:'Mini chat',fileLimit:'file max: 10MB',chatSending:"Sending…",chatAnalyzing:"The model is analyzing your question and attachments…",chatNeedInput:"Enter a question, attach a file, or record a message.",chatFileError:"File {name} is too large or has an unsupported format. Limit: 10 MB per file.",chatRecording:"Recording…",chatRecordingReady:"Recording ready — it will be sent with your question.",chatMicError:"Could not start the microphone.",chatNoAnswer:"The model did not return an answer.",chatConnectionError:"Cannot connect to the backend. Start the API server and configure its URL.",chatServerError:"The server could not process the request.",openTool:"Open tool",emptyState:"No tools found. Try a different search.",bannerKicker:"YOUR HUB. YOUR POSSIBILITIES.",bannerTitle:"One place. Many ideas.",bannerCopy:"The catalog will grow with more tools, categories and practical tips.",backTop:"Back to top ↑",footerCopy:"© 2026 Chatbot Hub · Independent AI tools directory",footerTop:"Top ↑",searchLabel:"Search for a chatbot or category..."
+        nav:['Explore','Categories','Featured'], cta:'Explore tools',
+        eyebrow:'YOUR AI DISCOVERY HUB', h1a:'All the possibilities of AI.', h1b:'in one place.',
+        hero:'Discover chatbots, compare capabilities, and choose the tools that fit your ideas.',
+        search:'Search chatbots or categories...', meta:'Discover. Learn. Create.',
+        kicker1:'NAVIGATE THE AI WORLD', categoryTitle:'Explore by category', categorySub:'Choose an area that interests you',
+        categories:[['AI assistants','Conversation and everyday help'],['Programming','Code, debugging and learning'],['Research','Knowledge and search'],['Creative AI','Ideas and creation']],
+        toolsKicker:'FEATURED TOOLS', toolsTitle:'Popular AI tools', live:'Starter catalogue',
+        open:'Open tool', empty:'No tools found. Try another search.',
+        bannerKicker:'YOUR HUB. YOUR POSSIBILITIES.', bannerTitle:'One place. Many ideas.',
+        bannerText:'The catalogue will grow with more tools, categories, and practical tips.',
+        back:'Back to top ↑', footer:'© 2026 Chatbot Hub · Independent AI tools catalogue'
+      },
+      pl: {
+        nav:['Odkrywaj','Kategorie','Polecane'], cta:'Poznaj narzędzia',
+        eyebrow:'TWOJE CENTRUM SZTUCZNEJ INTELIGENCJI', h1a:'Wszystkie możliwości AI.', h1b:'w jednym miejscu.',
+        hero:'Odkrywaj chatboty, porównuj możliwości i wybieraj narzędzia, które najlepiej pasują do Twoich pomysłów.',
+        search:'Wyszukaj chatbot lub kategorię...', meta:'Odkrywaj. Ucz się. Twórz.',
+        kicker1:'NAWIGUJ PO ŚWIECIE AI', categoryTitle:'Odkryj według kategorii', categorySub:'Wybierz obszar, który Cię interesuje',
+        categories:[['Asystenci AI','Rozmowa i codzienna pomoc'],['Programowanie','Kod, debugowanie i nauka'],['Research','Wiedza i wyszukiwanie'],['Kreatywne AI','Pomysły i tworzenie']],
+        toolsKicker:'WYBRANE NARZĘDZIA', toolsTitle:'Popularne chatboty', live:'Katalog startowy',
+        open:'Otwórz narzędzie', empty:'Nie znaleziono narzędzi. Spróbuj innej frazy.',
+        bannerKicker:'TWÓJ HUB. TWOJE MOŻLIWOŚCI.', bannerTitle:'Jedno miejsce. Wiele pomysłów.',
+        bannerText:'Katalog będzie rozwijany o kolejne narzędzia, kategorie i praktyczne wskazówki.',
+        back:'Wróć na górę ↑', footer:'© 2026 Chatbot Hub · Niezależny katalog narzędzi AI'
       },
       es: {
-        pageTitle:"Chatbot Hub — Tu centro de IA",navDiscover:"Descubrir",navCategories:"Categorías",navFeatured:"Destacados",topCta:"Explorar herramientas",languageLabel:"Elegir idioma",
-        eyebrow:"TU CENTRO DE INTELIGENCIA ARTIFICIAL",heroTitle:"Todas las posibilidades de la IA.<br><span>en un solo lugar.</span>",heroCopy:"Descubre chatbots, compara sus capacidades y elige las herramientas que mejor se adapten a tus ideas.",searchPlaceholder:"Buscar un chatbot o una categoría...",heroMeta:"Descubre. Aprende. Crea.",
-        categoryKicker:"EXPLORA EL MUNDO DE LA IA",categoryTitle:"Explora por categoría",categoryHint:"Elige el área que te interesa",catAssistants:"Asistentes de IA",catAssistantsDesc:"Conversación y ayuda diaria",catCoding:"Programación",catCodingDesc:"Código, depuración y aprendizaje",catResearch:"Investigación",catResearchDesc:"Conocimiento y búsqueda",catCreative:"IA creativa",catCreativeDesc:"Ideas y creación",
-        toolsKicker:"HERRAMIENTAS SELECCIONADAS",toolsTitle:"Chatbots populares",catalogLabel:"Catálogo inicial",typeAssistant:"ASISTENTE DE IA",typeCoding:"PROGRAMACIÓN",typeCreative:"IA CREATIVA",chatgptDesc:"Un asistente versátil para conversar, aprender, analizar y crear.",claudeDesc:"Un asistente para trabajar con textos, análisis, documentos y código.",geminiDesc:"El modelo de IA de Google para trabajar con información y contenido multimedia.",perplexityDesc:"Encuentra respuestas y explora temas con fuentes citadas.",copilotDesc:"Ayuda para programar, sugerencias de código y asistencia en tu IDE.",midjourneyDesc:"Genera imágenes y desarrolla conceptos visuales.",bielikDesc:"Ecosistema polaco de modelos de lenguaje abiertos, diseñado para el idioma polaco.",deepseekDesc:"Asistente de IA y modelos para razonamiento, análisis y programación.",openaiDesc:"La empresa que desarrolla los modelos GPT, herramientas de IA y soluciones para desarrolladores.",opencodeDesc:"Agente de programación en terminal compatible con muchos modelos de IA.",codexDesc:"Agente de programación de OpenAI para crear, analizar y mejorar código.",
-        chatTitle:'Pregunta a la IA',chatIntro:'Elige un modelo, haz una pregunta, adjunta un archivo o graba tu voz.',modelLabel:'Modelo de IA',chatQuestionPlaceholder:'Escribe una pregunta para el modelo seleccionado...',sendChat:'Enviar ↗',uploadTitle:'Añadir archivos',clearFiles:'Eliminar archivos',uploadHint:'Arrastra archivos aquí o selecciónalos en tu equipo',voiceTitle:'Grabación de voz',recordReady:'Máximo 60 segundos',recordStart:'● Grabar',recordStop:'■ Detener',responsePlaceholder:'La respuesta del modelo aparecerá aquí.',privacyNote:'Los archivos se envían al servidor de IA configurado. No incluyas contraseñas ni datos confidenciales.',chatKicker:'CHATBOT HUB AI',chatStatus:'Mini chat',fileLimit:'file max: 10MB',chatSending:"Enviando…",chatAnalyzing:"El modelo está analizando tu pregunta y los archivos adjuntos…",chatNeedInput:"Escribe una pregunta, adjunta un archivo o graba un mensaje.",chatFileError:"El archivo {name} es demasiado grande o tiene un formato no compatible. Límite: 10 MB por archivo.",chatRecording:"Grabando…",chatRecordingReady:"Grabación lista: se enviará con tu pregunta.",chatMicError:"No se pudo iniciar el micrófono.",chatNoAnswer:"El modelo no devolvió ninguna respuesta.",chatConnectionError:"No se puede conectar con el servidor. Inicia la API y configura su dirección.",chatServerError:"El servidor no pudo procesar la solicitud.",openTool:"Abrir herramienta",emptyState:"No se encontraron herramientas. Prueba otra búsqueda.",bannerKicker:"TU HUB. TUS POSIBILIDADES.",bannerTitle:"Un lugar. Muchas ideas.",bannerCopy:"El catálogo crecerá con más herramientas, categorías y consejos prácticos.",backTop:"Volver arriba ↑",footerCopy:"© 2026 Chatbot Hub · Directorio independiente de herramientas de IA",footerTop:"Arriba ↑",searchLabel:"Buscar un chatbot o una categoría..."
+        nav:['Explorar','Categorías','Destacados'], cta:'Ver herramientas',
+        eyebrow:'TU CENTRO DE DESCUBRIMIENTO DE IA', h1a:'Todas las posibilidades de la IA.', h1b:'en un solo lugar.',
+        hero:'Descubre chatbots, compara sus capacidades y elige las herramientas adecuadas para tus ideas.',
+        search:'Buscar chatbots o categorías...', meta:'Descubre. Aprende. Crea.',
+        kicker1:'NAVEGA POR EL MUNDO DE LA IA', categoryTitle:'Explorar por categoría', categorySub:'Elige el área que te interesa',
+        categories:[['Asistentes de IA','Conversación y ayuda diaria'],['Programación','Código, depuración y aprendizaje'],['Investigación','Conocimiento y búsqueda'],['IA creativa','Ideas y creación']],
+        toolsKicker:'HERRAMIENTAS DESTACADAS', toolsTitle:'Chatbots populares', live:'Catálogo inicial',
+        open:'Abrir herramienta', empty:'No se encontraron herramientas. Prueba otra búsqueda.',
+        bannerKicker:'TU HUB. TUS POSIBILIDADES.', bannerTitle:'Un lugar. Muchas ideas.',
+        bannerText:'El catálogo crecerá con más herramientas, categorías y consejos prácticos.',
+        back:'Volver arriba ↑', footer:'© 2026 Chatbot Hub · Catálogo independiente de herramientas de IA'
       },
       fr: {
-        pageTitle:"Chatbot Hub — Votre centre IA",navDiscover:"Découvrir",navCategories:"Catégories",navFeatured:"À la une",topCta:"Explorer les outils",languageLabel:"Choisir la langue",
-        eyebrow:"VOTRE CENTRE D’INTELLIGENCE ARTIFICIELLE",heroTitle:"Toutes les possibilités de l’IA.<br><span>au même endroit.</span>",heroCopy:"Découvrez des chatbots, comparez leurs capacités et choisissez les outils qui correspondent le mieux à vos idées.",searchPlaceholder:"Rechercher un chatbot ou une catégorie...",heroMeta:"Découvrez. Apprenez. Créez.",
-        categoryKicker:"EXPLOREZ LE MONDE DE L’IA",categoryTitle:"Découvrir par catégorie",categoryHint:"Choisissez un domaine qui vous intéresse",catAssistants:"Assistants IA",catAssistantsDesc:"Conversation et aide au quotidien",catCoding:"Programmation",catCodingDesc:"Code, débogage et apprentissage",catResearch:"Recherche",catResearchDesc:"Connaissances et recherche",catCreative:"IA créative",catCreativeDesc:"Idées et création",
-        toolsKicker:"OUTILS SÉLECTIONNÉS",toolsTitle:"Chatbots populaires",catalogLabel:"Catalogue de départ",typeAssistant:"ASSISTANT IA",typeCoding:"PROGRAMMATION",typeCreative:"IA CRÉATIVE",chatgptDesc:"Un assistant polyvalent pour discuter, apprendre, analyser et créer.",claudeDesc:"Un assistant pour travailler sur des textes, des analyses, des documents et du code.",geminiDesc:"Le modèle IA de Google pour travailler avec des informations et des contenus multimédias.",perplexityDesc:"Trouvez des réponses et explorez des sujets avec des sources citées.",copilotDesc:"Aide à la programmation, suggestions de code et assistance dans votre IDE.",midjourneyDesc:"Générez des images et développez des concepts visuels.",bielikDesc:"Écosystème polonais de modèles linguistiques ouverts, conçu pour la langue polonaise.",deepseekDesc:"Assistant IA et modèles pour le raisonnement, l’analyse et la programmation.",openaiDesc:"L’entreprise qui développe les modèles GPT, des outils IA et des solutions pour développeurs.",opencodeDesc:"Agent de programmation en terminal compatible avec de nombreux modèles IA.",codexDesc:"Agent de programmation OpenAI pour créer, analyser et améliorer du code.",
-        chatTitle:'Demander à l’IA',chatIntro:'Choisissez un modèle, posez une question, joignez un fichier ou enregistrez votre voix.',modelLabel:'Modèle IA',chatQuestionPlaceholder:'Posez une question au modèle sélectionné...',sendChat:'Envoyer ↗',uploadTitle:'Ajouter des fichiers',clearFiles:'Supprimer les fichiers',uploadHint:'Déposez les fichiers ici ou parcourez votre ordinateur',voiceTitle:'Enregistrement vocal',recordReady:'60 secondes maximum',recordStart:'● Enregistrer',recordStop:'■ Arrêter',responsePlaceholder:'La réponse du modèle apparaîtra ici.',privacyNote:'Les fichiers sont envoyés au serveur IA configuré. N’incluez aucun mot de passe ni donnée confidentielle.',chatKicker:'CHATBOT HUB AI',chatStatus:'Mini chat',fileLimit:'file max: 10MB',chatSending:"Envoi…",chatAnalyzing:"Le modèle analyse votre question et les pièces jointes…",chatNeedInput:"Saisissez une question, joignez un fichier ou enregistrez un message.",chatFileError:"Le fichier {name} est trop volumineux ou son format n’est pas pris en charge. Limite : 10 Mo par fichier.",chatRecording:"Enregistrement…",chatRecordingReady:"Enregistrement prêt — il sera envoyé avec votre question.",chatMicError:"Impossible de démarrer le microphone.",chatNoAnswer:"Le modèle n’a renvoyé aucune réponse.",chatConnectionError:"Connexion au serveur impossible. Démarrez l’API et configurez son adresse.",chatServerError:"Le serveur n’a pas pu traiter la demande.",openTool:"Ouvrir l’outil",emptyState:"Aucun outil trouvé. Essayez une autre recherche.",bannerKicker:"VOTRE HUB. VOS POSSIBILITÉS.",bannerTitle:"Un endroit. Mille idées.",bannerCopy:"Le catalogue s’enrichira de nouveaux outils, catégories et conseils pratiques.",backTop:"Retour en haut ↑",footerCopy:"© 2026 Chatbot Hub · Annuaire indépendant des outils d’IA",footerTop:"Haut ↑",searchLabel:"Rechercher un chatbot ou une catégorie..."
+        nav:['Découvrir','Catégories','À la une'], cta:'Voir les outils',
+        eyebrow:'VOTRE CENTRE DE DÉCOUVERTE DE L’IA', h1a:'Toutes les possibilités de l’IA.', h1b:'au même endroit.',
+        hero:'Découvrez des chatbots, comparez leurs capacités et choisissez les outils adaptés à vos idées.',
+        search:'Rechercher des chatbots ou catégories...', meta:'Découvrez. Apprenez. Créez.',
+        kicker1:'EXPLOREZ LE MONDE DE L’IA', categoryTitle:'Explorer par catégorie', categorySub:'Choisissez un domaine qui vous intéresse',
+        categories:[['Assistants IA','Conversation et aide au quotidien'],['Programmation','Code, débogage et apprentissage'],['Recherche','Connaissances et recherche'],['IA créative','Idées et création']],
+        toolsKicker:'OUTILS À LA UNE', toolsTitle:'Chatbots populaires', live:'Catalogue de départ',
+        open:'Ouvrir l’outil', empty:'Aucun outil trouvé. Essayez une autre recherche.',
+        bannerKicker:'VOTRE HUB. VOS POSSIBILITÉS.', bannerTitle:'Un lieu. Beaucoup d’idées.',
+        bannerText:'Le catalogue s’enrichira de nouveaux outils, catégories et conseils pratiques.',
+        back:'Retour en haut ↑', footer:'© 2026 Chatbot Hub · Catalogue indépendant d’outils IA'
       },
       de: {
-        pageTitle:"Chatbot Hub — Dein KI-Zentrum",navDiscover:"Entdecken",navCategories:"Kategorien",navFeatured:"Empfehlungen",topCta:"Tools entdecken",languageLabel:"Sprache auswählen",
-        eyebrow:"DEIN ZENTRUM FÜR KÜNSTLICHE INTELLIGENZ",heroTitle:"Alle Möglichkeiten der KI.<br><span>an einem Ort.</span>",heroCopy:"Entdecke Chatbots, vergleiche ihre Funktionen und wähle die Tools, die am besten zu deinen Ideen passen.",searchPlaceholder:"Chatbot oder Kategorie suchen...",heroMeta:"Entdecken. Lernen. Erschaffen.",
-        categoryKicker:"ENTDECKE DIE WELT DER KI",categoryTitle:"Nach Kategorie entdecken",categoryHint:"Wähle einen Bereich, der dich interessiert",catAssistants:"KI-Assistenten",catAssistantsDesc:"Gespräche und Alltagshilfe",catCoding:"Programmierung",catCodingDesc:"Code, Fehlersuche und Lernen",catResearch:"Recherche",catResearchDesc:"Wissen und Suche",catCreative:"Kreative KI",catCreativeDesc:"Ideen und Gestaltung",
-        toolsKicker:"AUSGEWÄHLTE TOOLS",toolsTitle:"Beliebte Chatbots",catalogLabel:"Startkatalog",typeAssistant:"KI-ASSISTENT",typeCoding:"PROGRAMMIERUNG",typeCreative:"KREATIVE KI",chatgptDesc:"Ein vielseitiger Assistent für Gespräche, Lernen, Analysen und Kreativität.",claudeDesc:"Ein Assistent für Texte, Analysen, Dokumente und Programmcode.",geminiDesc:"Googles KI-Modell für Informationen und Multimedia-Inhalte.",perplexityDesc:"Finde Antworten und erkunde Themen mit Quellenangaben.",copilotDesc:"Programmierhilfe, Code-Vorschläge und Unterstützung direkt in deiner IDE.",midjourneyDesc:"Erstelle Bilder und entwickle visuelle Konzepte.",bielikDesc:"Offenes polnisches Sprachmodell-Ökosystem mit besonderem Fokus auf die polnische Sprache.",deepseekDesc:"KI-Assistent und Modelle für logisches Denken, Analyse und Programmierung.",openaiDesc:"Das Unternehmen hinter GPT-Modellen, KI-Tools und Entwicklerlösungen.",opencodeDesc:"Terminalbasierter Programmieragent für die Arbeit mit vielen KI-Modellen.",codexDesc:"OpenAI-Programmieragent zum Erstellen, Analysieren und Verbessern von Code.",
-        chatTitle:'KI fragen',chatIntro:'Wähle ein Modell, stelle eine Frage, füge eine Datei hinzu oder nimm deine Stimme auf.',modelLabel:'KI-Modell',chatQuestionPlaceholder:'Stelle dem ausgewählten Modell eine Frage...',sendChat:'Senden ↗',uploadTitle:'Dateien hinzufügen',clearFiles:'Dateien entfernen',uploadHint:'Dateien hier ablegen oder auf deinem Computer auswählen',voiceTitle:'Sprachaufnahme',recordReady:'Maximal 60 Sekunden',recordStart:'● Aufnehmen',recordStop:'■ Stoppen',responsePlaceholder:'Die Antwort des ausgewählten Modells erscheint hier.',privacyNote:'Dateien werden an den konfigurierten KI-Server gesendet. Keine Passwörter oder vertraulichen Daten eingeben.',chatKicker:'CHATBOT HUB AI',chatStatus:'Mini chat',fileLimit:'file max: 10MB',chatSending:"Wird gesendet…",chatAnalyzing:"Das Modell analysiert deine Frage und Anhänge…",chatNeedInput:"Gib eine Frage ein, füge eine Datei hinzu oder nimm eine Nachricht auf.",chatFileError:"Datei {name} ist zu groß oder hat ein nicht unterstütztes Format. Limit: 10 MB pro Datei.",chatRecording:"Aufnahme läuft…",chatRecordingReady:"Aufnahme bereit — sie wird mit deiner Frage gesendet.",chatMicError:"Das Mikrofon konnte nicht gestartet werden.",chatNoAnswer:"Das Modell hat keine Antwort zurückgegeben.",chatConnectionError:"Keine Verbindung zum Backend. Starte den API-Server und konfiguriere seine Adresse.",chatServerError:"Der Server konnte die Anfrage nicht verarbeiten.",openTool:"Tool öffnen",emptyState:"Keine Tools gefunden. Versuche eine andere Suche.",bannerKicker:"DEIN HUB. DEINE MÖGLICHKEITEN.",bannerTitle:"Ein Ort. Viele Ideen.",bannerCopy:"Der Katalog wird um weitere Tools, Kategorien und praktische Tipps erweitert.",backTop:"Nach oben ↑",footerCopy:"© 2026 Chatbot Hub · Unabhängiges Verzeichnis für KI-Tools",footerTop:"Nach oben ↑",searchLabel:"Chatbot oder Kategorie suchen..."
+        nav:['Entdecken','Kategorien','Empfohlen'], cta:'Tools entdecken',
+        eyebrow:'DEIN ZENTRUM FÜR KI-ENTDECKUNGEN', h1a:'Alle Möglichkeiten der KI.', h1b:'an einem Ort.',
+        hero:'Entdecke Chatbots, vergleiche ihre Fähigkeiten und wähle passende Tools für deine Ideen.',
+        search:'Chatbots oder Kategorien suchen...', meta:'Entdecken. Lernen. Erstellen.',
+        kicker1:'DIE WELT DER KI ENTDECKEN', categoryTitle:'Nach Kategorie entdecken', categorySub:'Wähle einen Bereich, der dich interessiert',
+        categories:[['KI-Assistenten','Gespräche und Alltagshilfe'],['Programmierung','Code, Debugging und Lernen'],['Recherche','Wissen und Suche'],['Kreative KI','Ideen und Kreation']],
+        toolsKicker:'AUSGEWÄHLTE TOOLS', toolsTitle:'Beliebte Chatbots', live:'Startkatalog',
+        open:'Tool öffnen', empty:'Keine Tools gefunden. Versuche eine andere Suche.',
+        bannerKicker:'DEIN HUB. DEINE MÖGLICHKEITEN.', bannerTitle:'Ein Ort. Viele Ideen.',
+        bannerText:'Der Katalog wird um weitere Tools, Kategorien und praktische Tipps erweitert.',
+        back:'Nach oben ↑', footer:'© 2026 Chatbot Hub · Unabhängiger Katalog für KI-Tools'
       },
       it: {
-        pageTitle:"Chatbot Hub — Il tuo centro IA",navDiscover:"Scopri",navCategories:"Categorie",navFeatured:"In evidenza",topCta:"Esplora gli strumenti",languageLabel:"Scegli la lingua",
-        eyebrow:"IL TUO CENTRO DI INTELLIGENZA ARTIFICIALE",heroTitle:"Tutte le possibilità dell’IA.<br><span>in un unico posto.</span>",heroCopy:"Scopri i chatbot, confronta le loro funzionalità e scegli gli strumenti più adatti alle tue idee.",searchPlaceholder:"Cerca un chatbot o una categoria...",heroMeta:"Scopri. Impara. Crea.",
-        categoryKicker:"ESPLORA IL MONDO DELL’IA",categoryTitle:"Esplora per categoria",categoryHint:"Scegli l’area che ti interessa",catAssistants:"Assistenti IA",catAssistantsDesc:"Conversazione e aiuto quotidiano",catCoding:"Programmazione",catCodingDesc:"Codice, debug e apprendimento",catResearch:"Ricerca",catResearchDesc:"Conoscenza e ricerca",catCreative:"IA creativa",catCreativeDesc:"Idee e creazione",
-        toolsKicker:"STRUMENTI SELEZIONATI",toolsTitle:"Chatbot popolari",catalogLabel:"Catalogo iniziale",typeAssistant:"ASSISTENTE IA",typeCoding:"PROGRAMMAZIONE",typeCreative:"IA CREATIVA",chatgptDesc:"Un assistente versatile per conversare, imparare, analizzare e creare.",claudeDesc:"Un assistente per lavorare con testi, analisi, documenti e codice.",geminiDesc:"Il modello IA di Google per lavorare con informazioni e contenuti multimediali.",perplexityDesc:"Trova risposte ed esplora argomenti con fonti citate.",copilotDesc:"Supporto alla programmazione, suggerimenti di codice e assistenza nel tuo IDE.",midjourneyDesc:"Genera immagini e sviluppa concept visivi.",bielikDesc:"Ecosistema polacco di modelli linguistici aperti, progettato per la lingua polacca.",deepseekDesc:"Assistente IA e modelli per ragionamento, analisi e programmazione.",openaiDesc:"L’azienda che sviluppa i modelli GPT, strumenti IA e soluzioni per sviluppatori.",opencodeDesc:"Agente di programmazione da terminale compatibile con molti modelli IA.",codexDesc:"Agente di programmazione OpenAI per creare, analizzare e migliorare codice.",
-        chatTitle:'Chiedi all’IA',chatIntro:'Scegli un modello, fai una domanda, allega un file o registra la tua voce.',modelLabel:'Modello IA',chatQuestionPlaceholder:'Scrivi una domanda per il modello selezionato...',sendChat:'Invia ↗',uploadTitle:'Aggiungi file',clearFiles:'Rimuovi file',uploadHint:'Trascina qui i file o selezionali dal computer',voiceTitle:'Registrazione vocale',recordReady:'Massimo 60 secondi',recordStart:'● Registra',recordStop:'■ Ferma',responsePlaceholder:'La risposta del modello apparirà qui.',privacyNote:'I file vengono inviati al server IA configurato. Non inserire password o dati riservati.',chatKicker:'CHATBOT HUB AI',chatStatus:'Mini chat',fileLimit:'file max: 10MB',chatSending:"Invio…",chatAnalyzing:"Il modello sta analizzando la domanda e gli allegati…",chatNeedInput:"Scrivi una domanda, allega un file o registra un messaggio.",chatFileError:"Il file {name} è troppo grande o ha un formato non supportato. Limite: 10 MB per file.",chatRecording:"Registrazione…",chatRecordingReady:"Registrazione pronta: verrà inviata con la domanda.",chatMicError:"Impossibile avviare il microfono.",chatNoAnswer:"Il modello non ha restituito una risposta.",chatConnectionError:"Impossibile connettersi al backend. Avvia il server API e configura il suo indirizzo.",chatServerError:"Il server non è riuscito a elaborare la richiesta.",openTool:"Apri strumento",emptyState:"Nessuno strumento trovato. Prova un'altra ricerca.",bannerKicker:"IL TUO HUB. LE TUE POSSIBILITÀ.",bannerTitle:"Un luogo. Tante idee.",bannerCopy:"Il catalogo si arricchirà di nuovi strumenti, categorie e consigli pratici.",backTop:"Torna in alto ↑",footerCopy:"© 2026 Chatbot Hub · Elenco indipendente di strumenti IA",footerTop:"In alto ↑",searchLabel:"Cerca un chatbot o una categoria..."
+        nav:['Esplora','Categorie','In evidenza'], cta:'Scopri gli strumenti',
+        eyebrow:'IL TUO HUB PER SCOPRIRE L’INTELLIGENZA ARTIFICIALE', h1a:'Tutte le possibilità dell’IA.', h1b:'in un unico posto.',
+        hero:'Scopri i chatbot, confronta le funzionalità e scegli gli strumenti più adatti alle tue idee.',
+        search:'Cerca chatbot o categorie...', meta:'Scopri. Impara. Crea.',
+        kicker1:'ESPLORA IL MONDO DELL’IA', categoryTitle:'Esplora per categoria', categorySub:'Scegli l’area che ti interessa',
+        categories:[['Assistenti IA','Conversazione e aiuto quotidiano'],['Programmazione','Codice, debug e apprendimento'],['Ricerca','Conoscenza e ricerca'],['IA creativa','Idee e creazione']],
+        toolsKicker:'STRUMENTI IN EVIDENZA', toolsTitle:'Chatbot popolari', live:'Catalogo iniziale',
+        open:'Apri strumento', empty:'Nessuno strumento trovato. Prova un’altra ricerca.',
+        bannerKicker:'IL TUO HUB. LE TUE POSSIBILITÀ.', bannerTitle:'Un posto. Tante idee.',
+        bannerText:'Il catalogo crescerà con nuovi strumenti, categorie e consigli pratici.',
+        back:'Torna su ↑', footer:'© 2026 Chatbot Hub · Catalogo indipendente di strumenti IA'
       }
     };
 
-    const languageSelect = document.getElementById("language-select");
-    const searchInput = document.getElementById("search");
-    const toolCards = [...document.querySelectorAll(".tool-card")];
-    const emptyState = document.getElementById("empty-state");
-    let activeCategory = "";
+    const toolDescriptions = {
+      en: [
+        'Versatile assistant for conversation, learning, analysis, and creation.',
+        'Assistant for writing, analysis, documents, and code.',
+        'Google AI model for working with information and media.',
+        'Find answers and explore topics with cited sources.',
+        'Coding assistance, code suggestions, and IDE workflows.',
+        'Image generation and visual concept development.',
+        'Polish language model for conversation, text analysis, and language tasks.',
+        'AI assistant for reasoning, research, and programming.',
+        'AI coding agent for working with software projects.',
+        'OpenAI coding agent for creating and reviewing code.'
+      ],
+      pl: [
+        'Wszechstronny asystent do rozmów, nauki, analizy i tworzenia.',
+        'Asystent do pracy z tekstem, analizą, dokumentami i kodem.',
+        'Model AI od Google do pracy z informacjami i multimediami.',
+        'Wyszukiwanie odpowiedzi i eksplorowanie tematów ze źródłami.',
+        'Wsparcie programowania, podpowiedzi kodu i praca w IDE.',
+        'Generowanie obrazów i rozwijanie wizualnych koncepcji.',
+        'Polski model językowy do rozmów, analizy tekstu i zadań językowych.',
+        'Asystent AI do rozumowania, wyszukiwania i programowania.',
+        'Agent kodujący AI do pracy z projektami programistycznymi.',
+        'Agent programistyczny OpenAI do tworzenia i przeglądania kodu.'
+      ],
+      es: [
+        'Asistente versátil para conversar, aprender, analizar y crear.',
+        'Asistente para textos, análisis, documentos y código.',
+        'Modelo de Google para trabajar con información y contenido multimedia.',
+        'Busca respuestas y explora temas con fuentes citadas.',
+        'Ayuda para programar, sugerencias de código y uso en IDE.',
+        'Generación de imágenes y desarrollo de conceptos visuales.',
+        'Modelo de lenguaje polaco para conversar y analizar textos.',
+        'Asistente de IA para razonamiento, investigación y programación.',
+        'Agente de programación con IA para proyectos de software.',
+        'Agente de programación de OpenAI para crear y revisar código.'
+      ],
+      fr: [
+        'Assistant polyvalent pour discuter, apprendre, analyser et créer.',
+        'Assistant pour les textes, l’analyse, les documents et le code.',
+        'Modèle Google pour travailler avec des informations et des médias.',
+        'Trouvez des réponses et explorez des sujets avec des sources.',
+        'Aide au développement, suggestions de code et intégration IDE.',
+        'Génération d’images et création de concepts visuels.',
+        'Modèle de langue polonaise pour les échanges et l’analyse de texte.',
+        'Assistant IA pour le raisonnement, la recherche et le développement.',
+        'Agent de codage IA pour les projets logiciels.',
+        'Agent de programmation OpenAI pour créer et examiner du code.'
+      ],
+      de: [
+        'Vielseitiger Assistent für Gespräche, Lernen, Analyse und Kreativität.',
+        'Assistent für Texte, Analysen, Dokumente und Code.',
+        'Google-KI-Modell für Informationen und Multimedia.',
+        'Antworten finden und Themen mit Quellen erkunden.',
+        'Programmierhilfe, Codevorschläge und IDE-Workflows.',
+        'Bildgenerierung und Entwicklung visueller Konzepte.',
+        'Polnisches Sprachmodell für Gespräche und Textanalyse.',
+        'KI-Assistent für logisches Denken, Recherche und Programmierung.',
+        'KI-Coding-Agent für Softwareprojekte.',
+        'OpenAI-Coding-Agent zum Erstellen und Prüfen von Code.'
+      ],
+      it: [
+        'Assistente versatile per conversazioni, studio, analisi e creazione.',
+        'Assistente per testi, analisi, documenti e codice.',
+        'Modello Google per lavorare con informazioni e contenuti multimediali.',
+        'Trova risposte ed esplora argomenti con fonti citate.',
+        'Supporto alla programmazione, suggerimenti di codice e IDE.',
+        'Generazione di immagini e sviluppo di concept visivi.',
+        'Modello linguistico polacco per conversazioni e analisi del testo.',
+        'Assistente IA per ragionamento, ricerca e programmazione.',
+        'Agente di programmazione IA per progetti software.',
+        'Agente di programmazione OpenAI per creare e revisionare codice.'
+      ]
+    };
 
-    function applyLanguage(language) {
-      const dictionary = translations[language] || translations.pl;
-      document.documentElement.lang = language;
-      document.title = dictionary.pageTitle;
-      document.querySelectorAll("[data-i18n]").forEach(element => {
-        const translated = dictionary[element.dataset.i18n];
-        if (translated) element.innerHTML = translated;
-      });
-      searchInput.placeholder = dictionary.searchPlaceholder;
-      document.querySelectorAll("[data-i18n-placeholder]").forEach(element => { const value = dictionary[element.dataset.i18nPlaceholder]; if (value) element.placeholder = value; });
-      const provider = document.getElementById("ai-provider"); if (provider) provider.setAttribute("aria-label", dictionary.modelLabel || "AI model");
-      searchInput.setAttribute("aria-label", dictionary.searchLabel);
-      languageSelect.value = language;
-      try { localStorage.setItem("chatbotHubLanguage", language); } catch (error) { /* Storage may be disabled. */ }
+    function setText(selector, value) {
+      const element = document.querySelector(selector);
+      if (element) element.textContent = value;
     }
-
-    function normalizeSearch(value) {
-      return value.toLocaleLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
-    }
-
-    function filterTools() {
-      const query = normalizeSearch(searchInput.value);
-      let visibleCount = 0;
-      toolCards.forEach(card => {
-        const categories = (card.dataset.category || "").replace(/\s+/g, " ");
-        const categoryMatch = !activeCategory || categories.split(" ").includes(activeCategory);
-        const searchableText = normalizeSearch(`${card.innerText} ${categories}`);
-        const searchMatch = !query || searchableText.includes(query);
-        const visible = categoryMatch && searchMatch;
-        card.hidden = !visible;
-        if (visible) visibleCount++;
+    function applyLanguage(lang) {
+      const t = translations[lang] || translations.en;
+      document.documentElement.lang = lang;
+      document.querySelectorAll('.nav-links a').forEach((el, i) => el.textContent = t.nav[i]);
+      setText('.top-cta', t.cta + ' ↗');
+      setText('.eyebrow', t.eyebrow);
+      const h1 = document.querySelector('h1');
+      h1.innerHTML = `${t.h1a}<br><span>${t.h1b}</span>`;
+      setText('.hero-copy', t.hero);
+      search.placeholder = t.search;
+      search.setAttribute('aria-label', t.search);
+      setText('.hero-meta', t.meta);
+      setText('#kategorie .section-kicker', t.kicker1);
+      setText('#kategorie h2', t.categoryTitle);
+      setText('#kategorie .subtle', t.categorySub);
+      document.querySelectorAll('.category-card').forEach((el, i) => {
+        el.querySelector('b').textContent = t.categories[i][0];
+        el.querySelector('small').textContent = t.categories[i][1];
       });
-      emptyState.hidden = visibleCount !== 0;
-      return visibleCount;
-    }
-
-    document.getElementById("search-form").addEventListener("submit", event => {
-      event.preventDefault();
-      filterTools();
-      document.getElementById("tools").scrollIntoView({ behavior: "smooth", block: "start" });
-    });
-    languageSelect.addEventListener("change", event => applyLanguage(event.target.value));
-    searchInput.addEventListener("input", filterTools);
-    document.querySelectorAll(".category-card").forEach(link => {
-      link.addEventListener("click", () => {
-        activeCategory = link.dataset.category;
-        filterTools();
+      document.querySelectorAll('.tool-card p').forEach((el, i) => {
+        el.textContent = (toolDescriptions[lang] || toolDescriptions.en)[i];
       });
-    });
-    document.querySelectorAll(".brand, .feature-link").forEach(link => {
-      link.addEventListener("click", () => { activeCategory = ""; filterTools(); });
-    });
-    document.addEventListener("keydown", event => {
-      if (event.key === "Escape" && document.activeElement === searchInput) {
-        searchInput.value = "";
-        activeCategory = "";
-        filterTools();
-        searchInput.blur();
+      setText('#narzedzia .section-kicker', t.toolsKicker);
+      setText('#narzedzia h2', t.toolsTitle);
+      setText('.live-label', t.live);
+      document.querySelectorAll('.tool-bottom a').forEach(a => {
+        const b = a.querySelector('b');
+        a.textContent = t.open + ' ';
+        if (b) a.appendChild(b);
+        else { const arrow = document.createElement('b'); arrow.textContent = '↗'; a.appendChild(arrow); }
+      });
+      setText('.empty-state', t.empty);
+      setText('#polecane .section-kicker', t.bannerKicker);
+      setText('#polecane h2', t.bannerTitle);
+      setText('#polecane p', t.bannerText);
+      setText('.feature-link', t.back);
+      setText('footer > span', t.footer);
+      languageSelect.value = lang;
+      const selectedOption = document.querySelector(`.language-option[data-language="${lang}"]`);
+      if (selectedOption) {
+        const trigger = document.querySelector('#language-trigger');
+        const current = document.querySelector('#language-current');
+        const selectedFlag = selectedOption.querySelector('.flag').cloneNode(true);
+        trigger.querySelector('.flag').replaceWith(selectedFlag);
+        current.textContent = selectedOption.textContent.trim();
+        document.querySelectorAll('.language-option').forEach(option => {
+          option.setAttribute('aria-selected', String(option === selectedOption));
+        });
       }
-    });
-
-
-    // Mini-chat: API keys remain on the backend, never in this public page.
-    const chatFiles = document.getElementById('chat-files');
-    const chatQuestion = document.getElementById('chat-question');
-    const chatResponse = document.getElementById('chat-response');
-    const chatError = document.getElementById('chat-error');
-    const sendChat = document.getElementById('send-chat');
-    const selectedFiles = document.getElementById('selected-files');
-    const allowedExtensions = ['bmp','jpg','jpeg','png','txt','doc','docx','gif','xls','xlsx','ppt','pptx','mp3','mp4','ogg'];
-    let audioBlob = null, recorder = null, recordTimer = null, recordSeconds = 0, mediaStream = null;
-    function showChatError(message) { chatError.textContent = message; chatError.hidden = false; }
-    function updateFileList() {
-      selectedFiles.textContent = [...chatFiles.files].map(file => `${file.name} (${(file.size/1024/1024).toFixed(2)} MB)`).join(' · ');
     }
-    const clearFilesButton = document.getElementById('clear-files');
-    clearFilesButton.addEventListener('click', () => {
-      chatFiles.value = '';
-      updateFileList();
-      chatError.hidden = true;
-    });
-    chatFiles.addEventListener('change', () => {
-      chatError.hidden = true;
-      const files = [...chatFiles.files];
-      const invalid = files.find(file => file.size > 10*1024*1024 || !allowedExtensions.includes(file.name.split('.').pop().toLowerCase()));
-      if (invalid) { chatFiles.value = ''; updateFileList(); showChatError((translations[languageSelect.value] || translations.pl).chatFileError.replace('{name}', invalid.name)); return; }
-      updateFileList();
-    });
-    document.getElementById('record-start').addEventListener('click', async () => {
-      try {
-        if (!navigator.mediaDevices?.getUserMedia || !window.MediaRecorder) throw new Error('Ta przeglądarka nie obsługuje nagrywania. Użyj aktualnego Chrome lub Edge przez HTTPS.');
-        mediaStream = await navigator.mediaDevices.getUserMedia({audio:true});
-        const options = MediaRecorder.isTypeSupported('audio/webm;codecs=opus') ? {mimeType:'audio/webm;codecs=opus'} : {};
-        recorder = new MediaRecorder(mediaStream, options); const chunks=[];
-        recorder.ondataavailable = event => { if(event.data.size) chunks.push(event.data); };
-        recorder.onstop = () => { audioBlob = new Blob(chunks,{type:recorder.mimeType || 'audio/webm'}); mediaStream?.getTracks().forEach(track=>track.stop()); mediaStream=null; document.getElementById('recording-status').textContent=(translations[languageSelect.value] || translations.pl).chatRecordingReady; };
-        recorder.start(); recordSeconds=0; audioBlob=null;
-        document.getElementById('record-start').disabled=true; document.getElementById('record-stop').disabled=false;
-        document.getElementById('recording-status').textContent=(translations[languageSelect.value] || translations.pl).chatRecording;
-        recordTimer=setInterval(()=>{recordSeconds++;document.getElementById('record-time').textContent=`00:${String(recordSeconds).padStart(2,'0')} / 01:00`;if(recordSeconds>=60) stopRecording();},1000);
-      } catch(error) { showChatError(error.message || (translations[languageSelect.value] || translations.pl).chatMicError); }
-    });
-    function stopRecording(){ if(recorder && recorder.state!=='inactive') recorder.stop(); clearInterval(recordTimer); document.getElementById('record-start').disabled=false; document.getElementById('record-stop').disabled=true; }
-    document.getElementById('record-stop').addEventListener('click',stopRecording);
-    async function submitChat(){
-      chatError.hidden=true;
-      if(recorder && recorder.state==='recording') { await new Promise(resolve => { recorder.addEventListener('stop', resolve, {once:true}); stopRecording(); }); }
-      const question=chatQuestion.value.trim(); const files=[...chatFiles.files];
-      if(!question && !files.length && !audioBlob){showChatError((translations[languageSelect.value] || translations.pl).chatNeedInput);return;}
-      const dict=translations[languageSelect.value] || translations.pl; sendChat.disabled=true; sendChat.textContent=dict.chatSending; chatResponse.textContent=dict.chatAnalyzing;
-      const form=new FormData(); form.append('provider',document.getElementById('ai-provider').value); form.append('question',question);
-      files.forEach(file=>form.append('files',file)); if(audioBlob) form.append('audio',audioBlob, 'voice-message.webm');
-      try{
-        const configuredApi = (window.CHATBOT_HUB_API_URL || '').trim();
-        if (!configuredApi && location.hostname.endsWith('github.io')) {
-          throw new Error('Backend API nie jest skonfigurowany. Najpierw wdroż backend Python (np. Render), a następnie ustaw window.CHATBOT_HUB_API_URL w index.html na adres usługi HTTPS. GitHub Pages nie uruchamia backendu Python.');
-        }
-        const apiBase=configuredApi.replace(/\/$/,'');
-        const response=await fetch(`${apiBase}/api/chat`,{method:'POST',body:form});
-        const contentType=response.headers.get('content-type') || '';
-        const data=contentType.includes('application/json') ? await response.json() : {detail:`Backend zwrócił nieoczekiwaną odpowiedź (HTTP ${response.status}). Sprawdź adres API i wdrożenie backendu.`};
-        if(!response.ok) throw new Error(data.detail || dict.chatServerError);
-        if(!data.answer) throw new Error(dict.chatNoAnswer);
-        chatResponse.textContent=data.answer;
-        audioBlob=null; chatFiles.value=''; updateFileList();
-      }catch(error){chatResponse.textContent='';showChatError(error.message.includes('Failed to fetch')?dict.chatConnectionError:error.message);}
-      finally{sendChat.disabled=false;sendChat.textContent=(translations[languageSelect.value] || translations.pl).sendChat;}
-    }
-    sendChat.addEventListener('click',submitChat); chatQuestion.addEventListener('keydown',event=>{if(event.key==='Enter')submitChat();});
-    const uploadBox=document.querySelector('.upload-box');
-    ['dragenter','dragover'].forEach(type=>uploadBox.addEventListener(type,event=>{event.preventDefault();uploadBox.classList.add('dragging');}));
-    ['dragleave','drop'].forEach(type=>uploadBox.addEventListener(type,event=>{event.preventDefault();uploadBox.classList.remove('dragging');}));
-    uploadBox.addEventListener('drop',event=>{const dt=new DataTransfer();[...event.dataTransfer.files].forEach(file=>dt.items.add(file));chatFiles.files=dt.files;chatFiles.dispatchEvent(new Event('change'));});
 
-    let initialLanguage = "pl";
-    try {
-      const savedLanguage = localStorage.getItem("chatbotHubLanguage");
-      if (savedLanguage && translations[savedLanguage]) initialLanguage = savedLanguage;
-    } catch (error) { /* Use Polish when browser storage is unavailable. */ }
-    applyLanguage(initialLanguage);
-    filterTools();
+    function filterTools(term) {
+      const q = term.trim().toLocaleLowerCase();
+      let visible = 0;
+      cards.forEach(card => {
+        const match = (card.innerText + ' ' + card.dataset.tags).toLocaleLowerCase().includes(q);
+        card.hidden = !match;
+        if (match) visible++;
+      });
+      empty.hidden = visible !== 0;
+    }
+    search.addEventListener('input', event => filterTools(event.target.value));
+    document.querySelectorAll('.category-card').forEach(link => {
+      link.addEventListener('click', () => {
+        const category = link.dataset.category;
+        search.value = category;
+        filterTools(category);
+      });
+    });
+    const languageTrigger = document.querySelector('#language-trigger');
+    const languageMenu = document.querySelector('#language-menu');
+
+    function closeLanguageMenu() {
+      languageMenu.hidden = true;
+      languageTrigger.setAttribute('aria-expanded', 'false');
+    }
+    languageTrigger.addEventListener('click', () => {
+      const willOpen = languageMenu.hidden;
+      languageMenu.hidden = !willOpen;
+      languageTrigger.setAttribute('aria-expanded', String(willOpen));
+    });
+    document.querySelectorAll('.language-option').forEach(option => {
+      option.addEventListener('click', () => {
+        const lang = option.dataset.language;
+        applyLanguage(lang);
+        closeLanguageMenu();
+        try { localStorage.setItem('chatbotHubLanguage', lang); } catch (_) {}
+      });
+    });
+    document.addEventListener('click', event => {
+      if (!event.target.closest('#language-control')) closeLanguageMenu();
+    });
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape') closeLanguageMenu();
+    });
+
+    // Zoom: 1% = 8px, 100% = 40px. Apply font changes only after release.
+    const fontElements = [...document.querySelectorAll('body *')].filter(el =>
+      el.children.length === 0 && el.textContent.trim() && !el.closest('.zoom-control, .language-control')
+    );
+    const baseFontSizes = new Map(fontElements.map(el => [el, parseFloat(getComputedStyle(el).fontSize) || 16]));
+    function applyZoom(percent) {
+      const targetSize = 8 + ((Number(percent) - 1) / 99) * 32;
+      const factor = targetSize / 16;
+      baseFontSizes.forEach((baseSize, element) => {
+        if (element.isConnected) element.style.fontSize = `${(baseSize * factor).toFixed(2)}px`;
+      });
+      zoomValue.textContent = `${percent}%`;
+      try { localStorage.setItem('chatbotHubZoom', String(percent)); } catch (_) {}
+    }
+    zoomSlider.addEventListener('input', event => {
+      zoomValue.textContent = `${event.target.value}%`;
+    });
+    zoomSlider.addEventListener('change', event => applyZoom(event.target.value));
+
+    // Start in English on every fresh page load.
+    applyLanguage('en');
+    let savedZoom = 50;
+    try { savedZoom = Number(localStorage.getItem('chatbotHubZoom')) || 50; } catch (_) {}
+    zoomSlider.value = String(Math.min(100, Math.max(1, savedZoom)));
+    applyZoom(zoomSlider.value);
+
+    document.addEventListener('keydown', event => {
+      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k') {
+        event.preventDefault(); search.focus();
+      }
+      if (event.key === 'Escape') { search.value = ''; filterTools(''); search.blur(); }
+    });
   </script>
 </body>
 </html>
