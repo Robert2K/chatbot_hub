@@ -276,8 +276,8 @@ footer { max-width: 1190px; min-height: 82px; margin: auto; padding: 18px 28px; 
   flex: 0 0 auto;
 }
 @keyframes brand-copyright-marquee {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
 }
 .topbar .brand-copy {
   gap: 1px;
@@ -324,3 +324,36 @@ footer { max-width: 1190px; min-height: 82px; margin: auto; padding: 18px 28px; 
 
 /* Duplicate header CTA intentionally removed; Explore navigation remains. */
 .topbar .top-cta { display: none !important; }
+
+
+/* Smooth scrolling copyright ticker on phones and small screens. */
+@media (max-width: 760px) {
+  .topbar .brand-copyright-flow {
+    width: 230px;
+    max-width: 42vw;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .topbar .brand-copyright-track {
+    display: flex;
+    flex-wrap: nowrap;
+    width: max-content;
+    animation: brand-copyright-marquee 24s linear infinite;
+    will-change: transform;
+    backface-visibility: hidden;
+  }
+  .topbar .brand-copyright-segment {
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 480px) {
+  .topbar .brand-copyright-flow {
+    width: 195px;
+    max-width: 43vw;
+  }
+  .topbar .brand-copyright-track {
+    animation-duration: 24s;
+  }
+}
